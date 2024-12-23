@@ -1,3 +1,3 @@
 # rest
 
-Provide rest resoure controllers
+Rest resource builder
