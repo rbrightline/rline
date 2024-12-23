@@ -44,7 +44,7 @@ export class ResourceControllerBuilder {
     return (t) => {
       ResourceName()(t);
       Controller()(t);
-      ApiTags(this.resourceName + 'Controller')(t);
+      ApiTags(t.name)(t);
     };
   }
 
@@ -52,7 +52,7 @@ export class ResourceControllerBuilder {
     return (t, p, d) => {
       ApiOperation({ summary: `Find all ${this.resourceName}` })(t, p, d);
       Get(this._many(this.entity))(t, p, d);
-      OperationRead()(t, p, d);
+      OperationRead(this.resourceName)(t, p, d);
       ApiQuery({ type: query })(t, p, d);
     };
   }
@@ -61,7 +61,7 @@ export class ResourceControllerBuilder {
     return (t, p, d) => {
       ApiOperation({ summary: `Find ${this.resourceName} by id` })(t, p, d);
       Get(this._id(this.entity))(t, p, d);
-      OperationRead()(t, p, d);
+      OperationRead(this.resourceName)(t, p, d);
     };
   }
 
@@ -69,8 +69,8 @@ export class ResourceControllerBuilder {
     return (t, p, d) => {
       ApiOperation({ summary: `Save ${this.resourceName}` })(t, p, d);
       Post(this._one(this.entity))(t, p, d);
-      OperationWrite()(t, p, d);
       ApiBody({ type: dto })(t, p, d);
+      OperationWrite(this.resourceName)(t, p, d);
     };
   }
 
@@ -79,8 +79,8 @@ export class ResourceControllerBuilder {
       const n = this.resourceNames(t).singular;
       ApiOperation({ summary: `Update ${n} by id` })(t, p, d);
       Put(this._id(t))(t, p, d);
-      OperationUpdate()(t, p, d);
       ApiBody({ type: dto })(t, p, d);
+      OperationUpdate(this.resourceName)(t, p, d);
     };
   }
 
@@ -88,7 +88,7 @@ export class ResourceControllerBuilder {
     return (t, p, d) => {
       ApiOperation({ summary: `Delete ${this.resourceName} by id` })(t, p, d);
       Delete(this._id(this.entity))(t, p, d);
-      OperationDelete()(t, p, d);
+      OperationDelete(this.resourceName)(t, p, d);
     };
   }
 
@@ -100,7 +100,7 @@ export class ResourceControllerBuilder {
         d
       );
       Put(this._relation(this.entity))(t, p, d);
-      OperationUpdate()(t, p, d);
+      OperationUpdate(this.resourceName)(t, p, d);
     };
   }
 
@@ -112,7 +112,7 @@ export class ResourceControllerBuilder {
         d
       );
       Delete(this._relation(this.entity))(t, p, d);
-      OperationUpdate()(t, p, d);
+      OperationUpdate(this.resourceName)(t, p, d);
     };
   }
 
@@ -124,7 +124,7 @@ export class ResourceControllerBuilder {
         d
       );
       Post(this._relation(this.entity))(t, p, d);
-      OperationUpdate()(t, p, d);
+      OperationUpdate(this.resourceName)(t, p, d);
     };
   }
 
@@ -136,7 +136,7 @@ export class ResourceControllerBuilder {
         d
       );
       Delete(this._unsetRelation(this.entity))(t, p, d);
-      OperationUpdate()(t, p, d);
+      OperationUpdate(this.resourceName)(t, p, d);
     };
   }
 }

@@ -1,15 +1,12 @@
 /**
  *
- * @param controllerName SampleController
+ * @param singularResourceName SampleController
  */
-export function parseResourceName(controllerName: string): {
+export function parseResourceName(singularResourceName: string): {
   singular: string;
   plural: string;
 } {
-  if (!controllerName.endsWith('Controller'))
-    throw new Error('Resouce controller should be end with Controller!');
-  controllerName = controllerName.replace('Controller', '');
-  let singular = controllerName
+  let singular = singularResourceName
     .split('')
     .map((e) => (/[A-Z]/.test(e) ? '-' + e : e))
     .map((e) => e.toLowerCase())

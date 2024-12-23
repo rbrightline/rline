@@ -1,53 +1,56 @@
 import { SetMetadata } from '@nestjs/common';
-import { parseResourceName } from './parse-resource-name';
-
+import { OperationName } from '@rline/type';
 export const OPERATION_NAME_TOKEN = 'OPERATION_NAME_TOKEN';
 
-export function OperationName(operationName: string): MethodDecorator {
+export function operationName(operation: OperationName, resouce: string) {
+  return `${operation}:${resouce}`;
+}
+
+export function OperationNameMetadata(operationName: string): MethodDecorator {
   return (t, p, d) => {
     SetMetadata(OPERATION_NAME_TOKEN, operationName)(t, p, d);
   };
 }
 
-export function OperationRead(): MethodDecorator {
+export function OperationRead(resourceName: string): MethodDecorator {
   return (t, p, d) => {
-    OperationName('READ:' + parseResourceName(t.constructor.name).singular)(
+    OperationNameMetadata(operationName(OperationName.READ, resourceName))(
       t,
       p,
       d
     );
   };
 }
-export function OperationWrite(): MethodDecorator {
+export function OperationWrite(resourceName: string): MethodDecorator {
   return (t, p, d) => {
-    OperationName('WRITE:' + parseResourceName(t.constructor.name).singular)(
+    OperationNameMetadata(operationName(OperationName.WRITE, resourceName))(
       t,
       p,
       d
     );
   };
 }
-export function OperationUpdate(): MethodDecorator {
+export function OperationUpdate(resourceName: string): MethodDecorator {
   return (t, p, d) => {
-    OperationName('UPDATE:' + parseResourceName(t.constructor.name).singular)(
+    OperationNameMetadata(operationName(OperationName.UPDATE, resourceName))(
       t,
       p,
       d
     );
   };
 }
-export function OperationDelete(): MethodDecorator {
+export function OperationDelete(resourceName: string): MethodDecorator {
   return (t, p, d) => {
-    OperationName('DELETE:' + parseResourceName(t.constructor.name).singular)(
+    OperationNameMetadata(operationName(OperationName.DELETE, resourceName))(
       t,
       p,
       d
     );
   };
 }
-export function OperationManage(): MethodDecorator {
+export function OperationManage(resourceName: string): MethodDecorator {
   return (t, p, d) => {
-    OperationName('MANAGE:' + parseResourceName(t.constructor.name).singular)(
+    OperationNameMetadata(operationName(OperationName.MANAGE, resourceName))(
       t,
       p,
       d

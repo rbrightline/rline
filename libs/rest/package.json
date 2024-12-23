@@ -1,6 +1,6 @@
 {
   "name": "@rline/rest",
-  "version": "4.5.4",
+  "version": "4.5.5",
   "peerDependencies": {
     "@nestjs/common": "^10.4.15",
     "@nestjs/swagger": "^8.1.0",
@@ -8,8 +8,9 @@
     "typeorm": "^0.3.20"
   },
   "dependencies": {
-    "@swc/helpers": "~0.5.11",
-    "@rline/orm": "4.5.4"
+    "@rline/orm": "4.5.5",
+    "@rline/type": "4.5.5",
+    "@swc/helpers": "~0.5.11"
   },
   "type": "commonjs",
   "main": "./dist/index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@rline/orm",
-  "version": "4.5.4",
+  "version": "4.5.5",
   "author": {
     "name": "Robert Brightline",
     "email": "robert.brightline@gmail.com",
@@ -19,10 +19,10 @@
     "typeorm": "^0.3.20"
   },
   "dependencies": {
-    "@rline/property": "4.5.4",
-    "@rline/query": "4.5.4",
-    "@rline/type": "4.5.4",
-    "@rline/validation": "4.5.4",
+    "@rline/property": "4.5.5",
+    "@rline/query": "4.5.5",
+    "@rline/type": "4.5.5",
+    "@rline/validation": "4.5.5",
     "@swc/helpers": "~0.5.11"
   },
   "type": "commonjs",
