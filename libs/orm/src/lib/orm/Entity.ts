@@ -1,10 +1,10 @@
 import { Exclude } from 'class-transformer';
-import { Entity, Unique } from 'typeorm';
+import { Entity as __Entity, Unique } from 'typeorm';
 
-export function E(uniques?: string[]): ClassDecorator {
+export function Entity(uniques?: string[]): ClassDecorator {
   return (t) => {
     Exclude()(t);
-    Entity()(t);
+    __Entity()(t);
     if (uniques && uniques.length > 0) Unique(uniques)(t);
   };
 }

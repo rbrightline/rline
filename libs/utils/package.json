@@ -1,6 +1,6 @@
 {
   "name": "@rline/utils",
-  "version": "4.5.0",
+  "version": "4.5.4",
   "author": {
     "name": "Robert Brightline",
     "email": "robert.brightline@gmail.com",
@@ -33,7 +33,7 @@
           "outputPath": "libs/utils/dist",
           "main": "libs/utils/src/index.ts",
           "tsConfig": "libs/utils/tsconfig.lib.json",
-          "skipTypeCheck": true,
+          "skipTypeCheck": false,
           "stripLeadingPaths": true
         }
       },

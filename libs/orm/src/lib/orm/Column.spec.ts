@@ -4,15 +4,15 @@ import { BaseEntity } from '../base/BaseEntity';
 describe('Column', () => {
   it('should create string column', async () => {
     @Entity()
-    class Sample extends BaseEntity<Sample> {}
+    class SampleColumn extends BaseEntity<SampleColumn> {}
 
     const r = await new DataSource({
       type: 'postgres',
+      database: 'testdb',
       username: 'testuser',
-      password: 'testdb',
-      entities: [Sample],
+      password: 'password',
+      entities: [SampleColumn],
       synchronize: true,
-      dropSchema: true,
     }).initialize();
 
     expect(r).toBeTruthy();

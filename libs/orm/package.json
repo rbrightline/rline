@@ -1,6 +1,6 @@
 {
   "name": "@rline/orm",
-  "version": "4.5.0",
+  "version": "4.5.4",
   "author": {
     "name": "Robert Brightline",
     "email": "robert.brightline@gmail.com",
@@ -19,11 +19,11 @@
     "typeorm": "^0.3.20"
   },
   "dependencies": {
-    "@swc/helpers": "~0.5.11",
-    "@rline/property": "4.5.0",
-    "@rline/query": "4.5.0",
-    "@rline/type": "4.5.0",
-    "@rline/validation": "4.5.0"
+    "@rline/property": "4.5.4",
+    "@rline/query": "4.5.4",
+    "@rline/type": "4.5.4",
+    "@rline/validation": "4.5.4",
+    "@swc/helpers": "~0.5.11"
   },
   "type": "commonjs",
   "main": "./dist/index.js",
@@ -45,7 +45,7 @@
           "outputPath": "libs/orm/dist",
           "main": "libs/orm/src/index.ts",
           "tsConfig": "libs/orm/tsconfig.lib.json",
-          "skipTypeCheck": true,
+          "skipTypeCheck": false,
           "stripLeadingPaths": true
         }
       },
@@ -60,5 +60,9 @@
       }
     },
     "name": "orm"
+  },
+  "devDependencies": {
+    "better-sqlite3": "^11.7.0",
+    "pg": "^8.13.1"
   }
 }

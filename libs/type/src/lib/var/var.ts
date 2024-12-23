@@ -15,7 +15,7 @@ export function num(defaultValue?: Nonable<number>): Nullable<number> {
 }
 
 export function bool(defaultValue?: Nonable<boolean>): Nullable<boolean> {
-  return typeof defaultValue == 'boolean' ? value(defaultValue) : null;
+  return typeof defaultValue == 'boolean' ? defaultValue : null;
 }
 
 export function date(defaultValue?: Nonable<Date>): Nullable<Date> {
@@ -23,5 +23,11 @@ export function date(defaultValue?: Nonable<Date>): Nullable<Date> {
 }
 
 export function arr<T>(defaultValue: Nullable<T[]>): Nullable<T[]> {
-  return defaultValue != undefined ? defaultValue : null;
+  return Array.isArray(defaultValue) ? defaultValue : null;
+}
+
+export function obj<T>(defaultValue: Nullable<T>): Nullable<T> {
+  return typeof defaultValue == 'object' && !Array.isArray(defaultValue)
+    ? defaultValue
+    : null;
 }

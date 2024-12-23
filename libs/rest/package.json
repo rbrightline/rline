@@ -1,6 +1,6 @@
 {
   "name": "@rline/rest",
-  "version": "4.5.0",
+  "version": "4.5.4",
   "peerDependencies": {
     "@nestjs/common": "^10.4.15",
     "@nestjs/swagger": "^8.1.0",
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@swc/helpers": "~0.5.11",
-    "@rline/orm": "^4.5.0"
+    "@rline/orm": "4.5.4"
   },
   "type": "commonjs",
   "main": "./dist/index.js",
@@ -31,7 +31,7 @@
           "outputPath": "libs/rest/dist",
           "main": "libs/rest/src/index.ts",
           "tsConfig": "libs/rest/tsconfig.lib.json",
-          "skipTypeCheck": true,
+          "skipTypeCheck": false,
           "stripLeadingPaths": true
         }
       },

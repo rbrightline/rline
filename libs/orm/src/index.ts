@@ -5,6 +5,7 @@ export * from './lib/base/BaseEntity';
 export * from './lib/base/BaseEntityView';
 export * from './lib/base/IDEntity';
 export * from './lib/base/IDEntityView';
+export * from './lib/base/Operation';
 export * from './lib/base/TimestampEntity';
 export * from './lib/base/TimestampEntityView';
 export * from './lib/dto/increment.dto';

@@ -1,4 +1,4 @@
-import { str, num, bool, date, value } from './var';
+import { str, num, bool, date, value, obj, arr } from './var';
 
 describe('var', () => {
   let dateValue = new Date();
@@ -91,6 +91,46 @@ describe('var', () => {
       'date($defaultValue) should return $expected',
       ({ defaultValue, expected }) => {
         expect(date(defaultValue)).toEqual(expected);
+      }
+    );
+  });
+  describe('object', () => {
+    it.each`
+      defaultValue        | expected
+      ${null}             | ${null}
+      ${undefined}        | ${null}
+      ${''}               | ${null}
+      ${'1'}              | ${null}
+      ${1}                | ${null}
+      ${true}             | ${null}
+      ${false}            | ${null}
+      ${[]}               | ${null}
+      ${{}}               | ${{}}
+      ${{ name: 'name' }} | ${{ name: 'name' }}
+    `(
+      'obj($defaultValue) should return $expected',
+      ({ defaultValue, expected }) => {
+        expect(obj(defaultValue)).toEqual(expected);
+      }
+    );
+  });
+  describe('array', () => {
+    it.each`
+      defaultValue        | expected
+      ${null}             | ${null}
+      ${undefined}        | ${null}
+      ${''}               | ${null}
+      ${'1'}              | ${null}
+      ${1}                | ${null}
+      ${true}             | ${null}
+      ${false}            | ${null}
+      ${{ name: 'name' }} | ${null}
+      ${[]}               | ${[]}
+      ${{}}               | ${null}
+    `(
+      'obj($defaultValue) should return $expected',
+      ({ defaultValue, expected }) => {
+        expect(arr(defaultValue)).toEqual(expected);
       }
     );
   });
