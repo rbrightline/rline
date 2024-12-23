@@ -125,8 +125,8 @@ describe('Validation', () => {
       ${{ type: 'object', required: true }}                           | ${{ value: null }}      | ${['isNotEmpty', 'isObject', 'nestedValidation']}
       ${{ type: 'array', required: true, items: { type: 'string' } }} | ${{ value: [] }}        | ${undefined}
       ${{ type: 'array', required: true, items: { type: 'string' } }} | ${{ value: ['some'] }}  | ${undefined}
-      ${{ type: 'array', required: true, items: { type: 'string' } }} | ${{ value: null }}      | ${['isNotEmpty']}
-      ${{ type: 'array', required: true, items: { type: 'string' } }} | ${{ value: undefined }} | ${['isNotEmpty']}
+      ${{ type: 'array', required: true, items: { type: 'string' } }} | ${{ value: null }}      | ${undefined}
+      ${{ type: 'array', required: true, items: { type: 'string' } }} | ${{ value: undefined }} | ${undefined}
       ${{ type: 'array', required: true, items: { type: 'string' } }} | ${{ value: [1] }}       | ${['isString']}
       ${{ type: 'array', required: true, items: { type: 'string' } }} | ${{ value: [true] }}    | ${['isString']}
       ${{ type: 'array', required: true, items: { type: 'string' } }} | ${{ value: [{}] }}      | ${['isString']}

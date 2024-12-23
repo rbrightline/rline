@@ -1,6 +1,6 @@
 {
   "name": "@rline/orm",
-  "version": "4.3.0",
+  "version": "4.5.0",
   "author": {
     "name": "Robert Brightline",
     "email": "robert.brightline@gmail.com",
@@ -15,15 +15,15 @@
     "@nestjs/config": "^3.3.0",
     "@nestjs/swagger": "^8.1.0",
     "@nestjs/typeorm": "^10.0.2",
-    "@rline/property": "4.2.0",
-    "@rline/query": "4.2.0",
-    "@rline/type": "4.2.0",
-    "@rline/validation": "4.2.0",
     "class-transformer": "^0.5.1",
     "typeorm": "^0.3.20"
   },
   "dependencies": {
-    "@swc/helpers": "~0.5.11"
+    "@swc/helpers": "~0.5.11",
+    "@rline/property": "4.5.0",
+    "@rline/query": "4.5.0",
+    "@rline/type": "4.5.0",
+    "@rline/validation": "4.5.0"
   },
   "type": "commonjs",
   "main": "./dist/index.js",
