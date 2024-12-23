@@ -2,5 +2,24 @@
   "extends": "./tsconfig.base.json",
   "compileOnSave": false,
   "files": [],
-  "references": []
+  "references": [
+    {
+      "path": "./libs/type"
+    },
+    {
+      "path": "./libs/property"
+    },
+    {
+      "path": "./libs/orm"
+    },
+    {
+      "path": "./libs/query"
+    },
+    {
+      "path": "./libs/utils"
+    },
+    {
+      "path": "./libs/validation"
+    }
+  ]
 }

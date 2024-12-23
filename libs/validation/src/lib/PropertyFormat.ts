@@ -1,0 +1,16 @@
+export type PropertyFormat =
+  | 'date'
+  | 'date-time'
+  | 'email'
+  | 'uuid'
+  | 'uri'
+  | 'hostname'
+  | 'ipv4'
+  | 'ipv6'
+  | 'binary'
+  | 'int32'
+  | 'int64'
+  | 'float'
+  | 'double'
+  | 'byte'
+  | 'password';

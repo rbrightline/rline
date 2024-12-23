@@ -1,0 +1,59 @@
+{
+  "name": "@rline/property",
+  "version": "0.0.1",
+  "author": {
+    "name": "Robert Brightline",
+    "email": "robert.brightline@gmail.com",
+    "url": "https://rbrightline.github.io"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest"
+  },
+  "peerDependencies": {
+    "@nestjs/swagger": "^8.1.0",
+    "@rline/validation": "^4.2.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "reflect-metadata": "^0.2.2"
+  },
+  "dependencies": {
+    "@swc/helpers": "~0.5.11"
+  },
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "!**/*.tsbuildinfo"
+  ],
+  "nx": {
+    "sourceRoot": "libs/property/src",
+    "projectType": "library",
+    "targets": {
+      "build": {
+        "executor": "@nx/js:swc",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "options": {
+          "outputPath": "libs/property/dist",
+          "main": "libs/property/src/index.ts",
+          "tsConfig": "libs/property/tsconfig.lib.json",
+          "skipTypeCheck": true,
+          "stripLeadingPaths": true
+        }
+      },
+      "test": {
+        "executor": "@nx/vite:test",
+        "outputs": [
+          "{options.reportsDirectory}"
+        ],
+        "options": {
+          "reportsDirectory": "../../coverage/libs/property"
+        }
+      }
+    },
+    "name": "property"
+  }
+}

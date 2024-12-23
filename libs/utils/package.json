@@ -1,0 +1,52 @@
+{
+  "name": "@rline/utils",
+  "version": "4.2.0",
+  "author": {
+    "name": "Robert Brightline",
+    "email": "robert.brightline@gmail.com",
+    "url": "https://rbrightline.github.io"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest"
+  },
+  "dependencies": {
+    "@swc/helpers": "~0.5.11"
+  },
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "!**/*.tsbuildinfo"
+  ],
+  "nx": {
+    "sourceRoot": "libs/utils/src",
+    "projectType": "library",
+    "targets": {
+      "build": {
+        "executor": "@nx/js:swc",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "options": {
+          "outputPath": "libs/utils/dist",
+          "main": "libs/utils/src/index.ts",
+          "tsConfig": "libs/utils/tsconfig.lib.json",
+          "skipTypeCheck": true,
+          "stripLeadingPaths": true
+        }
+      },
+      "test": {
+        "executor": "@nx/vite:test",
+        "outputs": [
+          "{options.reportsDirectory}"
+        ],
+        "options": {
+          "reportsDirectory": "../../coverage/libs/utils"
+        }
+      }
+    },
+    "name": "utils"
+  }
+}
