@@ -14,7 +14,9 @@ export function StringValidation(
   return (t, p) => {
     IsString(voptions)(t, p);
 
-    options.minLength && MinLength(options.minLength, voptions)(t, p);
-    options.maxLength && MaxLength(options.maxLength, voptions)(t, p);
+    if (options.minLength != undefined)
+      MinLength(options.minLength, voptions)(t, p);
+    if (options.maxLength != undefined)
+      MaxLength(options.maxLength, voptions)(t, p);
   };
 }

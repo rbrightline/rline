@@ -1,4 +1,5 @@
 import { Property } from '@rline/property';
+import { arr, bool, num, str } from '@rline/type';
 import { Column as __Column, ColumnOptions } from 'typeorm';
 
 export function Column(options: ColumnOptions): PropertyDecorator {
@@ -14,35 +15,69 @@ export function Column(options: ColumnOptions): PropertyDecorator {
       unique: options.unique,
       default: options.default,
     };
+
     switch (type) {
       case 'string':
-        Property({ type: 'string', ...po })(t, p);
-        __Column({ ...co, type: 'varchar' })(t, p);
+        Property({ type: 'string', ...po, default: str(options.default) })(
+          t,
+          p
+        );
+        __Column({ ...co, type: 'varchar', default: str(options.default) })(
+          t,
+          p
+        );
         break;
 
       case 'number':
-        Property({ type: 'number', ...po })(t, p);
-        __Column({ ...co, type: 'number' })(t, p);
+        Property({ type: 'number', ...po, default: num(options.default) })(
+          t,
+          p
+        );
+        __Column({ ...co, type: 'number', default: num(options.default) })(
+          t,
+          p
+        );
         break;
 
       case 'integer':
-        Property({ type: 'integer', ...po })(t, p);
-        __Column({ ...co, type: 'integer' })(t, p);
+        Property({ type: 'integer', ...po, default: num(options.default) })(
+          t,
+          p
+        );
+        __Column({ ...co, type: 'integer', default: num(options.default) })(
+          t,
+          p
+        );
         break;
 
       case 'boolean':
-        Property({ type: 'array', ...po, items: { type: 'string' } })(t, p);
-        __Column({ type: 'boolean', nullable: true })(t, p);
+        Property({ type: 'boolean', ...po, default: bool(options.default) })(
+          t,
+          p
+        );
+        __Column({
+          type: 'boolean',
+          nullable: true,
+          default: bool(options.default),
+        })(t, p);
         break;
 
       case 'jsonb':
-        Property({ type: 'string', ...po })(t, p);
+        Property({ type: 'string', ...po, default: str(options.default) })(
+          t,
+          p
+        );
         __Column({ type: 'jsonb', nullable: true })(t, p);
         break;
 
       case 'array':
-        Property({ type: 'array', ...po, items: { type: 'string' } })(t, p);
-        __Column({ ...co, type: 'array' })(t, p);
+        Property({
+          type: 'array',
+          ...po,
+          default: arr(options.default),
+          items: { type: 'string' },
+        })(t, p);
+        __Column({ ...co, type: 'array', default: arr(options.default) })(t, p);
         break;
 
       default:

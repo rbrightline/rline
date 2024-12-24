@@ -6,9 +6,9 @@ export const RESOURCE_NAME_TOKEN = 'RESOURCE_NAME_TOKEN';
  * Resource name metadata
  * @returns
  */
-export function ResourceName(): ClassDecorator {
+export function ResourceName(resourceName: string): ClassDecorator {
   return (t) => {
-    const names = parseResourceName(t.constructor.name);
+    const names = parseResourceName(resourceName);
     SetMetadata(RESOURCE_NAME_TOKEN, names.singular)(t);
   };
 }

@@ -146,16 +146,16 @@ describe('Property', () => {
 
   describe('number', () => {
     it.each`
-      options                                       | value             | errors
-      ${{ type: 'number' }}                         | ${{}}             | ${undefined}
-      ${{ type: 'number' }}                         | ${{ value: '' }}  | ${['isNumber']}
-      ${{ type: 'number', minimum: 1, maximum: 2 }} | ${{ value: 2 }}   | ${undefined}
-      ${{ type: 'number', minimum: 1, maximum: 2 }} | ${{ value: 1 }}   | ${undefined}
-      ${{ type: 'number', minimum: 1, maximum: 2 }} | ${{ value: 1.4 }} | ${undefined}
-      ${{ type: 'number', minimum: 1, maximum: 2 }} | ${{ value: 0 }}   | ${['min']}
-      ${{ type: 'number', minimum: 1, maximum: 2 }} | ${{ value: 3 }}   | ${['max']}
-      ${{ type: 'integer' }}                        | ${{ value: '' }}  | ${['isInt']}
-      ${{ type: 'integer' }}                        | ${{ value: 3.3 }} | ${['isInt']}
+      options                                        | value             | errors
+      ${{ type: 'number' }}                          | ${{}}             | ${undefined}
+      ${{ type: 'number' }}                          | ${{ value: '' }}  | ${['isNumber']}
+      ${{ type: 'number', minimum: -1, maximum: 2 }} | ${{ value: 2 }}   | ${undefined}
+      ${{ type: 'number', minimum: -1, maximum: 2 }} | ${{ value: 1 }}   | ${undefined}
+      ${{ type: 'number', minimum: -1, maximum: 2 }} | ${{ value: 1.4 }} | ${undefined}
+      ${{ type: 'number', minimum: -1, maximum: 2 }} | ${{ value: -2 }}  | ${['min']}
+      ${{ type: 'number', minimum: -1, maximum: 2 }} | ${{ value: 3 }}   | ${['max']}
+      ${{ type: 'integer' }}                         | ${{ value: '' }}  | ${['isInt']}
+      ${{ type: 'integer' }}                         | ${{ value: 3.3 }} | ${['isInt']}
     `(
       'should validate $value with $options and throw $errors',
       ({ options, value, errors }) => {

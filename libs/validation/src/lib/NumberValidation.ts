@@ -13,7 +13,7 @@ export function NumberValidation(
       IsNumber({}, voptions)(t, p);
     }
 
-    options.minimum && Min(options.minimum, voptions)(t, p);
-    options.maximum && Max(options.maximum, voptions)(t, p);
+    if (options.minimum != undefined) Min(options.minimum, voptions)(t, p);
+    if (options.maximum != undefined) Max(options.maximum, voptions)(t, p);
   };
 }

@@ -22,11 +22,11 @@ export function date(defaultValue?: Nonable<Date>): Nullable<Date> {
   return defaultValue instanceof Date ? defaultValue : null;
 }
 
-export function arr<T>(defaultValue: Nullable<T[]>): Nullable<T[]> {
+export function arr<T>(defaultValue?: Nullable<T[]>): Nullable<T[]> {
   return Array.isArray(defaultValue) ? defaultValue : null;
 }
 
-export function obj<T>(defaultValue: Nullable<T>): Nullable<T> {
+export function obj<T>(defaultValue?: Nullable<T>): Nullable<T> {
   return typeof defaultValue == 'object' && !Array.isArray(defaultValue)
     ? defaultValue
     : null;

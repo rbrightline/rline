@@ -1,5 +1,12 @@
 import { Controller, Delete, Get, Post, Put, Type } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOkResponse,
+  ApiOperation,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { ResourceName } from './ResourceName';
 import { parseResourceName } from './parse-resource-name';
 import {
@@ -9,86 +16,111 @@ import {
   OperationWrite,
 } from './OperationName';
 
+import {
+  CountDto,
+  IncrementDto,
+  CreateUpdateResultDto,
+  CreateDeleteResultDto,
+  DecrementDto,
+} from '@rline/orm';
+
 export class ResourceControllerBuilder {
   protected readonly resourceName: string;
 
-  constructor(protected readonly entity: Type) {
+  constructor(
+    protected readonly entity: Type,
+    protected readonly createDto: Type,
+    protected readonly updateDto: Type,
+    protected readonly queryDto: Type
+  ) {
     this.resourceName = this.entity.name;
   }
 
-  private resourceNames(t: Object): { singular: string; plural: string } {
-    return parseResourceName(t.constructor.name);
+  private rn(): { singular: string; plural: string } {
+    return parseResourceName(this.resourceName);
   }
 
-  private _one(t: Object) {
-    return this.resourceNames(t).singular;
+  private _one() {
+    return this.rn().singular;
   }
 
-  private _many(t: Object) {
-    return this.resourceNames(t).plural;
+  private _many() {
+    return this.rn().plural;
   }
 
-  private _id(t: Object) {
-    return `${this._one(t)}/:id`;
+  private _id() {
+    return `${this._one()}/:id`;
   }
 
-  private _relation(t: Object) {
-    return `${this._one(t)}/:rn/:rid`;
+  private _relation(t: Type) {
+    return `${this._one()}/:rn/:rid`;
   }
 
-  private _unsetRelation(t: Object) {
-    return `${this._one(t)}/:rn`;
+  private _unsetRelation(t: Type) {
+    return `${this._one()}/:rn`;
   }
 
   Controller(): ClassDecorator {
     return (t) => {
-      ResourceName()(t);
       Controller()(t);
-      ApiTags(t.name)(t);
+      ApiBearerAuth()(t);
+      ApiTags(this.resourceName + 'Controller')(t);
+      ResourceName(this.resourceName)(t);
     };
   }
 
-  Find(query: Type): MethodDecorator {
+  Find(): MethodDecorator {
     return (t, p, d) => {
       ApiOperation({ summary: `Find all ${this.resourceName}` })(t, p, d);
-      Get(this._many(this.entity))(t, p, d);
+      Get(this._many())(t, p, d);
       OperationRead(this.resourceName)(t, p, d);
-      ApiQuery({ type: query })(t, p, d);
+      ApiQuery({ type: this.queryDto })(t, p, d);
+      ApiOkResponse({ type: this.entity, isArray: true })(t, p, d);
     };
   }
 
   FindOneById(): MethodDecorator {
     return (t, p, d) => {
       ApiOperation({ summary: `Find ${this.resourceName} by id` })(t, p, d);
-      Get(this._id(this.entity))(t, p, d);
       OperationRead(this.resourceName)(t, p, d);
+      Get(this._id())(t, p, d);
+      ApiOkResponse({ type: this.entity })(t, p, d);
     };
   }
 
-  Save(dto: Type): MethodDecorator {
+  Save(): MethodDecorator {
     return (t, p, d) => {
       ApiOperation({ summary: `Save ${this.resourceName}` })(t, p, d);
-      Post(this._one(this.entity))(t, p, d);
-      ApiBody({ type: dto })(t, p, d);
+      Post(this._one())(t, p, d);
+      ApiBody({ type: this.createDto })(t, p, d);
       OperationWrite(this.resourceName)(t, p, d);
+      ApiOkResponse({ type: this.entity })(t, p, d);
     };
   }
 
-  Update(dto: Type): MethodDecorator {
+  Update(): MethodDecorator {
     return (t, p, d) => {
-      const n = this.resourceNames(t).singular;
+      const n = this.rn().singular;
       ApiOperation({ summary: `Update ${n} by id` })(t, p, d);
-      Put(this._id(t))(t, p, d);
-      ApiBody({ type: dto })(t, p, d);
+      Put(this._id())(t, p, d);
+      ApiBody({ type: this.updateDto })(t, p, d);
       OperationUpdate(this.resourceName)(t, p, d);
+      ApiOkResponse({
+        type: CreateUpdateResultDto(this.entity),
+        example: [new this.entity(), new this.entity()],
+      })(t, p, d);
     };
   }
 
   Delete(): MethodDecorator {
     return (t, p, d) => {
       ApiOperation({ summary: `Delete ${this.resourceName} by id` })(t, p, d);
-      Delete(this._id(this.entity))(t, p, d);
+      Delete(this._id())(t, p, d);
       OperationDelete(this.resourceName)(t, p, d);
+      ApiOkResponse({
+        type: CreateDeleteResultDto(this.entity),
+        example: [new this.entity()],
+      })(t, p, d);
     };
   }
 
@@ -101,6 +133,7 @@ export class ResourceControllerBuilder {
       );
       Put(this._relation(this.entity))(t, p, d);
       OperationUpdate(this.resourceName)(t, p, d);
+      ApiOkResponse({ type: this.entity })(t, p, d);
     };
   }
 
@@ -113,6 +146,7 @@ export class ResourceControllerBuilder {
       );
       Delete(this._relation(this.entity))(t, p, d);
       OperationUpdate(this.resourceName)(t, p, d);
+      ApiOkResponse({ type: this.entity })(t, p, d);
     };
   }
 
@@ -125,6 +159,7 @@ export class ResourceControllerBuilder {
       );
       Post(this._relation(this.entity))(t, p, d);
       OperationUpdate(this.resourceName)(t, p, d);
+      ApiOkResponse({ type: this.entity })(t, p, d);
     };
   }
 
@@ -137,6 +172,39 @@ export class ResourceControllerBuilder {
       );
       Delete(this._unsetRelation(this.entity))(t, p, d);
       OperationUpdate(this.resourceName)(t, p, d);
+      ApiOkResponse({ type: this.entity })(t, p, d);
+    };
+  }
+
+  Count(): MethodDecorator {
+    return (t, p, d) => {
+      const n = this.rn().singular;
+      ApiOperation({ summary: `Count ${n}` })(t, p, d);
+      Get(this._many() + '/count')(t, p, d);
+      ApiQuery({ type: this.queryDto })(t, p, d);
+      OperationRead(this.resourceName)(t, p, d);
+      ApiOkResponse({ type: CountDto })(t, p, d);
+    };
+  }
+
+  Increment(): MethodDecorator {
+    return (t, p, d) => {
+      const n = this.rn().singular;
+      ApiOperation({ summary: `Increment ${n}` })(t, p, d);
+      Put(this._many() + '/:id/increment')(t, p, d);
+      ApiBody({ type: IncrementDto })(t, p, d);
+      OperationUpdate(this.resourceName)(t, p, d);
+      ApiOkResponse({ type: CreateUpdateResultDto(this.entity) })(t, p, d);
+    };
+  }
+  Decrement(): MethodDecorator {
+    return (t, p, d) => {
+      const n = this.rn().singular;
+      ApiOperation({ summary: `Decrement ${n}` })(t, p, d);
+      Put(this._many() + '/:id/decrement')(t, p, d);
+      ApiBody({ type: DecrementDto })(t, p, d);
+      OperationUpdate(this.resourceName)(t, p, d);
+      ApiOkResponse({ type: CreateUpdateResultDto(this.entity) })(t, p, d);
     };
   }
 }

@@ -1,4 +1,4 @@
-import { Property } from '@rline/property';
+import { ApiProperty } from '@nestjs/swagger';
 import { parseOrderString } from '@rline/query';
 import { Transform } from 'class-transformer';
 
@@ -7,16 +7,13 @@ import { Transform } from 'class-transformer';
  * @param keys
  * @returns
  */
-export function OrderProperty(keys: string[]): PropertyDecorator {
+export function OrderProperty(): PropertyDecorator {
   return (t, p) => {
-    Property({ type: 'string', example: 'id:ASC' })(t, p);
-
+    ApiProperty({ type: 'string', required: false, default: 'id::ASC' })(t, p);
     Transform(({ value }) => {
       const orderItem = parseOrderString(value);
       if (orderItem && orderItem.property && orderItem.direction) {
-        if (keys.includes(orderItem.property)) {
-          return { [orderItem.property]: orderItem.direction };
-        }
+        return { [orderItem.property]: orderItem.direction };
       }
       return undefined;
     })(t, p);

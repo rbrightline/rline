@@ -17,7 +17,7 @@
     "reflect-metadata": "^0.2.2"
   },
   "dependencies": {
-    "@rline/validation": "4.5.5",
+    "@rline/validation": "workspace:*",
     "@swc/helpers": "~0.5.11"
   },
   "type": "commonjs",

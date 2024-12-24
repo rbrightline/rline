@@ -1,15 +1,22 @@
 import { ApiProperty, ApiPropertyOptions } from '@nestjs/swagger';
 import { PropertyType, Validation } from '@rline/validation';
 import { Expose } from 'class-transformer';
+import { TransformValue } from './TransformValue';
 
 export function Property(
-  options: ApiPropertyOptions,
+  options: Partial<ApiPropertyOptions>,
   target?: () => any
 ): PropertyDecorator {
   return (t, p) => {
-    ApiProperty({ ...options, nullable: options.required != true })(t, p);
+    ApiProperty({
+      ...options,
+      nullable: options.required != true,
+      required: options.required == true,
+    } as ApiPropertyOptions)(t, p);
 
     Expose()(t, p);
+
+    TransformValue()(t, p);
 
     const { type, required: isRequired } = options;
 
@@ -26,7 +33,7 @@ export function Property(
         target
       )(t, p);
     } else if (type == 'object') {
-      Validation({ type: 'object', required, target })(t, p);
+      Validation({ type: 'object', required }, {}, target)(t, p);
     } else {
       Validation({
         ...(options as any),

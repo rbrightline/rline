@@ -32,11 +32,11 @@ export function Validation(
         break;
 
       case 'object':
-        ObjectValidation({ ...options, target })(t, p);
+        ObjectValidation({ ...options, target }, voptions)(t, p);
         break;
 
       case 'array': {
-        ArrayValidation(options)(t, p);
+        ArrayValidation(options, target)(t, p);
         break;
       }
     }
