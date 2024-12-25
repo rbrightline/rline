@@ -1,4 +1,4 @@
-import { Body, Param, ParseIntPipe, Query } from '@nestjs/common';
+import { Body, Param, ParseIntPipe, Query, Type } from '@nestjs/common';
 import {
   AddRelationDto,
   EntityService,
@@ -12,13 +12,25 @@ import {
 } from '@rline/orm';
 import { ResourceControllerBuilder } from './ResourceControllerBuilder';
 import { FindManyOptions } from 'typeorm';
+import { ResourceControllerOptions } from './ResourceControllerOptions';
 
-export function ResourceController(
-  entity: any,
-  createDto: any = entity,
-  updateDto: any = entity,
-  queryDto: any = entity
-) {
+export function CreateResourceController(
+  options: ResourceControllerOptions
+): Type[] {
+  const {
+    entity,
+    createDto,
+    updateDto,
+    queryDto,
+    addRelation,
+    setRelation,
+    increment,
+    read,
+    write,
+  } = options;
+
+  const constrollers: Type[] = [];
+
   const Rest = new ResourceControllerBuilder(
     entity,
     createDto,
@@ -27,16 +39,15 @@ export function ResourceController(
   );
 
   @Rest.Controller()
-  class __ResourceController {
+  class __BaseController {
     constructor(
-      @InjectEntityService(entity) public readonly service: EntityService<any>
+      @InjectEntityService(entity)
+      protected readonly service: EntityService<any>
     ) {}
+  }
 
-    @Rest.Save()
-    Save(@Body() entity: any) {
-      return this.service.save(entity);
-    }
-
+  @Rest.Controller()
+  class __Read extends __BaseController {
     @Rest.Find()
     Find(@Query() query: QueryDto) {
       console.table(query);
@@ -50,6 +61,18 @@ export function ResourceController(
     ) {
       return await this.service.findOneById(id, query as any);
     }
+    @Rest.Count()
+    Count(@Query() query: QueryDto) {
+      return this.service.count(query as any);
+    }
+  }
+
+  @Rest.Controller()
+  class __Write extends __BaseController {
+    @Rest.Save()
+    Save(@Body() entity: any) {
+      return this.service.save(entity);
+    }
 
     @Rest.Update()
     Update(@Param('id', ParseIntPipe) id: number, @Body() entity: any) {
@@ -57,10 +80,13 @@ export function ResourceController(
     }
 
     @Rest.Delete()
-    Delete(@Param('id', ParseIntPipe) id: number) {
-      return this.service.delete(id);
+    async Delete(@Param('id', ParseIntPipe) id: number) {
+      return await this.service.delete(id);
     }
+  }
 
+  @Rest.Controller()
+  class __AddRelation extends __BaseController {
     @Rest.AddRelation()
     AddRelation(@Param() relation: AddRelationDto) {
       return this.service.addRelation(relation);
@@ -70,7 +96,10 @@ export function ResourceController(
     RemoveRelation(@Param() relation: RemoveRelationDto) {
       return this.service.removeRelation(relation);
     }
+  }
 
+  @Rest.Controller()
+  class __SetRelation extends __BaseController {
     @Rest.SetRelation()
     SetRelation(@Param() relation: SetRelationDto) {
       return this.service.setRelation(relation);
@@ -80,12 +109,9 @@ export function ResourceController(
     UnsetRelation(@Param() relation: UnsetRelationDto) {
       return this.service.unsetRelation(relation);
     }
-
-    @Rest.Count()
-    Count(@Query() query: QueryDto) {
-      return this.service.count(query as any);
-    }
-
+  }
+  @Rest.Controller()
+  class __Increment extends __BaseController {
     @Rest.Increment()
     Increment(
       @Param('id', ParseIntPipe) id: number,
@@ -103,5 +129,11 @@ export function ResourceController(
     }
   }
 
-  return __ResourceController;
+  if (increment) constrollers.push(__Increment);
+  if (addRelation) constrollers.push(__AddRelation);
+  if (setRelation) constrollers.push(__SetRelation);
+  if (read) constrollers.push(__Read);
+  if (write) constrollers.push(__Write);
+
+  return constrollers;
 }

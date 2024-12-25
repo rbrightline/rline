@@ -46,7 +46,7 @@ export class EntityService<T extends {}> {
       return found;
     }
     throw new NotFoundException({
-      message: `There is no entity matching with the query ${query}!`,
+      message: `There is no entity matching with the query ${id}!`,
     });
   }
 
@@ -87,7 +87,7 @@ export class EntityService<T extends {}> {
   }
 
   async delete(id: number) {
-    const oldData = await this.findOneById(id, {});
+    const oldData = await this.findOneById(id, { select: ['id', 'deletedAt'] });
     const result = await this.repo.delete(id);
 
     return {

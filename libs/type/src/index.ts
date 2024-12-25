@@ -12,6 +12,7 @@ export * from './lib/model/ActiveModel';
 export * from './lib/model/BaseModel';
 export * from './lib/model/DeleteResult';
 export * from './lib/model/IDModel';
+export * from './lib/model/OperationModel';
 export * from './lib/model/QueryModel';
 export * from './lib/model/TimestampModel';
 export * from './lib/model/UpdateResult';

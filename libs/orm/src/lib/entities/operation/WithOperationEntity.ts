@@ -2,9 +2,9 @@ import { JoinTable, OneToMany } from 'typeorm';
 import { arr } from '@rline/type';
 import { Operation } from './Operation';
 import { Property } from '@rline/property';
-import { ActiveEntity } from './ActiveEntity';
+import { ActiveEntity } from '../../base/ActiveEntity';
 
-export class OperationEntity<T> extends ActiveEntity<T> {
+export class WithOperationEntity<T> extends ActiveEntity<T> {
   @Property({ type: 'array', items: { type: 'object' } }, () => Operation)
   @OneToMany(() => Operation, (t) => t.id, {
     cascade: false,

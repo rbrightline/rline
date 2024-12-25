@@ -107,7 +107,7 @@ export class ResourceControllerBuilder {
       OperationUpdate(this.resourceName)(t, p, d);
       ApiOkResponse({
         type: CreateUpdateResultDto(this.entity),
-        example: [new this.entity(), new this.entity()],
+        example: new (CreateUpdateResultDto(this.entity))(),
       })(t, p, d);
     };
   }

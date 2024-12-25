@@ -1,21 +1,23 @@
-import { DynamicModule, Module, Type } from '@nestjs/common';
+import { DynamicModule, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getEntityServiceToken, provideEntityService } from '@rline/orm';
-import { ResourceController } from './ResourceController';
+import { CreateResourceController } from './CreateResourceController';
 import { ConfigModule } from '@nestjs/config';
+import { ResourceModuleOptions } from './ResourceModuleOptions';
 
 @Module({})
 export class ResourceModule {
-  static register(entities: Type[]): DynamicModule {
-    const exports = entities.map((e) => getEntityServiceToken(e));
-    const providers = entities.map((e) => provideEntityService(e));
-    const controllers = entities.map((e) => ResourceController(e));
+  static register(options: ResourceModuleOptions): DynamicModule {
+    const exports = [getEntityServiceToken(options.entity)];
+    const services = [provideEntityService(options.entity)];
+
+    const controllers = CreateResourceController(options);
 
     return {
       module: ResourceModule,
-      imports: [ConfigModule, TypeOrmModule.forFeature(entities)],
+      imports: [ConfigModule, TypeOrmModule.forFeature([options.entity])],
       controllers: [...controllers],
-      providers: [...providers],
+      providers: [...services],
       exports: [...exports, TypeOrmModule],
     };
   }
