@@ -28,6 +28,7 @@ export function datasourceOptionsFactory(
     subscribers: subscribers,
     entitySkipConstructor: true,
     synchronize: true,
+    dropSchema: true,
     poolSize: 100,
   };
 }

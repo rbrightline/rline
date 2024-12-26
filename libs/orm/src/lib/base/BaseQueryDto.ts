@@ -1,9 +1,13 @@
-import { BaseModel, num, str } from '@rline/type';
+import { BaseModel, ModelQuery, value } from '@rline/type';
 import { QueryProperty } from '@rline/property';
 import { ActiveQueryDto } from './ActiveQueryDto';
+import { FindOperator } from 'typeorm';
 
-export class BaseQueryDto<T> extends ActiveQueryDto implements BaseModel {
-  @QueryProperty() info = str();
-  @QueryProperty() createdBy = num();
-  @QueryProperty() updatedBy = num();
+export class BaseQueryDto<T>
+  extends ActiveQueryDto
+  implements ModelQuery<BaseModel, FindOperator<any>>
+{
+  @QueryProperty() info = value<FindOperator<string>>();
+  @QueryProperty() createdBy = value<FindOperator<number>>();
+  @QueryProperty() updatedBy = value<FindOperator<number>>();
 }

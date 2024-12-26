@@ -1,7 +1,9 @@
-import { Data } from '@rline/property';
-import { CreateOperationModel, obj, OperationModelData } from '@rline/type';
+import { Data, Property } from '@rline/property';
+import { CreateOperationModel, obj } from '@rline/type';
+import { CreateOperationModelDataDto } from './CreateOperationModelDataDto';
 
 @Data()
 export class CreateOperationDto implements CreateOperationModel {
-  data = obj<OperationModelData>(null);
+  @Property({ type: 'object' }, () => CreateOperationModelDataDto)
+  data = obj<CreateOperationModelDataDto>(null);
 }

@@ -25,6 +25,14 @@ export class EntityService<T extends {}> {
   ): Promise<T[]> {
     if (typeof query.select == 'string') query.select = [query.select, 'id'];
 
+    query = Object.fromEntries(
+      Object.entries(query).filter(([key, value]) => value != undefined)
+    );
+
+    where = Object.fromEntries(
+      Object.entries(where).filter(([key, value]) => value != undefined)
+    );
+
     const result = await this.repo.find({ ...query, where } as any);
     return result;
   }

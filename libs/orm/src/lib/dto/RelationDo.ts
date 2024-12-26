@@ -4,16 +4,16 @@ import { Exclude } from 'class-transformer';
 
 @Exclude()
 export class UnsetRelationDto {
-  @Property({ type: 'integer' })
+  @Property({ type: 'integer', required: true })
   id = num();
 
-  @Property({ type: 'string' })
+  @Property({ type: 'string', required: true })
   rn = str();
 }
 
 @Exclude()
 export class SetRelationDto extends UnsetRelationDto {
-  @Property({ type: 'integer' })
+  @Property({ type: 'integer', required: true })
   rid = num();
 }
 

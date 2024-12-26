@@ -1,5 +1,5 @@
 import { Property } from '@rline/property';
-import { arr, bool, num, str } from '@rline/type';
+import { arr, bool, date, num, str } from '@rline/type';
 import { Column as __Column, ColumnOptions } from 'typeorm';
 
 export function Column(options: ColumnOptions): PropertyDecorator {
@@ -33,7 +33,7 @@ export function Column(options: ColumnOptions): PropertyDecorator {
           t,
           p
         );
-        __Column({ ...co, type: 'number', default: num(options.default) })(
+        __Column({ ...co, type: 'numeric', default: num(options.default) })(
           t,
           p
         );
@@ -77,7 +77,15 @@ export function Column(options: ColumnOptions): PropertyDecorator {
           default: arr(options.default),
           items: { type: 'string' },
         })(t, p);
-        __Column({ ...co, type: 'array', default: arr(options.default) })(t, p);
+        __Column({ ...co, type: 'simple-array', default: arr(options.default) })(t, p);
+        break;
+
+      case 'date':
+        Property({ ...po, type: 'string', format: 'datetime' })(t, p);
+        __Column({ ...co, type: 'timestamp', default: date(options.default) })(
+          t,
+          p
+        );
         break;
 
       default:

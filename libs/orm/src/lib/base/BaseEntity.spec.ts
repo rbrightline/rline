@@ -1,5 +1,5 @@
 import { str } from '@rline/type';
-import { DataSource, Equal, ILike, MoreThan, Repository } from 'typeorm';
+import { DataSource, MoreThan, Repository } from 'typeorm';
 import { Entity } from '../orm/Entity';
 import { Column } from '../orm/Column';
 import { IDEntity } from './IDEntity';

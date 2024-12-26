@@ -1,9 +1,14 @@
-import { date } from '@rline/type';
+import { ModelQuery, TimestampModel, value } from '@rline/type';
 import { IDQueryDto } from './IDQueryDto';
-import { QueryProperty } from '@rline/property';
+import { Data, QueryProperty } from '@rline/property';
+import { FindOperator } from 'typeorm';
 
-export class TimestampQueryDto extends IDQueryDto {
-  @QueryProperty() createdAt = date();
-  @QueryProperty() updatedAt = date();
-  @QueryProperty() deletedAt = date();
+@Data()
+export class TimestampQueryDto
+  extends IDQueryDto
+  implements ModelQuery<TimestampModel, FindOperator<any>>
+{
+  @QueryProperty() createdAt = value<FindOperator<Date>>();
+  @QueryProperty() updatedAt = value<FindOperator<Date>>();
+  @QueryProperty() deletedAt = value<FindOperator<Date>>();
 }

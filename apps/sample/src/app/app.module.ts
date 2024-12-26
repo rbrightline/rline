@@ -2,10 +2,15 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ResourceModule } from '@rline/rest';
 import {
+  Category,
   CreateOperationDto,
+  CreateSampleDto,
   datasourceOptionsFactory,
   Operation,
+  QuerySampleDto,
+  Sample,
   UpdateOperationDto,
+  UpdateSampleDto,
 } from '@rline/orm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import 'class-transformer';
@@ -18,7 +23,11 @@ import 'class-validator';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory(config: ConfigService) {
-        return datasourceOptionsFactory(config, [Operation], []);
+        return datasourceOptionsFactory(
+          config,
+          [Operation, Sample, Category],
+          []
+        );
       },
     }),
     ResourceModule.register({
@@ -30,6 +39,17 @@ import 'class-validator';
       write: true,
       addRelation: false,
       setRelation: false,
+    }),
+    ResourceModule.register({
+      entity: Sample,
+      createDto: CreateSampleDto,
+      updateDto: UpdateSampleDto,
+      queryDto: QuerySampleDto,
+      read: true,
+      write: true,
+      addRelation: true,
+      setRelation: true,
+      increment: true,
     }),
   ],
   providers: [],
