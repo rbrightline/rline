@@ -36,7 +36,7 @@ describe('Property', () => {
 
   describe('null/undefined', () => {
     it.each`
-      options                                         | value                   | errors
+      options                                         | data                    | errors
       ${{ type: 'string' }}                           | ${{}}                   | ${undefined}
       ${{ type: 'string' }}                           | ${{ value: undefined }} | ${undefined}
       ${{ type: 'string' }}                           | ${{ value: null }}      | ${undefined}
@@ -56,9 +56,9 @@ describe('Property', () => {
       ${{ type: 'array', items: { type: 'string' } }} | ${{ value: undefined }} | ${undefined}
       ${{ type: 'array', items: { type: 'string' } }} | ${{ value: null }}      | ${undefined}
     `(
-      'should validate $value with $options and throw $errors',
-      ({ options, value, errors }) => {
-        testInstance(options, value, errors);
+      'should validate $data with $options and throw $errors',
+      ({ options, data, errors }) => {
+        testInstance(options, data, errors);
       }
     );
   });
@@ -66,7 +66,7 @@ describe('Property', () => {
   // [ ] required array validation does not work!
   describe('required', () => {
     it.each`
-      options                                                         | value              | errors
+      options                                                         | data               | errors
       ${{ type: 'string', required: true }}                           | ${{ value: null }} | ${['isNotEmpty', 'isString']}
       ${{ type: 'number', required: true }}                           | ${{ value: null }} | ${['isNotEmpty', 'isNumber']}
       ${{ type: 'integer', required: true }}                          | ${{ value: null }} | ${['isNotEmpty', 'isInt']}
@@ -74,16 +74,16 @@ describe('Property', () => {
       ${{ type: 'object', required: true }}                           | ${{ value: null }} | ${['isNotEmpty', 'isObject', 'nestedValidation']}
       ${{ type: 'array', required: true, items: { type: 'string' } }} | ${{ value: null }} | ${undefined}
     `(
-      'should validate $value with $options and throw $errors',
-      ({ options, value, errors }) => {
-        testInstance(options, value, errors);
+      'should validate $data with $options and throw $errors',
+      ({ options, data, errors }) => {
+        testInstance(options, data, errors);
       }
     );
   });
 
   describe('type', () => {
     it.each`
-      options                                         | value              | errors
+      options                                         | data               | errors
       ${{ type: 'string' }}                           | ${{ value: '1' }}  | ${undefined}
       ${{ type: 'string' }}                           | ${{ value: 1 }}    | ${['isString']}
       ${{ type: 'string' }}                           | ${{ value: true }} | ${['isString']}
@@ -112,20 +112,20 @@ describe('Property', () => {
       ${{ type: 'object' }}                           | ${{ value: [] }}   | ${['isObject']}
       ${{ type: 'array', items: { type: 'string' } }} | ${{ value: [] }}   | ${undefined}
       ${{ type: 'array', items: { type: 'string' } }} | ${{ value: {} }}   | ${['isArray', 'isString']}
-      ${{ type: 'array', items: { type: 'string' } }} | ${{ value: 1 }}    | ${['isArray', 'isString']}
-      ${{ type: 'array', items: { type: 'string' } }} | ${{ value: true }} | ${['isArray', 'isString']}
-      ${{ type: 'array', items: { type: 'string' } }} | ${{ value: '1' }}  | ${['isArray']}
+      ${{ type: 'array', items: { type: 'string' } }} | ${{ value: 1 }}    | ${['isArray', 'isString', 'nestedValidation']}
+      ${{ type: 'array', items: { type: 'string' } }} | ${{ value: true }} | ${['isArray', 'isString', 'nestedValidation']}
+      ${{ type: 'array', items: { type: 'string' } }} | ${{ value: '1' }}  | ${['isArray', 'nestedValidation']}
     `(
-      'should validate $value with $options and throw $errors',
-      ({ options, value, errors }) => {
-        testInstance(options, value, errors);
+      'should validate $data with $options and throw $errors',
+      ({ options, data, errors }) => {
+        testInstance(options, data, errors);
       }
     );
   });
 
   describe('string', () => {
     it.each`
-      options                                           | value                | errors
+      options                                           | data                 | errors
       ${{ type: 'string' }}                             | ${{}}                | ${undefined}
       ${{ type: 'string' }}                             | ${{ value: '' }}     | ${undefined}
       ${{ type: 'string', minLength: 1, maxLength: 2 }} | ${{ value: '1' }}    | ${undefined}
@@ -137,16 +137,16 @@ describe('Property', () => {
       ${{ type: 'string', format: 'uuid' }}             | ${{ value: 'some' }} | ${['isUuid']}
       ${{ type: 'string', format: 'password' }}         | ${{ value: 'some' }} | ${['isStrongPassword']}
     `(
-      'should validate $value with $options and throw $errors',
-      ({ options, value, errors }) => {
-        testInstance(options, value, errors);
+      'should validate $data with $options and throw $errors',
+      ({ options, data, errors }) => {
+        testInstance(options, data, errors);
       }
     );
   });
 
   describe('number', () => {
     it.each`
-      options                                        | value             | errors
+      options                                        | data              | errors
       ${{ type: 'number' }}                          | ${{}}             | ${undefined}
       ${{ type: 'number' }}                          | ${{ value: '' }}  | ${['isNumber']}
       ${{ type: 'number', minimum: -1, maximum: 2 }} | ${{ value: 2 }}   | ${undefined}
@@ -157,22 +157,22 @@ describe('Property', () => {
       ${{ type: 'integer' }}                         | ${{ value: '' }}  | ${['isInt']}
       ${{ type: 'integer' }}                         | ${{ value: 3.3 }} | ${['isInt']}
     `(
-      'should validate $value with $options and throw $errors',
-      ({ options, value, errors }) => {
-        testInstance(options, value, errors);
+      'should validate $data with $options and throw $errors',
+      ({ options, data, errors }) => {
+        testInstance(options, data, errors);
       }
     );
   });
   describe('boolean', () => {
     it.each`
-      options                | value               | errors
+      options                | data                | errors
       ${{ type: 'boolean' }} | ${{}}               | ${undefined}
       ${{ type: 'boolean' }} | ${{ value: true }}  | ${undefined}
       ${{ type: 'boolean' }} | ${{ value: false }} | ${undefined}
     `(
-      'should validate $value with $options and throw $errors',
-      ({ options, value, errors }) => {
-        testInstance(options, value, errors);
+      'should validate $data with $options and throw $errors',
+      ({ options, data, errors }) => {
+        testInstance(options, data, errors);
       }
     );
   });
