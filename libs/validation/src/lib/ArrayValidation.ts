@@ -8,9 +8,10 @@ import { ArrayValidationOptions } from './ArrayValidationOptions';
 import { Validation } from './Validation';
 import { Type } from 'class-transformer';
 import { DefaultValueTransform } from './DefaultValueTransform';
+import { CommonValidationOptions } from './CommonValidationOptions';
 
 export function ArrayValidation(
-  options: Partial<ArrayValidationOptions>,
+  options: Partial<ArrayValidationOptions & CommonValidationOptions>,
   target?: () => any
 ): PropertyDecorator {
   return (t, p) => {

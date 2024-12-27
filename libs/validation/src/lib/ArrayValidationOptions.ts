@@ -7,4 +7,5 @@ export type ArrayValidationOptions =
       maxSize: number;
       minSize: number;
       items: ValidationOptions;
+      format: string;
     } & DefaultValueOption<Array<any>>;
