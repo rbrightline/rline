@@ -3,12 +3,15 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ResourceModule } from '@rline/rest';
 import {
   Category,
+  CreateCategoryDto,
   CreateOperationDto,
   CreateSampleDto,
   datasourceOptionsFactory,
   Operation,
+  QueryCategoryDto,
   QuerySampleDto,
   Sample,
+  UpdateCategoryDto,
   UpdateOperationDto,
   UpdateSampleDto,
 } from '@rline/orm';
@@ -50,6 +53,14 @@ import 'class-validator';
       addRelation: true,
       setRelation: true,
       increment: true,
+    }),
+    ResourceModule.register({
+      entity: Category,
+      createDto: CreateCategoryDto,
+      updateDto: UpdateCategoryDto,
+      queryDto: QueryCategoryDto,
+      read: true,
+      write: true,
     }),
   ],
   providers: [],

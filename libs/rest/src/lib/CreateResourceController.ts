@@ -81,7 +81,7 @@ export function CreateResourceController(
 
     @Rest.Delete()
     async Delete(@Param('id', ParseIntPipe) id: number) {
-      return await this.service.delete(id);
+      return await this.service.softDelete(id);
     }
   }
 

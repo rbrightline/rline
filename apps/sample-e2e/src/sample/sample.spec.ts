@@ -1,11 +1,20 @@
 import axios from 'axios';
-import { CreateSampleDto, Sample, UpdateSampleDto } from '@rline/orm';
-import { UpdateResult } from '@rline/type';
+import {
+  Category,
+  CreateCategoryDto,
+  CreateSampleDto,
+  Sample,
+  UpdateSampleDto,
+} from '@rline/orm';
+import { DeleteResult, UpdateResult } from '@rline/type';
 
 describe('Sample Module', () => {
   let instance = new CreateSampleDto();
+  let savedCategory: Category;
   let saved: Sample;
   let dateValue = new Date();
+
+  let categoryInstance = new CreateCategoryDto();
 
   beforeAll(async () => {
     instance.sampleString = 'Sample string';
@@ -19,8 +28,15 @@ describe('Sample Module', () => {
     await axios.post('api/sample', instance);
     await axios.post('api/sample', instance);
     saved = response.data;
+
+    categoryInstance.name = 'category' + Math.floor(Math.random() * 500) + 1;
+    const catResponse = await axios.post('api/category', categoryInstance);
+    savedCategory = catResponse.data;
   });
 
+  it('should run before test', () => {
+    expect(savedCategory).toBeTruthy();
+  });
   it('should create', () => {
     expect(saved.sampleString).toEqual('Sample string');
     expect(saved.sampleArray).toEqual(['first', 'second']);
@@ -191,5 +207,13 @@ describe('Sample Module', () => {
 
     expect(oldData).toEqual({ sampleObject: instance.sampleObject });
     expect(newData).toEqual({ sampleObject: updated.sampleObject });
+  });
+
+  it('should delete', async () => {
+    // const foundOne = await axios.get<Sample>(`api/sample/${saved.id}`);
+    const { data } = await axios.delete<DeleteResult>(`api/sample/${saved.id}`);
+
+    console.log(data);
+    expect(data.data![0]).toBeTruthy();
   });
 });

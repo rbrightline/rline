@@ -7,7 +7,7 @@ import {
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { DecrementDto, IncrementDto } from '../dto/IncrementDto';
 import { SetRelationDto, UnsetRelationDto } from '../dto/RelationDo';
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, Type } from '@nestjs/common';
 import { DeleteResult, UpdateResult } from '@rline/type';
 import { MessageDto } from '../dto/MessageDto';
 import { CountDto } from '../dto/CountDto';
@@ -15,7 +15,11 @@ import { CountDto } from '../dto/CountDto';
 export class EntityService<T extends {}> {
   constructor(protected readonly repo: Repository<T>) {}
 
-  uniques() {
+  protected keys() {
+    return Object.keys(new (this.repo.target as Type)());
+  }
+
+  protected uniques() {
     return this.repo.metadata.uniques.map((e) => e.givenName);
   }
 
@@ -23,36 +27,17 @@ export class EntityService<T extends {}> {
     query: FindManyOptions<any>,
     where: FindOptionsWhere<any>
   ): Promise<T[]> {
-    if (typeof query.select == 'string') query.select = [query.select, 'id'];
+    console.log('query', query);
+    console.log('where', where);
 
-    query = Object.fromEntries(
-      Object.entries(query).filter(([key, value]) => value != undefined)
-    );
-
-    where = Object.fromEntries(
-      Object.entries(where).filter(([key, value]) => value != undefined)
-    );
-
-    const result = await this.repo.find({ ...query, where } as any);
-    return result;
+    return await this.repo.find({ ...query, where } as any);
   }
 
   async findOneById(id: number, query: FindOneOptions<any>) {
-    let found = await this.repo.findOneBy({ id } as any);
+    const founds = await this.find(query, { id });
 
-    if (found) {
-      if (query.select) {
-        if (typeof query.select == 'string') {
-          query.select = [query.select, 'id'];
-        }
-        return Object.fromEntries(
-          Object.entries(found).filter(([key, value]) =>
-            (query.select as any).includes(key)
-          )
-        );
-      }
-      return found;
-    }
+    if (founds && founds.length > 0) return founds[0];
+
     throw new NotFoundException({
       message: `There is no entity matching with the query ${id}!`,
     });

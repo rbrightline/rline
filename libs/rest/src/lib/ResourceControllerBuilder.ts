@@ -52,12 +52,12 @@ export class ResourceControllerBuilder {
     return `${this._one()}/:id`;
   }
 
-  private _relation(t: Type) {
-    return `${this._one()}/:rn/:rid`;
+  private _relation() {
+    return `${this._id()}/:rn/:rid`;
   }
 
-  private _unsetRelation(t: Type) {
-    return `${this._one()}/:rn`;
+  private _unsetRelation() {
+    return `${this._id()}/:rn`;
   }
 
   Controller(): ClassDecorator {
@@ -131,7 +131,7 @@ export class ResourceControllerBuilder {
         p,
         d
       );
-      Put(this._relation(this.entity))(t, p, d);
+      Put(this._relation())(t, p, d);
       OperationUpdate(this.resourceName)(t, p, d);
       ApiOkResponse({ type: this.entity })(t, p, d);
     };
@@ -144,7 +144,7 @@ export class ResourceControllerBuilder {
         p,
         d
       );
-      Delete(this._relation(this.entity))(t, p, d);
+      Delete(this._relation())(t, p, d);
       OperationUpdate(this.resourceName)(t, p, d);
       ApiOkResponse({ type: this.entity })(t, p, d);
     };
@@ -157,7 +157,7 @@ export class ResourceControllerBuilder {
         p,
         d
       );
-      Post(this._relation(this.entity))(t, p, d);
+      Post(this._relation())(t, p, d);
       OperationUpdate(this.resourceName)(t, p, d);
       ApiOkResponse({ type: this.entity })(t, p, d);
     };
@@ -170,7 +170,7 @@ export class ResourceControllerBuilder {
         p,
         d
       );
-      Delete(this._unsetRelation(this.entity))(t, p, d);
+      Delete(this._unsetRelation())(t, p, d);
       OperationUpdate(this.resourceName)(t, p, d);
       ApiOkResponse({ type: this.entity })(t, p, d);
     };
