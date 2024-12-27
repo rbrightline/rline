@@ -5,4 +5,5 @@ export type CommonValidationOptions = {
   type: PropertyType;
   required: boolean;
   format: PropertyFormat;
+  default: any;
 };

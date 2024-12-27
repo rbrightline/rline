@@ -1,5 +1,6 @@
-import { arr, bool, num, obj, QueryModel } from '@rline/type';
+import { arr, bool, Nullable, num, obj, QueryModel } from '@rline/type';
 import { Property, Data, OrderProperty } from '@rline/property';
+import { Type } from '@nestjs/common';
 
 @Data()
 export class QueryOneDto
@@ -31,4 +32,14 @@ export class QueryDto implements Partial<QueryModel<any>> {
 
   @Property({ type: 'boolean', format: 'string' }) loadEagerRelations = bool();
   @Property({ type: 'boolean', format: 'string' }) loadRelationIds = bool();
+}
+
+export function CreateQueryOneDto(): Type {
+  @Data()
+  class __QueryOneDto extends QueryOneDto {
+    @Property({ type: 'array' })
+    override select = arr<string>();
+  }
+
+  return __QueryOneDto;
 }

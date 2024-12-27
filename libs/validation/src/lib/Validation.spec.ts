@@ -37,6 +37,7 @@ describe('Validation', () => {
       }
     } catch (error) {
       console.log(instance, options, rawErrors);
+      console.log(rawErrors[0].children);
       throw error;
     }
   }
@@ -70,7 +71,7 @@ describe('Validation', () => {
     );
   });
 
-  describe('type', () => {
+  describe('PropertyType Validation', () => {
     it.each`
       options                                         | value              | errors
       ${{ type: 'string' }}                           | ${{ value: '1' }}  | ${undefined}
@@ -115,7 +116,7 @@ describe('Validation', () => {
   /**
    * - [ ] check the required array property
    */
-  describe('required', () => {
+  describe('PropertyRequired Validation', () => {
     it.each`
       options                                                         | value                   | errors
       ${{ type: 'string', required: true }}                           | ${{ value: null }}      | ${['isNotEmpty', 'isString']}

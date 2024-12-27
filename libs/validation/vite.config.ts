@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-
+import 'reflect-metadata';
 export default defineConfig({
   root: __dirname,
   cacheDir: '../../node_modules/.vite/libs/validation',

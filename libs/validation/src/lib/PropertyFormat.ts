@@ -1,4 +1,7 @@
 export type PropertyFormat =
+  | 'object'
+  | 'number'
+  | 'string'
   | 'date'
   | 'date-time'
   | 'email'

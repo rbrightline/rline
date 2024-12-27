@@ -6,12 +6,15 @@ import {
 } from 'class-validator';
 import { CommonValidationOptions } from './CommonValidationOptions';
 import { FormatValidation } from './FormatValidation';
+import { DefaultValueTransform } from './DefaultValueTransform';
 
 export function CommonValidation(
   options: Partial<CommonValidationOptions>,
   voptions?: ValidationOptions
 ): PropertyDecorator {
   return (t, p) => {
+    DefaultValueTransform(options.default)(t, p);
+
     if (options.required) {
       IsNotEmpty(voptions)(t, p);
     } else {

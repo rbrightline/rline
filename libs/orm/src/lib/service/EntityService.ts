@@ -16,14 +16,6 @@ import { CountDto } from '../dto/CountDto';
 export class EntityService<T extends {}> {
   constructor(protected readonly repo: Repository<T>) {}
 
-  protected keys() {
-    return Object.keys(new (this.repo.target as Type)());
-  }
-
-  protected uniques() {
-    return this.repo.metadata.uniques.map((e) => e.givenName);
-  }
-
   async find(
     query?: FindManyOptions<any>,
     where?: FindOptionsWhere<any>

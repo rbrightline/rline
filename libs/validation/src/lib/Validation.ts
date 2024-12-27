@@ -22,13 +22,13 @@ export function Validation(
         StringValidation(options, voptions)(t, p);
         break;
 
-      case 'boolean':
-        BooleanValidation(options, voptions)(t, p);
-        break;
-
       case 'integer':
       case 'number':
         NumberValidation(options, voptions)(t, p);
+        break;
+
+      case 'boolean':
+        BooleanValidation(options, voptions)(t, p);
         break;
 
       case 'object':

@@ -7,6 +7,7 @@ import {
 import { ArrayValidationOptions } from './ArrayValidationOptions';
 import { Validation } from './Validation';
 import { Type } from 'class-transformer';
+import { DefaultValueTransform } from './DefaultValueTransform';
 
 export function ArrayValidation(
   options: Partial<ArrayValidationOptions>,
@@ -18,9 +19,17 @@ export function ArrayValidation(
 
     IsArray()(t, p);
 
-    if (target) {
+    if (options.items.type === 'object') {
+      if (!target)
+        throw new Error(
+          `target property is required for object array options!`
+        );
       ValidateNested({ each: true })(t, p);
       Type(target)(t, p);
+    }
+
+    if (options.default != undefined) {
+      DefaultValueTransform(options.default)(t, p);
     }
 
     Validation(options.items, { each: true }, target)(t, p);
