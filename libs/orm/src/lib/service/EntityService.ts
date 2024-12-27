@@ -8,7 +8,7 @@ import {
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { DecrementDto, IncrementDto } from '../dto/IncrementDto';
 import { SetRelationDto, UnsetRelationDto } from '../dto/RelationDo';
-import { NotFoundException, Type } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
 import { DeleteResult, UpdateResult } from '@rline/type';
 import { MessageDto } from '../dto/MessageDto';
 import { CountDto } from '../dto/CountDto';

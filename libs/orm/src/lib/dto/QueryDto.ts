@@ -1,4 +1,4 @@
-import { arr, bool, Nullable, num, obj, QueryModel } from '@rline/type';
+import { arr, bool, num, obj, QueryModel } from '@rline/type';
 import { Property, Data, OrderProperty } from '@rline/property';
 import { Type } from '@nestjs/common';
 
