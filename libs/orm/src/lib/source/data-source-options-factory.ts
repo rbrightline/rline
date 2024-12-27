@@ -2,6 +2,7 @@ import { Type } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigKey } from '@rline/type';
+import { DataSourceOptions } from 'typeorm';
 
 /**
  * Configure the database
@@ -24,6 +25,29 @@ export function datasourceOptionsFactory(
     database,
     username,
     password,
+    entities: entities,
+    subscribers: subscribers,
+    entitySkipConstructor: true,
+    poolSize: 100,
+  };
+}
+
+/**
+ * Configure the database
+ * @param config
+ * @param entities
+ * @param subscribers
+ * @returns
+ */
+export function datasourceTestOptionsFactory(
+  entities: Type[],
+  subscribers: Type[]
+): DataSourceOptions {
+  return {
+    type: 'postgres',
+    database: 'testdb',
+    username: 'testuser',
+    password: 'password',
     entities: entities,
     subscribers: subscribers,
     entitySkipConstructor: true,

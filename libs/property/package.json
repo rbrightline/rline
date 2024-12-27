@@ -1,6 +1,6 @@
 {
   "name": "@rline/property",
-  "version": "4.5.5",
+  "version": "4.5.6",
   "author": {
     "name": "Robert Brightline",
     "email": "robert.brightline@gmail.com",
@@ -17,7 +17,7 @@
     "reflect-metadata": "^0.2.2"
   },
   "dependencies": {
-    "@rline/validation": "workspace:*",
+    "@rline/validation": "4.5.6",
     "@swc/helpers": "~0.5.11"
   },
   "type": "commonjs",

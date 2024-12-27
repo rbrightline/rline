@@ -1,4 +1,5 @@
 import {
+  Equal,
   FindManyOptions,
   FindOneOptions,
   FindOptionsWhere,
@@ -24,19 +25,24 @@ export class EntityService<T extends {}> {
   }
 
   async find(
-    query: FindManyOptions<any>,
-    where: FindOptionsWhere<any>
+    query?: FindManyOptions<any>,
+    where?: FindOptionsWhere<any>
   ): Promise<T[]> {
-    console.log('query', query);
-    console.log('where', where);
-
-    return await this.repo.find({ ...query, where } as any);
+    return await this.repo.find({
+      ...query,
+      where,
+      loadRelationIds: query?.loadRelationIds == true,
+      loadEagerRelations: query?.loadEagerRelations == true,
+    } as any);
   }
 
-  async findOneById(id: number, query: FindOneOptions<any>) {
-    const founds = await this.find(query, { id });
+  async findOneById(id: number, query?: FindOneOptions<any>) {
+    const found = await this.repo.findOne({
+      ...query,
+      where: { id: Equal(id) },
+    } as any);
 
-    if (founds && founds.length > 0) return founds[0];
+    if (found) return found;
 
     throw new NotFoundException({
       message: `There is no entity matching with the query ${id}!`,
