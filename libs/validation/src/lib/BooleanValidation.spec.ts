@@ -1,32 +1,33 @@
 import { plainToInstance } from 'class-transformer';
-import { BooleanValidation } from './BooleanValidation';
-import { BooleanValidationOptions as O } from './BooleanValidationOptions';
 import { validateTestInstance } from './__testHelper';
+import { Validation } from './Validation';
+import { ValidationOptions as O } from './ValidationOptions';
 
 describe('BooleanValidation', () => {
   it.each`
-    options                     | data                    | errors
-    ${{ type: 'boolean' } as O} | ${{}}                   | ${['isBoolean']}
-    ${{ type: 'boolean' } as O} | ${{ value: undefined }} | ${['isBoolean']}
-    ${{ type: 'boolean' } as O} | ${{ value: null }}      | ${['isBoolean']}
-    ${{ type: 'boolean' } as O} | ${{ value: '' }}        | ${['isBoolean']}
-    ${{ type: 'boolean' } as O} | ${{ value: 1 }}         | ${['isBoolean']}
-    ${{ type: 'boolean' } as O} | ${{ value: {} }}        | ${['isBoolean']}
-    ${{ type: 'boolean' } as O} | ${{ value: true }}      | ${undefined}
-    ${{ type: 'boolean' } as O} | ${{ value: false }}     | ${undefined}
+    options                      | data                    | errors
+    ${{} as O}                   | ${{ value: undefined }} | ${undefined}
+    ${{} as O}                   | ${{ value: null }}      | ${undefined}
+    ${{ required: true } as O}   | ${{ value: undefined }} | ${['isNotEmpty', 'isBoolean']}
+    ${{ required: true } as O}   | ${{ value: null }}      | ${['isNotEmpty', 'isBoolean']}
+    ${{} as O}                   | ${{ value: '' }}        | ${['isBoolean']}
+    ${{} as O}                   | ${{ value: 1 }}         | ${['isBoolean']}
+    ${{} as O}                   | ${{ value: {} }}        | ${['isBoolean']}
+    ${{} as O}                   | ${{ value: true }}      | ${undefined}
+    ${{} as O}                   | ${{ value: false }}     | ${undefined}
+    ${{ format: 'string' } as O} | ${{ value: 'false' }}   | ${undefined}
+    ${{ format: 'string' } as O} | ${{ value: 'true' }}    | ${undefined}
+    ${{ format: 'string' } as O} | ${{ value: 'some' }}    | ${['isBoolean']}
   `(
     'should validate $data with $options and throw $errors',
     ({ options, data, errors }) => {
       class Sample {
-        @BooleanValidation(options)
+        @Validation({ ...options, type: 'boolean' })
         value: any;
       }
 
       const instance = plainToInstance(Sample, data);
-      console.log('instance ', instance);
       const foundErrors = validateTestInstance(instance);
-
-      console.log('errrors ', foundErrors);
 
       if (errors) {
         for (const e of errors) {

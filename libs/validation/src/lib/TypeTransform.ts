@@ -6,7 +6,7 @@ export function NumberTransform(
 ): PropertyDecorator {
   return (t, p) => {
     if (options.format === 'string') {
-      Transform((value) => {
+      Transform(({ value }) => {
         if (typeof value === 'string') {
           if (options.type === 'integer') {
             return parseInt(value);
