@@ -1,4 +1,5 @@
 import {
+  DeepPartial,
   Equal,
   FindManyOptions,
   FindOneOptions,
@@ -17,8 +18,8 @@ export class EntityService<T extends {}> {
   constructor(protected readonly repo: Repository<T>) {}
 
   async find(
-    query?: FindManyOptions<any>,
-    where?: FindOptionsWhere<any>
+    query?: FindManyOptions<T>,
+    where?: FindOptionsWhere<T>
   ): Promise<T[]> {
     return await this.repo.find({
       ...query,
@@ -29,19 +30,17 @@ export class EntityService<T extends {}> {
   }
 
   async findOneById(id: number, query?: FindOneOptions<any>) {
-    const found = await this.repo.findOne({
+    const founds = await this.repo.find({
       ...query,
-      where: { id: Equal(id) },
-    } as any);
-
-    if (found) return found;
-
-    throw new NotFoundException({
-      message: `There is no entity matching with the query ${id}!`,
-    });
+      where: { id: Equal(id) } as any,
+    } as FindManyOptions<T>);
+    if (founds && founds.length > 0) {
+      return founds[0];
+    }
+    throw new NotFoundException(`There is not entity matching ${id}!`);
   }
 
-  async save(entity: T) {
+  async save(entity: DeepPartial<T>) {
     return await this.repo.save(entity);
   }
 
@@ -50,10 +49,11 @@ export class EntityService<T extends {}> {
     entity: QueryDeepPartialEntity<T>
   ): Promise<UpdateResult> {
     const keys = Object.keys(entity);
+    const selectOptions: FindManyOptions<any> = { select: keys };
 
-    const oldData = await this.findOneById(id, { select: keys });
+    const oldData = await this.findOneById(id, selectOptions);
     const result = await this.repo.update(id, entity);
-    const newData = await this.findOneById(id, { select: keys });
+    const newData = await this.findOneById(id, selectOptions);
 
     return {
       raw: result.raw,
@@ -63,12 +63,10 @@ export class EntityService<T extends {}> {
   }
 
   async softDelete(id: number): Promise<DeleteResult> {
-    const oldData = await this.findOneById(id, { select: ['id', 'deletedAt'] });
+    const selectOptions: FindManyOptions<any> = { select: ['id', 'deletedAt'] };
+    const oldData = await this.findOneById(id, selectOptions);
     const result = await this.repo.softDelete(id);
-    const newData = await this.findOneById(id, {
-      select: ['id', 'deletedAt'],
-      withDeleted: true,
-    });
+    const newData = await this.findOneById(id, selectOptions);
 
     return {
       raw: result.raw,
@@ -78,7 +76,11 @@ export class EntityService<T extends {}> {
   }
 
   async delete(id: number) {
-    const oldData = await this.findOneById(id, { select: ['id', 'deletedAt'] });
+    const oldData = await this.findOneById(id, {
+      select: ['id', 'deletedAt'],
+      withDeleted: true,
+    });
+
     const result = await this.repo.delete(id);
 
     return {

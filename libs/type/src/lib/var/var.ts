@@ -6,7 +6,9 @@ export function value<T>(defaultValue?: Nonable<T>): Nullable<T> {
   return defaultValue ?? null;
 }
 
-export function str(defaultValue?: Nonable<string>): Nullable<string> {
+export function str<T>(
+  defaultValue?: Nonable<T & string>
+): Nullable<T & string> {
   return typeof defaultValue == 'string' ? defaultValue : null;
 }
 

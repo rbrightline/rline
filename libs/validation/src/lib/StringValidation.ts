@@ -1,4 +1,5 @@
 import {
+  IsIn,
   IsString,
   MaxLength,
   MinLength,
@@ -13,6 +14,8 @@ export function StringValidation(
 ): PropertyDecorator {
   return (t, p) => {
     IsString(voptions)(t, p);
+
+    if (options.enum) IsIn(options.enum, voptions)(t, p);
 
     if (options.minLength != undefined)
       MinLength(options.minLength, voptions)(t, p);
