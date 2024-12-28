@@ -31,33 +31,66 @@ export class ResourceControllerBuilder {
     protected readonly entity: Type,
     protected readonly createDto: Type,
     protected readonly updateDto: Type,
-    protected readonly queryDto: Type
+    protected readonly whereDto: Type,
+    protected readonly aggregateDto: Type
   ) {
     this.resourceName = this.entity.name;
   }
 
+  /**
+   *
+   * @returns ''
+   */
   private rn(): { singular: string; plural: string } {
     return parseResourceName(this.resourceName);
   }
 
+  /**
+   *
+   * @returns ''
+   */
   private _one() {
     return this.rn().singular;
   }
 
+  /**
+   *
+   * @returns ''
+   */
   private _many() {
     return this.rn().plural;
   }
 
+  /**
+   *
+   * @returns ':id'
+   */
   private _id() {
     return `${this._one()}/:id`;
   }
 
+  /**
+   *
+   * @returns ':id/:rn/:rid
+   */
   private _relation() {
     return `${this._id()}/:rn/:rid`;
   }
 
+  /**
+   *
+   * @returns ':id/:rn'
+   */
   private _unsetRelation() {
     return `${this._id()}/:rn`;
+  }
+
+  private _findByRelation() {
+    return `${this._one()}/:rn/:key/:value`;
+  }
+
+  private _findByRelationId() {
+    return `${this._one()}/:rn/:rid`;
   }
 
   Controller(): ClassDecorator {
@@ -73,8 +106,9 @@ export class ResourceControllerBuilder {
     return (t, p, d) => {
       ApiOperation({ summary: `Find all ${this.resourceName}` })(t, p, d);
       Get(this._many())(t, p, d);
-      OperationRead(this.resourceName)(t, p, d);
-      ApiQuery({ type: this.queryDto })(t, p, d);
+      OperationRead()(t, p, d);
+      ApiQuery({ type: () => this.whereDto })(t, p, d);
+      ApiQuery({ type: () => this.aggregateDto })(t, p, d);
       ApiOkResponse({ type: this.entity, isArray: true })(t, p, d);
     };
   }
@@ -82,7 +116,7 @@ export class ResourceControllerBuilder {
   FindOneById(): MethodDecorator {
     return (t, p, d) => {
       ApiOperation({ summary: `Find ${this.resourceName} by id` })(t, p, d);
-      OperationRead(this.resourceName)(t, p, d);
+      OperationRead()(t, p, d);
       Get(this._id())(t, p, d);
       ApiOkResponse({ type: this.entity })(t, p, d);
     };
@@ -93,7 +127,7 @@ export class ResourceControllerBuilder {
       ApiOperation({ summary: `Save ${this.resourceName}` })(t, p, d);
       Post(this._one())(t, p, d);
       ApiBody({ type: this.createDto })(t, p, d);
-      OperationWrite(this.resourceName)(t, p, d);
+      OperationWrite()(t, p, d);
       ApiOkResponse({ type: this.entity })(t, p, d);
     };
   }
@@ -104,7 +138,7 @@ export class ResourceControllerBuilder {
       ApiOperation({ summary: `Update ${n} by id` })(t, p, d);
       Put(this._id())(t, p, d);
       ApiBody({ type: this.updateDto })(t, p, d);
-      OperationUpdate(this.resourceName)(t, p, d);
+      OperationUpdate()(t, p, d);
       ApiOkResponse({
         type: CreateUpdateResultDto(this.entity),
         example: new (CreateUpdateResultDto(this.entity))(),
@@ -116,7 +150,7 @@ export class ResourceControllerBuilder {
     return (t, p, d) => {
       ApiOperation({ summary: `Delete ${this.resourceName} by id` })(t, p, d);
       Delete(this._id())(t, p, d);
-      OperationDelete(this.resourceName)(t, p, d);
+      OperationDelete()(t, p, d);
       ApiOkResponse({
         type: CreateDeleteResultDto(this.entity),
         example: [new this.entity()],
@@ -132,7 +166,7 @@ export class ResourceControllerBuilder {
         d
       );
       Put(this._relation())(t, p, d);
-      OperationUpdate(this.resourceName)(t, p, d);
+      OperationUpdate()(t, p, d);
       ApiOkResponse({ type: this.entity })(t, p, d);
     };
   }
@@ -145,7 +179,7 @@ export class ResourceControllerBuilder {
         d
       );
       Delete(this._relation())(t, p, d);
-      OperationUpdate(this.resourceName)(t, p, d);
+      OperationUpdate()(t, p, d);
       ApiOkResponse({ type: this.entity })(t, p, d);
     };
   }
@@ -158,7 +192,7 @@ export class ResourceControllerBuilder {
         d
       );
       Post(this._relation())(t, p, d);
-      OperationUpdate(this.resourceName)(t, p, d);
+      OperationUpdate()(t, p, d);
       ApiOkResponse({ type: this.entity })(t, p, d);
     };
   }
@@ -171,7 +205,29 @@ export class ResourceControllerBuilder {
         d
       );
       Delete(this._unsetRelation())(t, p, d);
-      OperationUpdate(this.resourceName)(t, p, d);
+      OperationUpdate()(t, p, d);
+      ApiOkResponse({ type: this.entity })(t, p, d);
+    };
+  }
+
+  FindByRelation(): MethodDecorator {
+    return (t, p, d) => {
+      ApiOperation({
+        summary: `Find ${this.resourceName} by relation key and value`,
+      })(t, p, d);
+      Get(this._findByRelation())(t, p, d);
+      OperationRead()(t, p, d);
+      ApiOkResponse({ type: this.entity })(t, p, d);
+    };
+  }
+
+  FindByRelationId(): MethodDecorator {
+    return (t, p, d) => {
+      ApiOperation({
+        summary: `Find ${this.resourceName} by relation id`,
+      })(t, p, d);
+      Get(this._findByRelationId())(t, p, d);
+      OperationRead()(t, p, d);
       ApiOkResponse({ type: this.entity })(t, p, d);
     };
   }
@@ -181,8 +237,8 @@ export class ResourceControllerBuilder {
       const n = this.rn().singular;
       ApiOperation({ summary: `Count ${n}` })(t, p, d);
       Get(this._many() + '/count')(t, p, d);
-      ApiQuery({ type: this.queryDto })(t, p, d);
-      OperationRead(this.resourceName)(t, p, d);
+      ApiQuery({ type: this.whereDto })(t, p, d);
+      OperationRead()(t, p, d);
       ApiOkResponse({ type: CountDto })(t, p, d);
     };
   }
@@ -193,17 +249,18 @@ export class ResourceControllerBuilder {
       ApiOperation({ summary: `Increment ${n}` })(t, p, d);
       Put(this._many() + '/:id/increment')(t, p, d);
       ApiBody({ type: IncrementDto })(t, p, d);
-      OperationUpdate(this.resourceName)(t, p, d);
+      OperationUpdate()(t, p, d);
       ApiOkResponse({ type: CreateUpdateResultDto(this.entity) })(t, p, d);
     };
   }
+
   Decrement(): MethodDecorator {
     return (t, p, d) => {
       const n = this.rn().singular;
       ApiOperation({ summary: `Decrement ${n}` })(t, p, d);
       Put(this._many() + '/:id/decrement')(t, p, d);
       ApiBody({ type: DecrementDto })(t, p, d);
-      OperationUpdate(this.resourceName)(t, p, d);
+      OperationUpdate()(t, p, d);
       ApiOkResponse({ type: CreateUpdateResultDto(this.entity) })(t, p, d);
     };
   }

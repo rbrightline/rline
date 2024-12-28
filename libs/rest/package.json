@@ -8,8 +8,8 @@
     "typeorm": "^0.3.20"
   },
   "dependencies": {
-    "@rline/orm": "4.7.0",
-    "@rline/type": "4.7.0",
+    "@rline/orm": "workspace:*",
+    "@rline/type": "workspace:*",
     "@swc/helpers": "~0.5.11"
   },
   "type": "commonjs",

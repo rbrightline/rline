@@ -16,7 +16,7 @@ import { JoinColumn, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Sample extends BaseEntity<Sample> implements SampleModel {
-  @Column({ type: 'string' }) sampleString = str();
+  @Column({ type: 'string', unique: true }) sampleString = str();
   @Column({ type: 'number' }) sampleNumber = num();
   @Column({ type: 'integer' }) sampleInteger = num();
   @Column({ type: 'date' }) sampleDate = date();
@@ -24,11 +24,19 @@ export class Sample extends BaseEntity<Sample> implements SampleModel {
   @Column({ type: 'jsonb' }) sampleObject = obj<SampleModelObject>();
   @Column({ type: 'array' }) sampleArray = arr<string>();
 
-  @ManyToOne(() => Category, (c) => c.id, { eager: true, nullable: true })
+  @ManyToOne(() => Category, (c) => c.id, {
+    eager: true,
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
   @JoinColumn()
   category = obj<Category>();
 
-  @ManyToMany(() => Category, (c) => c.id, { eager: true, nullable: true })
+  @ManyToMany(() => Category, (c) => c.id, {
+    eager: true,
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
   @JoinTable()
   categories = arr<Category>();
 }

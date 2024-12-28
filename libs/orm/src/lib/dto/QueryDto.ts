@@ -2,6 +2,7 @@ import { arr, bool, num, obj, QueryModel } from '@rline/type';
 import { Property, Data, OrderProperty } from '@rline/property';
 import { Type } from '@nestjs/common';
 import { OrderItemDto } from './OrderItemDto';
+import { TimestampEntity } from '../base/TimestampEntity';
 
 @Data()
 export class QueryOneDto
@@ -30,10 +31,9 @@ export class QueryDto implements Partial<QueryModel<any>> {
   @Property({ type: 'integer', minimum: 0, format: 'string' }) skip = num();
   @Property({ type: 'boolean', default: false, format: 'string' }) withDeleted =
     bool();
-  @Property({ type: 'array', items: { type: 'string' } })
-  select = arr<string>();
-
-  @OrderProperty() order = obj<OrderItemDto>();
+  @Property({ type: 'array', items: { type: 'string' } }) select =
+    arr<string>();
+  @OrderProperty(() => TimestampEntity) order = obj<OrderItemDto>();
 
   @Property({ type: 'boolean', format: 'string' }) loadEagerRelations = bool();
   @Property({ type: 'boolean', format: 'string' }) loadRelationIds = bool();
@@ -52,17 +52,25 @@ export function CreateQueryOneDto(entity: Type): Type {
   return __QueryOneDto;
 }
 
-export function CreateQueryDto(entity: Type): Type {
+export function CreateQueryDto(entity: () => Type): Type {
   @Data()
-  class __QueryDto extends QueryDto {
+  class __QueryDto {
+    @Property({ type: 'integer', minimum: 1, format: 'string' }) take = num();
+    @Property({ type: 'integer', minimum: 0, format: 'string' }) skip = num();
+    @Property({ type: 'boolean', default: false, format: 'string' })
+    withDeleted = bool();
+
     @Property({
       type: 'array',
-      items: { type: 'string', enum: Object.keys(entity) },
+      items: { type: 'string', enum: Object.keys(new (entity())()) },
     })
-    override select = arr<string>();
+    select = arr<string>();
 
-    @OrderProperty(entity)
-    override order = obj<OrderItemDto>();
+    @OrderProperty(entity) order = obj<OrderItemDto>();
+
+    @Property({ type: 'boolean', format: 'string' }) loadEagerRelations =
+      bool();
+    @Property({ type: 'boolean', format: 'string' }) loadRelationIds = bool();
   }
 
   return __QueryDto;

@@ -2,6 +2,8 @@ import { Body, Param, ParseIntPipe, Query, Type } from '@nestjs/common';
 import {
   AddRelationDto,
   EntityService,
+  FindByRelationDto,
+  FindByRelationIdDto,
   IncrementDto,
   InjectEntityService,
   QueryDto,
@@ -11,8 +13,8 @@ import {
   UnsetRelationDto,
 } from '@rline/orm';
 import { ResourceControllerBuilder } from './ResourceControllerBuilder';
-import { FindManyOptions } from 'typeorm';
 import { ResourceControllerOptions } from './ResourceControllerOptions';
+import { GlobalValidationPipeWithType } from './GlobalValidationPipe';
 
 export function CreateResourceController(
   options: ResourceControllerOptions
@@ -21,12 +23,15 @@ export function CreateResourceController(
     entity,
     createDto,
     updateDto,
-    queryDto,
+    whereDto,
+    aggregateDto,
+    read,
+    write,
+
     addRelation,
     setRelation,
     increment,
-    read,
-    write,
+    queryRelation,
   } = options;
 
   const constrollers: Type[] = [];
@@ -35,7 +40,8 @@ export function CreateResourceController(
     entity,
     createDto,
     updateDto,
-    queryDto
+    whereDto,
+    aggregateDto
   );
 
   @Rest.Controller()
@@ -49,9 +55,13 @@ export function CreateResourceController(
   @Rest.Controller()
   class __Read extends __BaseController {
     @Rest.Find()
-    Find(@Query() query: QueryDto) {
-      console.table(query);
-      return this.service.find(query as FindManyOptions<any>, {});
+    Find(
+      @Query(GlobalValidationPipeWithType(aggregateDto)) query: any,
+      @Query(GlobalValidationPipeWithType(whereDto)) where: any
+    ) {
+      console.log('query', query);
+      console.log('where', where);
+      return this.service.find({ ...query, where } as any);
     }
 
     @Rest.FindOneById()
@@ -59,6 +69,8 @@ export function CreateResourceController(
       @Param('id', ParseIntPipe) id: number,
       @Query() query: QueryOneDto
     ) {
+      console.log('id', id);
+      console.log('Query : ', query);
       return await this.service.findOneById(id, query as any);
     }
     @Rest.Count()
@@ -129,11 +141,26 @@ export function CreateResourceController(
     }
   }
 
+  @Rest.Controller()
+  class __QueryRelation extends __BaseController {
+    @Rest.FindByRelation()
+    findByRelation(@Query() query: FindByRelationDto) {
+      return this.service.findByRelation(query);
+    }
+
+    @Rest.FindByRelationId()
+    findByRelationId(@Query() query: FindByRelationIdDto) {
+      return this.service.findByRelationId(query);
+    }
+  }
+
   if (increment) constrollers.push(__Increment);
   if (addRelation) constrollers.push(__AddRelation);
   if (setRelation) constrollers.push(__SetRelation);
   if (read) constrollers.push(__Read);
   if (write) constrollers.push(__Write);
+
+  if (queryRelation) constrollers.push(__QueryRelation);
 
   return constrollers;
 }

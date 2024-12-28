@@ -24,7 +24,7 @@ export class CreateSampleDto implements CreateSampleModel {
   @Property({ type: 'array', items: { type: 'string' } }) sampleArray =
     arr<string>();
 
-  @Property({ type: 'object' }, () => IDDto) category = obj<IDDto>();
+  @Property({ type: 'integer', minimum: 1 }) category = num();
 
   @Property({ type: 'array', items: { type: 'object' } }, () => IDDto)
   categories = arr<IDDto>();

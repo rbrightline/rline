@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigKey } from '@rline/type';
 import { DataSourceOptions } from 'typeorm';
+import { DatabaseNamingStrategy } from '../orm/NamingStrategy';
 
 /**
  * Configure the database
@@ -29,6 +30,7 @@ export function datasourceOptionsFactory(
     subscribers: subscribers,
     entitySkipConstructor: true,
     poolSize: 100,
+    namingStrategy: new DatabaseNamingStrategy(),
   };
 }
 
@@ -52,7 +54,7 @@ export function datasourceTestOptionsFactory(
     subscribers: subscribers,
     entitySkipConstructor: true,
     synchronize: true,
-    dropSchema: true,
     poolSize: 100,
+    namingStrategy: new DatabaseNamingStrategy(),
   };
 }

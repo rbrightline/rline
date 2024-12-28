@@ -2,17 +2,13 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ResourceModule } from '@rline/rest';
 import {
+  AggreageSampleDto,
   Category,
-  CreateCategoryDto,
-  CreateOperationDto,
   CreateSampleDto,
   datasourceOptionsFactory,
   Operation,
-  QueryCategoryDto,
-  QuerySampleDto,
+  WhereSampleDto,
   Sample,
-  UpdateCategoryDto,
-  UpdateOperationDto,
   UpdateSampleDto,
 } from '@rline/orm';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -33,34 +29,19 @@ import 'class-validator';
         );
       },
     }),
-    ResourceModule.register({
-      entity: Operation,
-      createDto: CreateOperationDto,
-      updateDto: UpdateOperationDto,
-      queryDto: Operation,
-      read: true,
-      write: true,
-      addRelation: false,
-      setRelation: false,
-    }),
+
     ResourceModule.register({
       entity: Sample,
       createDto: CreateSampleDto,
       updateDto: UpdateSampleDto,
-      queryDto: QuerySampleDto,
+      whereDto: WhereSampleDto,
+      aggregateDto: AggreageSampleDto,
       read: true,
       write: true,
       addRelation: true,
       setRelation: true,
       increment: true,
-    }),
-    ResourceModule.register({
-      entity: Category,
-      createDto: CreateCategoryDto,
-      updateDto: UpdateCategoryDto,
-      queryDto: QueryCategoryDto,
-      read: true,
-      write: true,
+      queryRelation: true,
     }),
   ],
   providers: [],

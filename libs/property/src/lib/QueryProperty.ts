@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { parseQueryString, QueryOperator } from '@rline/query';
-import { Transform } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 import {
   Equal,
   FindOperator,
@@ -12,10 +12,11 @@ import {
   Not,
 } from 'typeorm';
 
-export function toQueryOperator(value: string): FindOperator<any> | null {
-  const query = parseQueryString(value);
+export function toQueryOperator(queryString: string): FindOperator<any> | null {
+  const query = parseQueryString(queryString)!;
   if (query) {
-    const operator = query.operator;
+    const { value, operator } = query;
+
     switch (operator) {
       case QueryOperator.CONTAIN:
         return ILike(`%${value}%`);
@@ -54,6 +55,12 @@ export function toQueryOperator(value: string): FindOperator<any> | null {
 export function QueryProperty(): PropertyDecorator {
   return (t, p) => {
     ApiProperty({ type: 'string', required: false })(t, p);
-    Transform(({ value }) => toQueryOperator(value))(t, p);
+    Expose()(t, p);
+    Transform(({ value }) => {
+      if (typeof value === 'string') {
+        return toQueryOperator(value);
+      }
+      return value;
+    })(t, p);
   };
 }

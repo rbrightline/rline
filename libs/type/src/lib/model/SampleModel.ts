@@ -26,7 +26,7 @@ export type CreateSampleModel = Omit<
   SampleModelRaw,
   'category' | 'categories'
 > & {
-  category: Nullable<IDModel>;
+  category: Nullable<number>;
   categories: Nullable<IDModel[]>;
 };
 
