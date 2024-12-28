@@ -42,5 +42,18 @@ describe('EntityService', () => {
       const found = await service.findOneById(1);
       expect(found).toBeTruthy();
     });
+
+    it('should update ', async () => {
+      const updated = await service.update(1, { sampleString: 'updated' });
+      expect(updated).toBeTruthy();
+      expect(updated.affected).toEqual(1);
+      expect(updated.data![1].sampleString).toEqual('updated');
+    });
+
+    it('should delete', async () => {
+      const updated = await service.delete(1);
+      expect(updated).toBeTruthy();
+      expect(updated.affected).toEqual(1);
+    });
   });
 });
