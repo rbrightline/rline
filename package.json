@@ -64,7 +64,6 @@
     "@nestjs/typeorm": "^10.0.2",
     "@rline/orm": "workspace:*",
     "@rline/property": "workspace:*",
-    "@rline/query": "workspace:*",
     "@rline/rest": "workspace:*",
     "@rline/type": "workspace:*",
     "@rline/validation": "workspace:*",

@@ -12,7 +12,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@rline/property': path.resolve(__dirname, '../property/dist'),
-      '@rline/query': path.resolve(__dirname, '../query/dist'),
+      '@rline/utils': path.resolve(__dirname, '../utils/dist'),
       '@rline/type': path.resolve(__dirname, '../type/dist'),
       '@rline/validation': path.resolve(__dirname, '../validation/dist'),
     },

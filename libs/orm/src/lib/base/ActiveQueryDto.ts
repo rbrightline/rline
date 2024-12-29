@@ -1,5 +1,4 @@
-import { ActiveModel, ModelQuery, value } from '@rline/type';
-import { QueryProperty } from '@rline/property';
+import { ActiveModel, ModelQuery, nvalue } from '@rline/type';
 import { TimestampQueryDto } from './TimestampQueryDto';
 import { FindOperator } from 'typeorm';
 
@@ -7,5 +6,5 @@ export class ActiveQueryDto
   extends TimestampQueryDto
   implements ModelQuery<ActiveModel, FindOperator<any>>
 {
-  @QueryProperty() active = value<FindOperator<boolean>>();
+  active = nvalue<FindOperator<any>>();
 }

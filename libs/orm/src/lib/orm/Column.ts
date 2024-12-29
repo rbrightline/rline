@@ -77,7 +77,11 @@ export function Column(options: ColumnOptions): PropertyDecorator {
           default: arr(options.default),
           items: { type: 'string' },
         })(t, p);
-        __Column({ ...co, type: 'simple-array', default: arr(options.default) })(t, p);
+        __Column({
+          ...co,
+          type: 'simple-array',
+          default: arr(options.default),
+        })(t, p);
         break;
 
       case 'date':

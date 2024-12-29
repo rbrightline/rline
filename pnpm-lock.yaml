@@ -35,9 +35,6 @@ importers:
       '@rline/property':
         specifier: workspace:*
         version: link:libs/property/dist
-      '@rline/query':
-        specifier: workspace:*
-        version: link:libs/query/dist
       '@rline/rest':
         specifier: workspace:*
         version: link:libs/rest/dist
@@ -189,9 +186,6 @@ importers:
       '@rline/property':
         specifier: workspace:*
         version: link:../property/dist
-      '@rline/query':
-        specifier: workspace:*
-        version: link:../query/dist
       '@rline/type':
         specifier: workspace:*
         version: link:../type/dist
@@ -235,12 +229,12 @@ importers:
       '@rline/property':
         specifier: workspace:*
         version: link:../../property/dist
-      '@rline/query':
-        specifier: workspace:*
-        version: link:../../query/dist
       '@rline/type':
         specifier: workspace:*
         version: link:../../type/dist
+      '@rline/utils':
+        specifier: workspace:^
+        version: link:../../utils/dist
       '@rline/validation':
         specifier: workspace:*
         version: link:../../validation/dist

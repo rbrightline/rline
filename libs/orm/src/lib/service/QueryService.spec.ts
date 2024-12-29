@@ -1,86 +1,96 @@
-import { DataSource } from 'typeorm';
-import { QueryService } from './QueryService';
+import { describe, it, expect, beforeEach } from 'vitest';
+import { FindManyOptions } from '@rline/type';
+import { DataSource, FindOperator, Repository } from 'typeorm';
+import { EntityQueryService } from './QueryService';
 import { datasourceTestOptionsFactory } from '../source/data-source-options-factory';
-import { Sample } from '../entities/sample/Sample';
-import { Category } from '../entities/category/Category';
-import { plainToInstance } from 'class-transformer';
-import { FindOptionsDto } from '../query/FindOptionsDto';
-import { repeat } from '@rline/utils';
-describe('QueryService', () => {
-  let ds: DataSource;
-  let sampleService: QueryService<Sample>;
+import { Sample } from './../entities/sample/Sample';
+import { Category } from './../entities/category/Category';
 
-  beforeAll(async () => {
+describe('EntityQueryService', () => {
+  let ds: DataSource;
+  let service: EntityQueryService<any>;
+  let repo: Repository<any>;
+
+  beforeEach(async () => {
     ds = await new DataSource(
       datasourceTestOptionsFactory([Sample, Category], [])
     ).initialize();
 
-    let sampleRepo = ds.getRepository(Sample);
+    repo = ds.getRepository(Sample);
+    service = new EntityQueryService(repo);
+  });
 
-    sampleService = new QueryService(sampleRepo);
+  describe('findAll', () => {
+    it('should call repo.find with correct parameters', async () => {
+      const query: FindManyOptions<Sample, FindOperator<any>> = {
+        order: { id: 'ASC' },
+        where: { sampleString: 'test' },
+        loadEagerRelations: true,
+        loadRelationIds: true,
+        select: ['id', 'sampleString'],
+        take: 10,
+        skip: 0,
+        withDeleted: false,
+        relations: ['category'],
+      };
+      const findSpy = vi.spyOn(repo, 'find').mockResolvedValue([]);
 
-    const rnd = () => Math.floor(Math.random() * 100000000);
+      await service.findAll(query);
 
-    let samplePromises = repeat(10, (i) => {
-      return sampleRepo.save({
-        sampleString: `sample ${i} ${rnd()}`,
-        sampleBoolean: true,
-        sampleNumber: i,
-        sampleInteger: i,
-        sampleArray: ['1', '2', '3'],
-        sampleDate: new Date('10/10/2025'),
-        sampleObject: { property: 'property', value: 'value' },
-        active: true,
-        info: 'Some info',
+      expect(findSpy).toHaveBeenCalledWith({
+        take: 10,
+        skip: 0,
+        withDeleted: false,
+        select: ['id', 'name'],
+        order: { id: 'ASC' },
+        where: { name: 'test' },
+        relations: ['relation1'],
+        loadEagerRelations: true,
+        loadRelationIds: true,
       });
     });
-
-    await Promise.all(samplePromises);
-
-    //...............
   });
 
-  it('should find one by id', async () => {
-    const found = await sampleService.findAll({ take: 1 });
-    expect(found).toBeTruthy();
-    const foundOne = await sampleService.findOneById(found[0].id!);
-    expect(foundOne?.id).toBe(found[0].id);
-  });
+  describe('findOne', () => {
+    it('should call repo.find with correct parameters', async () => {
+      const query = {
+        loadEagerRelations: true,
+        loadRelationIds: true,
+        relations: ['relation1'],
+        select: ['id', 'name'],
+        where: { id: 1 },
+        withDeleted: false,
+      };
+      const findSpy = vi.spyOn(repo, 'find').mockResolvedValue([]);
 
-  it('should find all', async () => {
-    const query = plainToInstance(FindOptionsDto, {});
-    const found = await sampleService.findAll(query, {});
-    expect(found).toBeTruthy();
-  });
+      await service.findOne(query);
 
-  it('should find all by select', async () => {
-    const query = plainToInstance(FindOptionsDto, { select: ['id'] });
-    const [first] = await sampleService.findAll(query, {});
-    expect(Object.keys(first)).toEqual(['id']);
-  });
-
-  it('should find all and order by ', async () => {
-    const query = plainToInstance(FindOptionsDto, {
-      select: ['id'],
-      orderBy: 'id',
-      orderDir: 'DESC',
+      expect(findSpy).toHaveBeenCalledWith({
+        relations: ['relation1'],
+        withDeleted: false,
+        select: ['id', 'name'],
+        where: { id: 1 },
+        loadEagerRelations: true,
+        loadRelationIds: true,
+      });
     });
-    const [first, ...lasts] = await sampleService.findAll(query, {});
-
-    expect(first.id).toBeGreaterThan(lasts.pop()!.id!);
   });
 
-  it('should find all and order by ', async () => {
-    const query = plainToInstance(FindOptionsDto, {
-      select: ['id', 'sampleString'],
-      orderBy: 'id',
-      orderDir: 'ASC',
-      relations: ['category', 'categories'],
+  describe('count', () => {
+    it('should call repo.count with correct parameters', async () => {
+      const query = {
+        where: { name: 'test' },
+        withDeleted: false,
+      };
+      const countSpy = vi.spyOn(repo, 'count').mockResolvedValue(5);
+
+      const result = await service.count(query);
+
+      expect(countSpy).toHaveBeenCalledWith({
+        where: { name: 'test' },
+        withDeleted: false,
+      });
+      expect(result).toEqual({ count: 5 });
     });
-
-    const found = await sampleService.findAll(query, {});
-    const [first, ...lasts] = found;
-
-    expect(first.id).toBeLessThan(lasts.pop()!.id!);
   });
 });

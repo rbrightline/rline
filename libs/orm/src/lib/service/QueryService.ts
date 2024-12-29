@@ -1,83 +1,67 @@
-import { FindOptionsWhere, ObjectLiteral, Repository } from 'typeorm';
-import { FindOptionsDto } from '../query/FindOptionsDto';
-import { FindByRelationValueDto } from '../query/FindByRelationValueDto';
+import {
+  CountOptions,
+  CountResult,
+  FindManyOptions,
+  FindOneOptions,
+  QueryService,
+} from '@rline/type';
+import { FindOperator, ObjectLiteral, Repository } from 'typeorm';
 
-export class QueryService<T extends ObjectLiteral> {
+export class EntityQueryService<T extends ObjectLiteral>
+  implements QueryService<T, FindOperator<any>>
+{
   constructor(protected readonly repo: Repository<T>) {}
 
-  async findAll(
-    findOptions?: FindOptionsDto<T>,
-    whereOptions?: FindOptionsWhere<T>
-  ) {
-    return this.repo.find({ ...findOptions, where: whereOptions });
-  }
-
-  async findOne(
-    findOptions: FindOptionsDto<T>,
-    whereOptions: FindOptionsWhere<T>
-  ) {
-    const { select, loadEagerRelations, loadRelationIds, withDeleted } =
-      findOptions;
-    return this.repo.findOne({
-      where: whereOptions,
+  findAll(query: FindManyOptions<T, FindOperator<any>>) {
+    const {
+      order,
+      where,
+      loadEagerRelations,
+      loadRelationIds,
       select,
-      loadEagerRelations: loadEagerRelations || false,
-      loadRelationIds: loadRelationIds || false,
-      withDeleted: withDeleted || false,
+      take,
+      skip,
+      withDeleted,
+      relations,
+    } = query;
+    return this.repo.find({
+      take,
+      skip,
+      withDeleted,
+      select,
+      order: order as any,
+      where: where as any,
+      relations,
+      loadEagerRelations: loadEagerRelations ?? false,
+      loadRelationIds: loadRelationIds ?? false,
     });
   }
 
-  async findOneById(id: T['id'], findOptions: FindOptionsDto<T> = {}) {
-    return this.findOne(findOptions, { id });
-  }
+  async findOne(query: FindOneOptions) {
+    const {
+      loadEagerRelations,
+      loadRelationIds,
+      relations,
+      select,
+      where,
+      withDeleted,
+    } = query;
 
-  async findByRelation(
-    relationOptions: FindByRelationValueDto,
-    findOptions?: FindOptionsDto<T>
-  ) {
-    const { key, rn, value } = relationOptions;
-    const query = this.repo
-      .createQueryBuilder('m')
-      .leftJoin(`m.${rn}`, rn!)
-      .where(`${rn}.${key}= :value`, { value })
-      .select(['m.id', `${rn}.id`]);
-
-    if (findOptions?.withDeleted) query.withDeleted();
-    if (findOptions?.orderBy && findOptions.orderDir) {
-      query.orderBy(
-        findOptions.orderBy as string,
-        findOptions.orderDir,
-        'NULLS LAST'
-      );
-    }
-
-    return query.getMany();
-  }
-
-  countEntity(
-    whereOptions: FindOptionsWhere<T>,
-    findOptions?: FindOptionsDto<T>
-  ): Promise<number> {
-    return this.repo.count({
-      withDeleted: !!findOptions?.withDeleted,
-      where: whereOptions,
+    await this.repo.find({
+      relations,
+      withDeleted,
+      select,
+      where,
+      loadEagerRelations: loadEagerRelations ?? false,
+      loadRelationIds: loadRelationIds ?? false,
     });
   }
 
-  async countByRelation(
-    relationOptions: FindByRelationValueDto,
-    findOptions?: FindOptionsDto<T>
-  ) {
-    const { key, rn, value } = relationOptions;
-    const query = this.repo
-      .createQueryBuilder('m')
-      .leftJoin(`m.${rn}`, rn!)
-      .where(`${rn}.${key}= :value`, { value })
-      .select(['m.id', `${rn}.id`]);
-
-    if (findOptions?.withDeleted) {
-      query.withDeleted();
-    }
-    return { count: query.getCount() };
+  async count<Operator>(
+    query: CountOptions<T, Operator>
+  ): Promise<CountResult> {
+    const { where, withDeleted } = query;
+    const count = await this.repo.count({ where: where as any, withDeleted });
+    return { count };
   }
 }

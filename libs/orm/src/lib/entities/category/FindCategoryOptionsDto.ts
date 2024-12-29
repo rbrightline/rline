@@ -1,7 +1,6 @@
 import { Data, QueryProperty } from '@rline/property';
-import { Nullable, CategoryModel, value } from '@rline/type';
+import { CategoryModel, nvalue, Nonable } from '@rline/type';
 import { FindOperator } from 'typeorm';
-
 import { IDQueryDto } from '../../base/IDQueryDto';
 import { CreateFindOptionsDto } from '../../query/FindOptionsDto';
 import { Category } from './Category';
@@ -9,9 +8,9 @@ import { Category } from './Category';
 @Data()
 export class WhereCategoryOptionsDto
   extends IDQueryDto
-  implements Record<keyof CategoryModel, Nullable<FindOperator<any>>>
+  implements Record<keyof CategoryModel, Nonable<FindOperator<any>>>
 {
-  @QueryProperty() name = value<FindOperator<string>>();
+  @QueryProperty() name = nvalue<FindOperator<string>>();
 }
 
 @Data()
