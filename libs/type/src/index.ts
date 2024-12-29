@@ -19,5 +19,8 @@ export * from './lib/model/QueryModel';
 export * from './lib/model/SampleModel';
 export * from './lib/model/TimestampModel';
 export * from './lib/model/UpdateResult';
+export * from './lib/query/FindByRelation';
+export * from './lib/query/FindOptions';
+export * from './lib/query/OrderDir';
 export * from './lib/type/KeyOf';
 export * from './lib/var/var';

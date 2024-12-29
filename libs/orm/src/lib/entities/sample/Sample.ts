@@ -16,7 +16,7 @@ import { JoinColumn, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Sample extends BaseEntity<Sample> implements SampleModel {
-  @Column({ type: 'string', unique: true }) sampleString = str();
+  @Column({ type: 'string' }) sampleString = str();
   @Column({ type: 'number' }) sampleNumber = num();
   @Column({ type: 'integer' }) sampleInteger = num();
   @Column({ type: 'date' }) sampleDate = date();

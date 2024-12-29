@@ -15,9 +15,9 @@ export const GlobalValidationPipe: ValidationPipe = new ValidationPipe({
   },
 });
 
-export function GlobalValidationPipeWithType(type: Type): ValidationPipe {
+export function ValidationPipeWithType(type: () => Type): ValidationPipe {
   return new ValidationPipe({
-    expectedType: type,
+    expectedType: type(),
     transform: true,
     transformOptions: {
       exposeUnsetFields: false,

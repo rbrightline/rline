@@ -2,11 +2,11 @@ import { Data, QueryProperty } from '@rline/property';
 import { Nullable, SampleModel, value } from '@rline/type';
 import { FindOperator } from 'typeorm';
 import { TimestampQueryDto } from '../../base/TimestampQueryDto';
-import { CreateQueryDto } from '../../dto/QueryDto';
+import { CreateFindOptionsDto } from '../../query/FindOptionsDto';
 import { Sample } from './Sample';
 
 @Data()
-export class WhereSampleDto
+export class WhereSampleOptionsDto
   extends TimestampQueryDto
   implements Record<keyof SampleModel, Nullable<FindOperator<any>>>
 {
@@ -24,4 +24,4 @@ export class WhereSampleDto
 }
 
 @Data()
-export class AggreageSampleDto extends CreateQueryDto(() => Sample) {}
+export class FindSampleOptionsDto extends CreateFindOptionsDto(() => Sample) {}

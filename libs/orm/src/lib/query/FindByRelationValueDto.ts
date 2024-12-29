@@ -1,23 +1,22 @@
 import { Data, Property } from '@rline/property';
-import { str } from '@rline/type';
 
 @Data()
-export class FindByRelationDto {
+export class FindByRelationValueDto {
   /**
    * Relation name
    */
   @Property({ type: 'string', required: true })
-  rn = str();
+  rn!: string;
 
   /**
    * Relation property name
    */
   @Property({ type: 'string', required: true })
-  key = str();
+  key!: string;
 
   /**
    * Relation property value
    */
   @Property({ type: 'string', required: true })
-  value = str();
+  value!: string;
 }

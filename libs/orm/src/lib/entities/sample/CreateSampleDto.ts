@@ -10,7 +10,7 @@ import {
   str,
 } from '@rline/type';
 import { CreateSampleObjectDto } from './CreateSampleModelObjectDto';
-import { IDDto } from '../../dto/IDDto';
+import { IDDto } from '../../query/IDDto';
 
 @Data()
 export class CreateSampleDto implements CreateSampleModel {

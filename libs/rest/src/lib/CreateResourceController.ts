@@ -1,4 +1,12 @@
-import { Body, Param, ParseIntPipe, Query, Type } from '@nestjs/common';
+import {
+  Body,
+  Optional,
+  Param,
+  ParseBoolPipe,
+  ParseIntPipe,
+  Query,
+  Type,
+} from '@nestjs/common';
 import {
   AddRelationDto,
   EntityService,
@@ -6,15 +14,14 @@ import {
   FindByRelationIdDto,
   IncrementDto,
   InjectEntityService,
-  QueryDto,
-  QueryOneDto,
   RemoveRelationDto,
   SetRelationDto,
   UnsetRelationDto,
 } from '@rline/orm';
 import { ResourceControllerBuilder } from './ResourceControllerBuilder';
 import { ResourceControllerOptions } from './ResourceControllerOptions';
-import { GlobalValidationPipeWithType } from './GlobalValidationPipe';
+import { ValidationPipeWithType } from './GlobalValidationPipe';
+import { FindManyOptions, FindOneOptions, FindOptionsWhere } from 'typeorm';
 
 export function CreateResourceController(
   options: ResourceControllerOptions
@@ -23,11 +30,10 @@ export function CreateResourceController(
     entity,
     createDto,
     updateDto,
-    whereDto,
-    aggregateDto,
+    whereOptionsDto,
+    findOptionsDto,
     read,
     write,
-
     addRelation,
     setRelation,
     increment,
@@ -36,13 +42,12 @@ export function CreateResourceController(
 
   const constrollers: Type[] = [];
 
-  const Rest = new ResourceControllerBuilder(
+  const Rest = new ResourceControllerBuilder({
     entity,
     createDto,
     updateDto,
-    whereDto,
-    aggregateDto
-  );
+    whereOptionsDto,
+  });
 
   @Rest.Controller()
   class __BaseController {
@@ -56,26 +61,31 @@ export function CreateResourceController(
   class __Read extends __BaseController {
     @Rest.Find()
     Find(
-      @Query(GlobalValidationPipeWithType(aggregateDto)) query: any,
-      @Query(GlobalValidationPipeWithType(whereDto)) where: any
+      @Query(ValidationPipeWithType(() => findOptionsDto))
+      query: FindManyOptions<any>,
+      @Query(ValidationPipeWithType(() => whereOptionsDto))
+      where: FindOptionsWhere<any>
     ) {
-      console.log('query', query);
-      console.log('where', where);
       return this.service.find({ ...query, where } as any);
     }
 
     @Rest.FindOneById()
     async FindOneById(
       @Param('id', ParseIntPipe) id: number,
-      @Query() query: QueryOneDto
+      @Query(ValidationPipeWithType(() => findOptionsDto))
+      query: FindOneOptions<any>
     ) {
       console.log('id', id);
       console.log('Query : ', query);
-      return await this.service.findOneById(id, query as any);
+      return await this.service.findOneById(id, query);
     }
+
     @Rest.Count()
-    Count(@Query() query: QueryDto) {
-      return this.service.count(query as any);
+    Count(
+      @Query(ValidationPipeWithType(() => whereDto)) where: any,
+      @Query(ValidationPipeWithType(() => CountQueryDto)) query: CountQueryDto
+    ) {
+      return this.service.count({ where });
     }
   }
 
@@ -92,8 +102,15 @@ export function CreateResourceController(
     }
 
     @Rest.Delete()
-    async Delete(@Param('id', ParseIntPipe) id: number) {
-      return await this.service.softDelete(id);
+    async Delete(
+      @Param('id', ParseIntPipe) id: number,
+      @Optional() @Query(ParseBoolPipe) hardDelete = false
+    ) {
+      if (hardDelete) {
+        return await this.service.delete(id);
+      } else {
+        return await this.service.softDelete(id);
+      }
     }
   }
 

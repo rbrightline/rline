@@ -1,8 +1,7 @@
-import { Property } from '@rline/property';
+import { Data, Property } from '@rline/property';
 import { num, str } from '@rline/type';
-import { Exclude } from 'class-transformer';
 
-@Exclude()
+@Data()
 export class UnsetRelationDto {
   @Property({ type: 'integer', required: true, format: 'string' })
   id = num();
@@ -11,14 +10,14 @@ export class UnsetRelationDto {
   rn = str();
 }
 
-@Exclude()
+@Data()
 export class SetRelationDto extends UnsetRelationDto {
   @Property({ type: 'integer', required: true, format: 'string' })
   rid = num();
 }
 
-@Exclude()
+@Data()
 export class AddRelationDto extends SetRelationDto {}
 
-@Exclude()
+@Data()
 export class RemoveRelationDto extends SetRelationDto {}

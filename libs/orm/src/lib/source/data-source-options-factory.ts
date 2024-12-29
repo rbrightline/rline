@@ -53,8 +53,12 @@ export function datasourceTestOptionsFactory(
     entities: entities,
     subscribers: subscribers,
     entitySkipConstructor: true,
-    synchronize: true,
-    poolSize: 100,
+
+    logging: false,
     namingStrategy: new DatabaseNamingStrategy(),
+    extra: {
+      max: 10, // Max connections in the pool
+      idleTimeoutMillis: 30000, // Close idle connections after 30 seconds
+    },
   };
 }

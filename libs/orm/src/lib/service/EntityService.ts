@@ -6,19 +6,19 @@ import {
   Repository,
 } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
-import { DecrementDto, IncrementDto } from '../dto/IncrementDto';
+import { DecrementDto, IncrementDto } from '../query/IncrementDto';
 import {
   AddRelationDto,
   RemoveRelationDto,
   SetRelationDto,
   UnsetRelationDto,
-} from '../dto/RelationDo';
+} from '../query/RelationDo';
 import { NotFoundException } from '@nestjs/common';
 import { DeleteResult, UpdateResult } from '@rline/type';
-import { MessageDto } from '../dto/MessageDto';
-import { CountDto } from '../dto/CountDto';
-import { FindByRelationIdDto } from '../dto/FindByRelationIdDto';
-import { FindByRelationDto } from '../dto/FindByRelationDto';
+import { MessageDto } from '../result/MessageDto';
+import { CountResultDto } from '../result/CountResultDto';
+import { FindByRelationIdDto } from '../query/FindByRelationIdDto';
+import { FindByRelationValueDto } from '../query/FindByRelationValueDto';
 
 export class EntityService<
   T extends {},
@@ -46,9 +46,8 @@ export class EntityService<
    * @param query {@link FindOneOptions}
    * @returns
    */
-  async findOneById(id: number, query?: FindOneOptions<any>) {
+  async findOneById(id: number, query?: FindManyOptions<any>) {
     const founds = await this.repo.find({
-      ...query,
       where: { id: Equal(id) } as any,
     } as FindManyOptions<T>);
     if (founds && founds.length > 0) {
@@ -104,7 +103,12 @@ export class EntityService<
     const selectOptions: FindManyOptions<any> = { select: ['id', 'deletedAt'] };
     const oldData = await this.findOneById(id, selectOptions);
     const result = await this.repo.softDelete(id);
-    const newData = await this.findOneById(id, selectOptions);
+    const newData = await this.findOneById(id, {
+      ...selectOptions,
+      withDeleted: true,
+      loadEagerRelations: false,
+      loadRelationIds: false,
+    });
 
     return {
       raw: result.raw,
@@ -135,10 +139,10 @@ export class EntityService<
 
   /**
    * Find entities by relation query such as `category.name`, `category.id`
-   * @param query {@link FindByRelationDto}
+   * @param query {@link FindByRelationValueDto}
    * @returns
    */
-  async findByRelation(query: FindByRelationDto) {
+  async findByRelation(query: FindByRelationValueDto) {
     const { key, rn, value } = query;
     return this.repo
       .createQueryBuilder('m')
@@ -150,7 +154,7 @@ export class EntityService<
 
   /**
    * Find by relation id
-   * @param query {@link FindByRelationDto}
+   * @param query {@link FindByRelationValueDto}
    * @returns
    */
   async findByRelationId(query: FindByRelationIdDto): Promise<T[]> {
@@ -213,7 +217,8 @@ export class EntityService<
    * @param query {@link FindManyOptions}
    * @returns
    */
-  async count(query: FindManyOptions<T>): Promise<CountDto> {
+  async count(query: FindManyOptions<T>): Promise<CountResultDto> {
+    console.log(query);
     const count = await this.repo.count(query);
     return { count };
   }

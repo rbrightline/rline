@@ -1,8 +1,7 @@
-import { Property } from '@rline/property';
+import { Data, Property } from '@rline/property';
 import { num, str } from '@rline/type';
-import { Exclude } from 'class-transformer';
 
-@Exclude()
+@Data()
 export class IncrementDto {
   @Property({ type: 'string' })
   property = str();
@@ -11,5 +10,5 @@ export class IncrementDto {
   value = num();
 }
 
-@Exclude()
+@Data()
 export class DecrementDto extends IncrementDto {}
