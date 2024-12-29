@@ -1,3 +1,3 @@
-import { Nullable } from '../var/var';
+import { Nonable } from '../var/var';
 
-export type ModelQuery<T, Operator> = Record<keyof T, Nullable<Operator>>;
+export type ModelQuery<T, Operator> = Record<keyof T, Nonable<Operator>>;

@@ -61,7 +61,9 @@ export function narr<T>(defaultValue?: Nonable<T[]>): Nonable<T[]> {
 }
 
 export function nobj<T>(defaultValue?: Nonable<T>): Nonable<T> {
-  return typeof defaultValue == 'object' && !Array.isArray(defaultValue)
+  return typeof defaultValue == 'object' &&
+    !Array.isArray(defaultValue) &&
+    defaultValue !== null
     ? defaultValue
     : undefined;
 }

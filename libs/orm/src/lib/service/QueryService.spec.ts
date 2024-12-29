@@ -5,6 +5,7 @@ import { Sample } from '../entities/sample/Sample';
 import { Category } from '../entities/category/Category';
 import { plainToInstance } from 'class-transformer';
 import { FindOptionsDto } from '../query/FindOptionsDto';
+import { repeat } from '@rline/utils';
 describe('QueryService', () => {
   let ds: DataSource;
   let sampleService: QueryService<Sample>;
@@ -20,22 +21,18 @@ describe('QueryService', () => {
 
     const rnd = () => Math.floor(Math.random() * 100000000);
 
-    let samplePromises: Promise<Sample>[] = [];
-
-    Array.from({ length: 10000 }).forEach((_, i) => {
-      samplePromises.push(
-        sampleRepo.save({
-          sampleString: `sample ${i} ${rnd()}`,
-          sampleBoolean: true,
-          sampleNumber: i,
-          sampleInteger: i,
-          sampleArray: ['1', '2', '3'],
-          sampleDate: new Date('10/10/2025'),
-          sampleObject: { property: 'property', value: 'value' },
-          active: true,
-          info: 'Some info',
-        })
-      );
+    let samplePromises = repeat(10, (i) => {
+      return sampleRepo.save({
+        sampleString: `sample ${i} ${rnd()}`,
+        sampleBoolean: true,
+        sampleNumber: i,
+        sampleInteger: i,
+        sampleArray: ['1', '2', '3'],
+        sampleDate: new Date('10/10/2025'),
+        sampleObject: { property: 'property', value: 'value' },
+        active: true,
+        info: 'Some info',
+      });
     });
 
     await Promise.all(samplePromises);
@@ -44,7 +41,10 @@ describe('QueryService', () => {
   });
 
   it('should find one by id', async () => {
-    expect(1).toBe(1);
+    const found = await sampleService.findAll({ take: 1 });
+    expect(found).toBeTruthy();
+    const foundOne = await sampleService.findOneById(found[0].id!);
+    expect(foundOne?.id).toBe(found[0].id);
   });
 
   it('should find all', async () => {

@@ -22,6 +22,7 @@
     "@rline/property": "workspace:*",
     "@rline/query": "workspace:*",
     "@rline/type": "workspace:*",
+    "@rline/utils": "workspace:^",
     "@rline/validation": "workspace:*",
     "@swc/helpers": "~0.5.11"
   },
