@@ -1,10 +1,10 @@
-import { Column } from '../../orm/Column';
-import { Entity } from '../../orm/Entity';
-import { BaseEntity } from '../../base/BaseEntity';
-import { CategoryModel, NULL_OBJECT } from '@rline/type';
+import { Column } from '../../orm/column';
+import { Entity } from '../../orm/entity';
+import { BaseEntity } from '../../base/base';
+import { CategoryModel } from '@rline/type';
 
 @Entity()
-export class Category extends BaseEntity<Category> implements CategoryModel {
+export class Category extends BaseEntity implements CategoryModel {
   @Column({ type: 'string', unique: true })
-  name = NULL_OBJECT();
+  name?: string;
 }

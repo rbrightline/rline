@@ -15,7 +15,7 @@ export function parseQueryString<T>(
   queryString: string,
   operatorPicker: QueryOperatorPicker<T>
 ): Record<string, T> | null {
-  if (isQueryString(queryString) === false) return null;
+  if (!isQueryString(queryString)) return null;
 
   const [property, operator, value] = queryString.split('::');
   return { [property]: operatorPicker(operator, value) };

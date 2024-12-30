@@ -1,10 +1,10 @@
-import { ArrayValidation } from './ArrayValidation';
-import { BooleanValidation } from './BooleanValidation';
-import { CommonValidation } from './CommonValidation';
-import { NumberValidation } from './NumberValidation';
-import { ObjectValidation } from './ObjectValidation';
-import { StringValidation } from './StringValidation';
-import { ValidationOptions } from './ValidationOptions';
+import { ArrayValidation } from './array';
+import { BooleanValidation } from './boolean';
+import { CommonValidation } from './common';
+import { NumberValidation } from './number';
+import { ObjectValidation } from './object';
+import { StringValidation } from './string';
+import { ValidationOptions } from './validation-options';
 import { ValidationOptions as __ValidationOptions } from 'class-validator';
 
 export function Validation(

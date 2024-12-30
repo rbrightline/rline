@@ -1,9 +1,9 @@
 import { Type } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { ConfigKey } from '@rline/type';
+import { ConfigKeys } from '@rline/type';
 import { DataSourceOptions } from 'typeorm';
-import { DatabaseNamingStrategy } from '../orm/NamingStrategy';
+import { DatabaseNamingStrategy } from '../orm/naming-strategy';
 
 /**
  * Configure the database
@@ -17,9 +17,9 @@ export function datasourceOptionsFactory(
   entities: Type[],
   subscribers: Type[]
 ): TypeOrmModuleOptions {
-  const database = config.get(ConfigKey.DB_NAME, 'testdb');
-  const username = config.get(ConfigKey.DB_USERNAME, 'testuser');
-  const password = config.get(ConfigKey.DB_PASSWORD, 'password');
+  const database = config.get(ConfigKeys.DB_NAME, 'testdb');
+  const username = config.get(ConfigKeys.DB_USERNAME, 'testuser');
+  const password = config.get(ConfigKeys.DB_PASSWORD, 'password');
 
   return {
     type: 'postgres',

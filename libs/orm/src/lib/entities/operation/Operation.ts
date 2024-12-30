@@ -1,10 +1,9 @@
-import { Column } from '../../orm/Column';
-import { Entity } from '../../orm/Entity';
-import { BaseEntity } from '../../base/BaseEntity';
-import { num, obj } from '@rline/type';
+import { Column } from '../../orm/column';
+import { Entity } from '../../orm/entity';
+import { BaseEntity } from '../../base/base';
 
 @Entity()
-export class Operation extends BaseEntity<Operation> {
-  @Column({ type: 'jsonb', nullable: true }) data = obj<any>(null);
-  @Column({ type: 'integer', nullable: true }) count = num(0);
+export class Operation extends BaseEntity {
+  @Column({ type: 'jsonb', nullable: true }) data?: Record<string, any>;
+  @Column({ type: 'integer', nullable: true }) count?: number;
 }

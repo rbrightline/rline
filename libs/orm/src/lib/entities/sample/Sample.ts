@@ -1,31 +1,19 @@
-import { Column } from '../../orm/Column';
-import { Entity } from '../../orm/Entity';
-import { BaseEntity } from '../../base/BaseEntity';
-import {
-  arr,
-  bool,
-  date,
-  num,
-  obj,
-  SampleModel,
-  SampleModelObject,
-  NULL_OBJECT,
-} from '@rline/type';
-import { Category } from '../category/Category';
+import { Column } from '../../orm/column';
+import { Entity } from '../../orm/entity';
+import { BaseEntity } from '../../base/base';
+import { SampleModel, SampleModelObject } from '@rline/type';
+import { Category } from '../category/category';
 import { JoinColumn, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
 
 @Entity()
-export class Sample
-  extends BaseEntity<Sample>
-  implements SampleModel<Category>
-{
-  @Column({ type: 'string' }) sampleString = NULL_OBJECT();
-  @Column({ type: 'number' }) sampleNumber = num();
-  @Column({ type: 'integer' }) sampleInteger = num();
-  @Column({ type: 'date' }) sampleDate = date();
-  @Column({ type: 'boolean' }) sampleBoolean = bool();
-  @Column({ type: 'jsonb' }) sampleObject = obj<SampleModelObject>();
-  @Column({ type: 'array' }) sampleArray = arr<string>();
+export class Sample extends BaseEntity implements SampleModel<Category> {
+  @Column({ type: 'string' }) sampleString?: string;
+  @Column({ type: 'number' }) sampleNumber?: number;
+  @Column({ type: 'integer' }) sampleInteger?: number;
+  @Column({ type: 'date' }) sampleDate?: Date;
+  @Column({ type: 'boolean' }) sampleBoolean?: boolean;
+  @Column({ type: 'jsonb' }) sampleObject?: SampleModelObject;
+  @Column({ type: 'array' }) sampleArray?: string[];
 
   @ManyToOne(() => Category, (c) => c.id, {
     eager: true,
@@ -33,7 +21,7 @@ export class Sample
     onDelete: 'SET NULL',
   })
   @JoinColumn()
-  category = obj<Category>();
+  category?: Category;
 
   @ManyToMany(() => Category, (c) => c.id, {
     eager: true,
@@ -41,5 +29,5 @@ export class Sample
     onDelete: 'SET NULL',
   })
   @JoinTable()
-  categories = arr<Category>();
+  categories?: Category[];
 }
