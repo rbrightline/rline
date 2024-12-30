@@ -1,5 +1,4 @@
 import { Order } from './Order';
-import { OrderDir } from './OrderDir';
 import { WhereOptions } from './WhereOptions';
 
 /**
@@ -22,10 +21,8 @@ export type FindManyOptions<T, FindOperator> = {
   skip?: number;
   withDeleted?: boolean;
   select?: (keyof T)[];
-  order: Order<T>;
-  where: WhereOptions<T, FindOperator>;
-  orderBy?: keyof T;
-  orderDir?: OrderDir;
+  order?: Order<T>;
+  where?: WhereOptions<T, FindOperator>;
   relations?: string[];
   loadEagerRelations?: boolean;
   loadRelationIds?: boolean;

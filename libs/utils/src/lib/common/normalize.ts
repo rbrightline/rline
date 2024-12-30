@@ -12,7 +12,7 @@
 export function normalize(
   value: string,
   preInputValidator?: (value: string) => boolean
-): string | null {
+): string {
   const isValid = preInputValidator
     ? preInputValidator(value)
     : !!value.match(/^[a-zA-Z_$]{1,}[a-zA-Z0-9_$\-\. ]{1,}$/);
@@ -25,6 +25,5 @@ export function normalize(
       .toLowerCase();
   }
 
-  console.debug(`Invalid input string ${value}`);
-  return null;
+  throw new Error(`Invalid input string: ${value}`);
 }

@@ -65,7 +65,7 @@ export type RestApiPaths = {
  * @property relation - The path for accessing a relation of a specific resource by its ID.
  * @property relationId - The path for accessing a specific relation of a specific resource by its ID and the relation's ID.
  */
-export function restPaths(name: string, prefix = ''): RestApiPaths {
+export function restPaths(name: string, prefix = ''): RestApiPaths | null {
   const pf = prefix ? `${prefix}/` : '';
   const singularName = names(name).kebabCase;
   const pluralName = pluralize(singularName);

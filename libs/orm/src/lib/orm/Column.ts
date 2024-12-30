@@ -1,5 +1,5 @@
 import { Property } from '@rline/property';
-import { arr, bool, date, num, str } from '@rline/type';
+import { arr, bool, date, num, NULL_OBJECT } from '@rline/type';
 import { Column as __Column, ColumnOptions } from 'typeorm';
 
 export function Column(options: ColumnOptions): PropertyDecorator {
@@ -18,11 +18,11 @@ export function Column(options: ColumnOptions): PropertyDecorator {
 
     switch (type) {
       case 'string':
-        Property({ type: 'string', ...po, default: str(options.default) })(
+        Property({ type: 'string', ...po, default: NULL_OBJECT(options.default) })(
           t,
           p
         );
-        __Column({ ...co, type: 'varchar', default: str(options.default) })(
+        __Column({ ...co, type: 'varchar', default: NULL_OBJECT(options.default) })(
           t,
           p
         );
@@ -63,7 +63,7 @@ export function Column(options: ColumnOptions): PropertyDecorator {
         break;
 
       case 'jsonb':
-        Property({ type: 'string', ...po, default: str(options.default) })(
+        Property({ type: 'string', ...po, default: NULL_OBJECT(options.default) })(
           t,
           p
         );

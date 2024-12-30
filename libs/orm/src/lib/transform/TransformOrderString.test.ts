@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { plainToClass } from 'class-transformer';
 import { TransformOrderString } from './TransformOrderString';
-import { IsValidHandler } from '@rline/utils';
 
 class TestClass {
   @TransformOrderString()

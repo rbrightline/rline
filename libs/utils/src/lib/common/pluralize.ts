@@ -1,4 +1,6 @@
 export function pluralize(word: string): string {
+  const lowercase = word.toLowerCase();
+
   const irregularPlurals: Record<string, string> = {
     child: 'children',
     person: 'people',
@@ -30,32 +32,32 @@ export function pluralize(word: string): string {
   ];
 
   // Check for uncountable words
-  if (uncountableWords.includes(word.toLowerCase())) {
+  if (uncountableWords.includes(lowercase)) {
     return word;
   }
 
   // Check for irregular plurals
-  if (irregularPlurals[word.toLowerCase()]) {
-    return irregularPlurals[word.toLowerCase()];
+  if (irregularPlurals[lowercase]) {
+    return irregularPlurals[lowercase];
   }
 
   // Regular pluralization rules
-  if (word.endsWith('y') && !/[aeiou]y$/i.test(word)) {
+  if (lowercase.endsWith('y') && !/[aeiou]y$/i.test(lowercase)) {
     // If the word ends with "y" and is preceded by a consonant
     return word.slice(0, -1) + 'ies';
   } else if (
-    word.endsWith('s') ||
-    word.endsWith('x') ||
-    word.endsWith('z') ||
-    word.endsWith('sh') ||
-    word.endsWith('ch')
+    lowercase.endsWith('s') ||
+    lowercase.endsWith('x') ||
+    lowercase.endsWith('z') ||
+    lowercase.endsWith('sh') ||
+    lowercase.endsWith('ch')
   ) {
     // If the word ends with "s", "x", "z", "sh", or "ch"
     return word + 'es';
-  } else if (word.endsWith('f')) {
+  } else if (lowercase.endsWith('f')) {
     // If the word ends with "f"
     return word.slice(0, -1) + 'ves';
-  } else if (word.endsWith('fe')) {
+  } else if (lowercase.endsWith('fe')) {
     // If the word ends with "fe"
     return word.slice(0, -2) + 'ves';
   } else {

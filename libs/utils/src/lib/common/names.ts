@@ -55,6 +55,7 @@ export type Names = {
  */
 export function names(resourceName: string): Names {
   let value = normalize(resourceName);
+
   return {
     camelCase: value
       .replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) =>

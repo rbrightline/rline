@@ -59,6 +59,8 @@ export function datasourceTestOptionsFactory(
     entitySkipConstructor: true,
     logging: false,
     namingStrategy: new DatabaseNamingStrategy(),
+    synchronize: true,
+    dropSchema: true,
     extra: {
       max: 10, // Max connections in the pool
       idleTimeoutMillis: 30000, // Close idle connections after 30 seconds

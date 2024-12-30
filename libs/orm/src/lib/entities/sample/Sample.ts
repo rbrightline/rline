@@ -9,14 +9,17 @@ import {
   obj,
   SampleModel,
   SampleModelObject,
-  str,
+  NULL_OBJECT,
 } from '@rline/type';
 import { Category } from '../category/Category';
 import { JoinColumn, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
 
 @Entity()
-export class Sample extends BaseEntity<Sample> implements SampleModel {
-  @Column({ type: 'string' }) sampleString = str();
+export class Sample
+  extends BaseEntity<Sample>
+  implements SampleModel<Category>
+{
+  @Column({ type: 'string' }) sampleString = NULL_OBJECT();
   @Column({ type: 'number' }) sampleNumber = num();
   @Column({ type: 'integer' }) sampleInteger = num();
   @Column({ type: 'date' }) sampleDate = date();

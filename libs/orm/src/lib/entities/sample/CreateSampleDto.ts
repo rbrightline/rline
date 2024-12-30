@@ -4,13 +4,14 @@ import {
   bool,
   CreateSampleModel,
   date,
+  IDModel,
   num,
   obj,
   SampleModelObject,
   str,
 } from '@rline/type';
 import { CreateSampleObjectDto } from './CreateSampleModelObjectDto';
-import { IDDto } from '../../query/IDDto';
+import { IDDto } from '../..//dto/IDDto';
 
 @Data()
 export class CreateSampleDto implements CreateSampleModel {
@@ -24,7 +25,7 @@ export class CreateSampleDto implements CreateSampleModel {
   @Property({ type: 'array', items: { type: 'string' } }) sampleArray =
     arr<string>();
 
-  @Property({ type: 'integer', minimum: 1 }) category = num();
+  @Property({ type: 'object' }, () => IDDto) category = obj<IDModel>();
 
   @Property({ type: 'array', items: { type: 'object' } }, () => IDDto)
   categories = arr<IDDto>();

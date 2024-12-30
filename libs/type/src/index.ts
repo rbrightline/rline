@@ -1,5 +1,4 @@
 // @index(['./**/*.ts', '!./**/*.{spec,test}.ts'], f => `export * from '${f.path}'`)
-export * from './lib/class/BaseModelClass';
 export * from './lib/constant/ConfigKey';
 export * from './lib/constant/OperationName';
 export * from './lib/model/ActiveModel';

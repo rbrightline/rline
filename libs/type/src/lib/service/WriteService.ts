@@ -7,14 +7,14 @@ import { UpdateResult } from '../results/UpdateResult';
  *
  * @template Entity - The type of the entity.
  */
-export interface WriteService<Entity> {
+export interface WriteService<Entity, CreateDto = Entity, UpdateDto = Entity> {
   /**
    * Saves the given entity.
    *
    * @param entity - The entity to save.
    * @returns A promise that resolves to the saved entity.
    */
-  save(entity: Entity): Promise<Entity>;
+  save(entity: CreateDto): Promise<Entity>;
 
   /**
    * Updates the entity with the given ID.
@@ -23,7 +23,7 @@ export interface WriteService<Entity> {
    * @param entity - The updated entity data.
    * @returns A promise that resolves to the result of the update operation.
    */
-  update(id: number, entity: Entity): Promise<UpdateResult>;
+  update(id: number, entity: UpdateDto): Promise<UpdateResult>;
 
   /**
    * Deletes the entity with the given ID.

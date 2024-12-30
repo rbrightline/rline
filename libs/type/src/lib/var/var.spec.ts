@@ -6,13 +6,12 @@ import {
   value,
   obj,
   arr,
-  nvalue,
-  nstr,
-  nnum,
-  nbool,
-  ndate,
-  nobj,
-  narr,
+  DEFAULT_STRING,
+  DEFAULT_NUMBER,
+  DEFAULT_DATE,
+  DEFAULT_BOOLEAN,
+  DEFAULT_OBJECT,
+  DEFAULT_ARRAY,
 } from './var';
 
 describe('var', () => {
@@ -39,14 +38,14 @@ describe('var', () => {
   describe('str', () => {
     it.each`
       defaultValue | expected
-      ${null}      | ${null}
-      ${undefined} | ${null}
+      ${null}      | ${DEFAULT_STRING}
+      ${undefined} | ${DEFAULT_STRING}
       ${''}        | ${''}
       ${'1'}       | ${'1'}
-      ${1}         | ${null}
-      ${true}      | ${null}
-      ${false}     | ${null}
-      ${dateValue} | ${null}
+      ${1}         | ${DEFAULT_STRING}
+      ${true}      | ${DEFAULT_STRING}
+      ${false}     | ${DEFAULT_STRING}
+      ${dateValue} | ${DEFAULT_STRING}
     `(
       'str($defaultValue) should return $expected',
       ({ defaultValue, expected }) => {
@@ -58,14 +57,14 @@ describe('var', () => {
   describe('num', () => {
     it.each`
       defaultValue | expected
-      ${null}      | ${null}
-      ${undefined} | ${null}
-      ${''}        | ${null}
-      ${'1'}       | ${null}
+      ${null}      | ${DEFAULT_NUMBER}
+      ${undefined} | ${DEFAULT_NUMBER}
+      ${''}        | ${DEFAULT_NUMBER}
+      ${'1'}       | ${DEFAULT_NUMBER}
       ${1}         | ${1}
-      ${true}      | ${null}
-      ${false}     | ${null}
-      ${dateValue} | ${null}
+      ${true}      | ${DEFAULT_NUMBER}
+      ${false}     | ${DEFAULT_NUMBER}
+      ${dateValue} | ${DEFAULT_NUMBER}
     `(
       'num($defaultValue) should return $expected',
       ({ defaultValue, expected }) => {
@@ -76,14 +75,14 @@ describe('var', () => {
   describe('bool', () => {
     it.each`
       defaultValue | expected
-      ${null}      | ${null}
-      ${undefined} | ${null}
-      ${''}        | ${null}
-      ${'1'}       | ${null}
-      ${1}         | ${null}
+      ${null}      | ${DEFAULT_BOOLEAN}
+      ${undefined} | ${DEFAULT_BOOLEAN}
+      ${''}        | ${DEFAULT_BOOLEAN}
+      ${'1'}       | ${DEFAULT_BOOLEAN}
+      ${1}         | ${DEFAULT_BOOLEAN}
       ${true}      | ${true}
       ${false}     | ${false}
-      ${dateValue} | ${null}
+      ${dateValue} | ${DEFAULT_BOOLEAN}
     `(
       'bool($defaultValue) should return $expected',
       ({ defaultValue, expected }) => {
@@ -94,13 +93,13 @@ describe('var', () => {
   describe('date', () => {
     it.each`
       defaultValue | expected
-      ${null}      | ${null}
-      ${undefined} | ${null}
-      ${''}        | ${null}
-      ${'1'}       | ${null}
-      ${1}         | ${null}
-      ${true}      | ${null}
-      ${false}     | ${null}
+      ${null}      | ${DEFAULT_DATE}
+      ${undefined} | ${DEFAULT_DATE}
+      ${''}        | ${DEFAULT_DATE}
+      ${'1'}       | ${DEFAULT_DATE}
+      ${1}         | ${DEFAULT_DATE}
+      ${true}      | ${DEFAULT_DATE}
+      ${false}     | ${DEFAULT_DATE}
       ${dateValue} | ${dateValue}
     `(
       'date($defaultValue) should return $expected',
@@ -112,14 +111,14 @@ describe('var', () => {
   describe('object', () => {
     it.each`
       defaultValue        | expected
-      ${null}             | ${null}
-      ${undefined}        | ${null}
-      ${''}               | ${null}
-      ${'1'}              | ${null}
-      ${1}                | ${null}
-      ${true}             | ${null}
-      ${false}            | ${null}
-      ${[]}               | ${null}
+      ${null}             | ${DEFAULT_OBJECT}
+      ${undefined}        | ${DEFAULT_OBJECT}
+      ${''}               | ${DEFAULT_OBJECT}
+      ${'1'}              | ${DEFAULT_OBJECT}
+      ${1}                | ${DEFAULT_OBJECT}
+      ${true}             | ${DEFAULT_OBJECT}
+      ${false}            | ${DEFAULT_OBJECT}
+      ${[]}               | ${DEFAULT_OBJECT}
       ${{}}               | ${{}}
       ${{ name: 'name' }} | ${{ name: 'name' }}
     `(
@@ -132,16 +131,16 @@ describe('var', () => {
   describe('array', () => {
     it.each`
       defaultValue        | expected
-      ${null}             | ${null}
-      ${undefined}        | ${null}
-      ${''}               | ${null}
-      ${'1'}              | ${null}
-      ${1}                | ${null}
-      ${true}             | ${null}
-      ${false}            | ${null}
-      ${{ name: 'name' }} | ${null}
+      ${null}             | ${DEFAULT_ARRAY}
+      ${undefined}        | ${DEFAULT_ARRAY}
+      ${''}               | ${DEFAULT_ARRAY}
+      ${'1'}              | ${DEFAULT_ARRAY}
+      ${1}                | ${DEFAULT_ARRAY}
+      ${true}             | ${DEFAULT_ARRAY}
+      ${false}            | ${DEFAULT_ARRAY}
+      ${{ name: 'name' }} | ${DEFAULT_ARRAY}
       ${[]}               | ${[]}
-      ${{}}               | ${null}
+      ${{}}               | ${DEFAULT_ARRAY}
     `(
       'obj($defaultValue) should return $expected',
       ({ defaultValue, expected }) => {
@@ -149,281 +148,15 @@ describe('var', () => {
       }
     );
   });
-});
 
-describe('var', () => {
-  let dateValue = new Date();
-  describe('value', () => {
-    it.each`
-      defaultValue | expected
-      ${null}      | ${null}
-      ${undefined} | ${null}
-      ${''}        | ${''}
-      ${'1'}       | ${'1'}
-      ${1}         | ${1}
-      ${true}      | ${true}
-      ${false}     | ${false}
-      ${dateValue} | ${dateValue}
-    `(
-      'value($defaultValue) should return $expected',
-      ({ defaultValue, expected }) => {
-        expect(value(defaultValue)).toEqual(expected);
-      }
-    );
-  });
+  it('should be defined', () => {
+    class A {
+      value?: string = '';
+    }
+    const ins = new A();
+    console.log(typeof ins.value);
+    console.log(Object.keys(ins));
 
-  describe('str', () => {
-    it.each`
-      defaultValue | expected
-      ${null}      | ${null}
-      ${undefined} | ${null}
-      ${''}        | ${''}
-      ${'1'}       | ${'1'}
-      ${1}         | ${null}
-      ${true}      | ${null}
-      ${false}     | ${null}
-      ${dateValue} | ${null}
-    `(
-      'str($defaultValue) should return $expected',
-      ({ defaultValue, expected }) => {
-        expect(str(defaultValue)).toEqual(expected);
-      }
-    );
-  });
-
-  describe('num', () => {
-    it.each`
-      defaultValue | expected
-      ${null}      | ${null}
-      ${undefined} | ${null}
-      ${''}        | ${null}
-      ${'1'}       | ${null}
-      ${1}         | ${1}
-      ${true}      | ${null}
-      ${false}     | ${null}
-      ${dateValue} | ${null}
-    `(
-      'num($defaultValue) should return $expected',
-      ({ defaultValue, expected }) => {
-        expect(num(defaultValue)).toEqual(expected);
-      }
-    );
-  });
-
-  describe('bool', () => {
-    it.each`
-      defaultValue | expected
-      ${null}      | ${null}
-      ${undefined} | ${null}
-      ${''}        | ${null}
-      ${'1'}       | ${null}
-      ${1}         | ${null}
-      ${true}      | ${true}
-      ${false}     | ${false}
-      ${dateValue} | ${null}
-    `(
-      'bool($defaultValue) should return $expected',
-      ({ defaultValue, expected }) => {
-        expect(bool(defaultValue)).toEqual(expected);
-      }
-    );
-  });
-
-  describe('date', () => {
-    it.each`
-      defaultValue | expected
-      ${null}      | ${null}
-      ${undefined} | ${null}
-      ${''}        | ${null}
-      ${'1'}       | ${null}
-      ${1}         | ${null}
-      ${true}      | ${null}
-      ${false}     | ${null}
-      ${dateValue} | ${dateValue}
-    `(
-      'date($defaultValue) should return $expected',
-      ({ defaultValue, expected }) => {
-        expect(date(defaultValue)).toEqual(expected);
-      }
-    );
-  });
-
-  describe('object', () => {
-    it.each`
-      defaultValue        | expected
-      ${null}             | ${null}
-      ${undefined}        | ${null}
-      ${''}               | ${null}
-      ${'1'}              | ${null}
-      ${1}                | ${null}
-      ${true}             | ${null}
-      ${false}            | ${null}
-      ${[]}               | ${null}
-      ${{}}               | ${{}}
-      ${{ name: 'name' }} | ${{ name: 'name' }}
-    `(
-      'obj($defaultValue) should return $expected',
-      ({ defaultValue, expected }) => {
-        expect(obj(defaultValue)).toEqual(expected);
-      }
-    );
-  });
-
-  describe('array', () => {
-    it.each`
-      defaultValue        | expected
-      ${null}             | ${null}
-      ${undefined}        | ${null}
-      ${''}               | ${null}
-      ${'1'}              | ${null}
-      ${1}                | ${null}
-      ${true}             | ${null}
-      ${false}            | ${null}
-      ${{ name: 'name' }} | ${null}
-      ${[]}               | ${[]}
-      ${{}}               | ${null}
-    `(
-      'arr($defaultValue) should return $expected',
-      ({ defaultValue, expected }) => {
-        expect(arr(defaultValue)).toEqual(expected);
-      }
-    );
-  });
-
-  describe('nvalue', () => {
-    it.each`
-      defaultValue | expected
-      ${null}      | ${undefined}
-      ${undefined} | ${undefined}
-      ${''}        | ${''}
-      ${'1'}       | ${'1'}
-      ${1}         | ${1}
-      ${true}      | ${true}
-      ${false}     | ${false}
-      ${dateValue} | ${dateValue}
-    `(
-      'nvalue($defaultValue) should return $expected',
-      ({ defaultValue, expected }) => {
-        expect(nvalue(defaultValue)).toEqual(expected);
-      }
-    );
-  });
-
-  describe('nstr', () => {
-    it.each`
-      defaultValue | expected
-      ${null}      | ${undefined}
-      ${undefined} | ${undefined}
-      ${''}        | ${''}
-      ${'1'}       | ${'1'}
-      ${1}         | ${undefined}
-      ${true}      | ${undefined}
-      ${false}     | ${undefined}
-      ${dateValue} | ${undefined}
-    `(
-      'nstr($defaultValue) should return $expected',
-      ({ defaultValue, expected }) => {
-        expect(nstr(defaultValue)).toEqual(expected);
-      }
-    );
-  });
-
-  describe('nnum', () => {
-    it.each`
-      defaultValue | expected
-      ${null}      | ${undefined}
-      ${undefined} | ${undefined}
-      ${''}        | ${undefined}
-      ${'1'}       | ${undefined}
-      ${1}         | ${1}
-      ${true}      | ${undefined}
-      ${false}     | ${undefined}
-      ${dateValue} | ${undefined}
-    `(
-      'nnum($defaultValue) should return $expected',
-      ({ defaultValue, expected }) => {
-        expect(nnum(defaultValue)).toEqual(expected);
-      }
-    );
-  });
-
-  describe('nbool', () => {
-    it.each`
-      defaultValue | expected
-      ${null}      | ${undefined}
-      ${undefined} | ${undefined}
-      ${''}        | ${undefined}
-      ${'1'}       | ${undefined}
-      ${1}         | ${undefined}
-      ${true}      | ${true}
-      ${false}     | ${false}
-      ${dateValue} | ${undefined}
-    `(
-      'nbool($defaultValue) should return $expected',
-      ({ defaultValue, expected }) => {
-        expect(nbool(defaultValue)).toEqual(expected);
-      }
-    );
-  });
-
-  describe('ndate', () => {
-    it.each`
-      defaultValue | expected
-      ${null}      | ${undefined}
-      ${undefined} | ${undefined}
-      ${''}        | ${undefined}
-      ${'1'}       | ${undefined}
-      ${1}         | ${undefined}
-      ${true}      | ${undefined}
-      ${false}     | ${undefined}
-      ${dateValue} | ${dateValue}
-    `(
-      'ndate($defaultValue) should return $expected',
-      ({ defaultValue, expected }) => {
-        expect(ndate(defaultValue)).toEqual(expected);
-      }
-    );
-  });
-
-  describe('nobject', () => {
-    it.each`
-      defaultValue        | expected
-      ${null}             | ${undefined}
-      ${undefined}        | ${undefined}
-      ${''}               | ${undefined}
-      ${'1'}              | ${undefined}
-      ${1}                | ${undefined}
-      ${true}             | ${undefined}
-      ${false}            | ${undefined}
-      ${[]}               | ${undefined}
-      ${{}}               | ${{}}
-      ${{ name: 'name' }} | ${{ name: 'name' }}
-    `(
-      'nobj($defaultValue) should return $expected',
-      ({ defaultValue, expected }) => {
-        expect(nobj(defaultValue)).toEqual(expected);
-      }
-    );
-  });
-
-  describe('narray', () => {
-    it.each`
-      defaultValue        | expected
-      ${null}             | ${undefined}
-      ${undefined}        | ${undefined}
-      ${''}               | ${undefined}
-      ${'1'}              | ${undefined}
-      ${1}                | ${undefined}
-      ${true}             | ${undefined}
-      ${false}            | ${undefined}
-      ${{ name: 'name' }} | ${undefined}
-      ${[]}               | ${[]}
-      ${{}}               | ${undefined}
-    `(
-      'narr($defaultValue) should return $expected',
-      ({ defaultValue, expected }) => {
-        expect(narr(defaultValue)).toEqual(expected);
-      }
-    );
+    expect(Object.keys(new A()).includes('value')).toBe(true);
   });
 });
