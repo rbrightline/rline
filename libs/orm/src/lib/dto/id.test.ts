@@ -7,9 +7,9 @@ describe('IDDto', () => {
     expect(dto).toBeInstanceOf(IDDto);
   });
 
-  it('should have an id property with a default value of 0', () => {
+  it('should have an id property with a default undefined', () => {
     const dto = new IDDto();
-    expect(dto.id).toBeNull();
+    expect(dto.id).toBeUndefined();
   });
 
   it('should allow setting a valid id', () => {

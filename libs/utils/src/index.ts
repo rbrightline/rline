@@ -16,4 +16,5 @@ export * from './lib/query/parse-query-string';
 export * from './lib/query/query-item';
 export * from './lib/query/query-string-builder';
 export * from './lib/query/query-string-delimeter';
+export * from './lib/query/rnd';
 export * from './lib/rest/rest-paths';

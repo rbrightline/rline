@@ -12,5 +12,5 @@ import { TimestampEntity } from './timestamp';
 import { Column } from '../orm/column';
 
 export class ActiveEntity extends TimestampEntity implements ActiveModel {
-  @Column({ type: 'boolean', nullable: true }) active?: boolean;
+  @Column({ type: 'boolean' }) active?: boolean;
 }

@@ -1,17 +1,24 @@
 import { Property } from '@rline/property';
 
-import { Column as __Column, ColumnOptions } from 'typeorm';
+import {
+  Column as __Column,
+  ColumnOptions as TypeOrmColumnOptions,
+} from 'typeorm';
+
+export type ColumnOptions = Omit<TypeOrmColumnOptions, 'nullable'> & {
+  required?: boolean;
+};
 
 export function Column(options: ColumnOptions): PropertyDecorator {
   return (t, p) => {
     const type = options.type;
 
     const po = {
-      required: options.nullable == true ? false : true,
+      required: options.required == true,
     };
 
-    const co: ColumnOptions = {
-      nullable: options.nullable,
+    const co: TypeOrmColumnOptions = {
+      nullable: options.required == true ? false : true,
       unique: options.unique,
       default: options.default,
     };

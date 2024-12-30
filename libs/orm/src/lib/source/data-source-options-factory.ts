@@ -62,8 +62,8 @@ export function datasourceTestOptionsFactory(
     synchronize: true,
     dropSchema: true,
     extra: {
-      max: 10, // Max connections in the pool
-      idleTimeoutMillis: 30000, // Close idle connections after 30 seconds
+      max: 20, // Max connections in the pool
+      idleTimeoutMillis: 1, // Close idle connections after 1 seconds
     },
   };
 }

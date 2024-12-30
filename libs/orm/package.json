@@ -1,6 +1,6 @@
 {
   "name": "@rline/orm",
-  "version": "4.7.0",
+  "version": "5.0.0",
   "author": {
     "name": "Robert Brightline",
     "email": "robert.brightline@gmail.com",
@@ -19,11 +19,12 @@
     "typeorm": "^0.3.20"
   },
   "dependencies": {
-    "@rline/property": "workspace:*",
-    "@rline/type": "workspace:*",
-    "@rline/utils": "workspace:^",
-    "@rline/validation": "workspace:*",
-    "@swc/helpers": "~0.5.11"
+    "@rline/property": "5.0.0",
+    "@rline/type": "5.0.0",
+    "@rline/utils": "5.0.0",
+    "@rline/validation": "5.0.0",
+    "@swc/helpers": "~0.5.11",
+    "uuid": "^11.0.3"
   },
   "type": "commonjs",
   "main": "./dist/index.js",
@@ -62,6 +63,7 @@
     "name": "orm"
   },
   "devDependencies": {
+    "@types/uuid": "^10.0.0",
     "better-sqlite3": "^11.7.0",
     "pg": "^8.13.1"
   }

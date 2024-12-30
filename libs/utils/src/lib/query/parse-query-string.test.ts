@@ -5,8 +5,10 @@ describe('parseQueryString', () => {
   const mockOperatorPicker = (operator: string, value: any) =>
     `${operator}:${value}`;
 
-  it('should return null for invalid query string', () => {
-    expect(parseQueryString('invalid-query', mockOperatorPicker)).toBeNull();
+  it('should return undefined for invalid query string', () => {
+    expect(
+      parseQueryString('invalid-query', mockOperatorPicker)
+    ).toBeUndefined();
   });
 
   it('should parse a valid query string', () => {
@@ -18,7 +20,7 @@ describe('parseQueryString', () => {
   it('should NOT handle different operators', () => {
     const queryString = 'age::gt::30';
     const result = parseQueryString(queryString, mockOperatorPicker);
-    expect(result).toEqual(null);
+    expect(result).toBeUndefined();
   });
 
   it('should handle different value types', () => {
@@ -27,7 +29,7 @@ describe('parseQueryString', () => {
     expect(result).toEqual({ active: 'eq:true' });
   });
 
-  it('should return null if query string is empty', () => {
-    expect(parseQueryString('', mockOperatorPicker)).toBeNull();
+  it('should return undefined if query string is empty', () => {
+    expect(parseQueryString('', mockOperatorPicker)).toBeUndefined();
   });
 });

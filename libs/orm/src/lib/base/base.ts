@@ -10,7 +10,7 @@ import { ActiveEntity } from './active';
 import { Column } from '../orm/column';
 
 export class BaseEntity extends ActiveEntity implements BaseModel {
-  @Column({ type: 'string', nullable: true }) info?: string;
-  @Column({ type: 'integer', nullable: true }) createdBy?: number;
-  @Column({ type: 'integer', nullable: true }) updatedBy?: number;
+  @Column({ type: 'string' }) info?: string;
+  @Column({ type: 'integer' }) createdBy?: number;
+  @Column({ type: 'integer' }) updatedBy?: number;
 }

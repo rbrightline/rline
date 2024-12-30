@@ -11,17 +11,17 @@ import { isOrderString } from './is-order-string';
 export function parseOrderString<T>(
   orderString: string,
   isValidPRoperty?: (property: string) => boolean
-): Record<keyof T, 'ASC' | 'DESC'> | null {
+): Record<keyof T, 'ASC' | 'DESC'> | undefined {
   if (isOrderString(orderString) === false) {
     console.debug(`Invalid order string ${orderString}`);
-    return null;
+    return undefined;
   }
 
   const [property, direction] = orderString.split('::');
 
   if (isValidPRoperty && !isValidPRoperty(property)) {
     console.debug(`Invalid property  ${property}`);
-    return null;
+    return undefined;
   }
 
   return {

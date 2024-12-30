@@ -93,14 +93,24 @@ export function TransformWhereString(): PropertyDecorator {
       if (Array.isArray(value)) {
         return value
           .map((v) => {
-            if (typeof v !== 'string') return v;
-            return parseQueryString(v, transformWhereString);
+            if (typeof v == 'string') {
+              return parseQueryString(v, transformWhereString);
+            }
+            return undefined;
           })
+          .filter((value) => value)
           .reduce((acc, cur) => ({ ...acc, ...cur }), {});
       }
 
-      if (typeof value !== 'string') return value;
-      return parseQueryString(value, transformWhereString);
+      if (typeof value === 'string') {
+        return parseQueryString(value, transformWhereString);
+      }
+
+      if (typeof value === 'object') {
+        return value;
+      }
+
+      return undefined;
     })(t, p);
   };
 }

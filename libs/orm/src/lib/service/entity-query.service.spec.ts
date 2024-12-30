@@ -4,7 +4,7 @@ import { EntityQueryService } from './enetity-query.service';
 import { datasourceTestOptionsFactory } from '../source/data-source-options-factory';
 import { Sample } from '../entities/sample/sample';
 import { Category } from '../entities/category/category';
-import { repeat } from '@rline/utils';
+import { repeat, rnd } from '@rline/utils';
 
 describe('EntityQueryService', () => {
   let ds: DataSource;
@@ -21,13 +21,15 @@ describe('EntityQueryService', () => {
     sampleService = new EntityQueryService(sampleRepo);
 
     let samplePromiess = repeat(10, async (index) => {
+      let uniqueString = rnd();
       return sampleRepo.save({
+        uniqueString,
         sampleString: `test ${index}`,
         sampleNumber: index,
         sampleInteger: index,
         sampleDate: new Date(),
         sampleBoolean: true,
-        sampleStringArray: ['test', 'test'],
+        sampleArray: ['test', 'test'],
       });
     });
 
@@ -110,9 +112,13 @@ describe('EntityQueryService', () => {
   });
 
   it('should count entities', async () => {
-    const count = await sampleService.count({
+    let count = await sampleService.count({
       where: { sampleString: ILike('test%') },
     });
     expect(count).toEqual({ count: 10 });
+    count = await sampleService.count({
+      where: { sampleString: ILike('test 1') },
+    });
+    expect(count).toEqual({ count: 1 });
   });
 });

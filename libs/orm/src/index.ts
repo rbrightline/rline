@@ -27,6 +27,7 @@ export * from './lib/orm/column';
 export * from './lib/orm/entity';
 export * from './lib/orm/naming-strategy';
 export * from './lib/orm/order-query-property';
+export * from './lib/orm/relation';
 export * from './lib/orm/relations';
 export * from './lib/orm/view-column';
 export * from './lib/orm/view-entity';
