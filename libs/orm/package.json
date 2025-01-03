@@ -1,6 +1,6 @@
 {
   "name": "@rline/orm",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "author": {
     "name": "Robert Brightline",
     "email": "robert.brightline@gmail.com",
@@ -19,10 +19,10 @@
     "typeorm": "^0.3.20"
   },
   "dependencies": {
-    "@rline/property": "workspace:*",
-    "@rline/type": "workspace:*",
-    "@rline/utils": "workspace:*",
-    "@rline/validation": "workspace:*",
+    "@rline/property": "5.2.0",
+    "@rline/type": "5.2.0",
+    "@rline/utils": "5.2.0",
+    "@rline/validation": "5.2.0",
     "@swc/helpers": "~0.5.11",
     "uuid": "^11.0.3"
   },

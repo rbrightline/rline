@@ -1,5 +1,10 @@
 import { ActiveModel } from './active';
 
+export type BaseModelRaw = {
+  info?: string;
+  updatedBy?: number;
+};
+
 /**
  * Represents the base model which extends the ActiveModel.
  *
@@ -8,7 +13,4 @@ import { ActiveModel } from './active';
  * @property {string} info - Additional information related to the model.
  * @property {number} updatedBy - Identifier of the user who last updated the model.
  */
-export type BaseModel = ActiveModel & {
-  info?: string;
-  updatedBy?: number;
-};
+export type BaseModel = ActiveModel & BaseModelRaw;

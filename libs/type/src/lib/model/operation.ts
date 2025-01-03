@@ -1,3 +1,4 @@
+import { BaseModelRaw } from './base';
 import { TimestampModel } from './timestamp';
 
 export type OperationModelData = {
@@ -5,12 +6,12 @@ export type OperationModelData = {
   newData?: any;
 };
 
-export type OperationModel = TimestampModel & {
-  data?: OperationModelData;
+export type OperationModelRaw = {
+  data: OperationModelData;
 };
 
-export type CreateOperationModel = {
-  data?: OperationModelData;
-};
+export type OperationModel = BaseModelRaw & TimestampModel & OperationModelRaw;
 
-export type UpdateOperationModel = CreateOperationModel;
+export type CreateOperationModel = OperationModelRaw & BaseModelRaw;
+
+export type UpdateOperationModel = Partial<CreateOperationModel>;
