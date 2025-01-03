@@ -6,5 +6,5 @@
  */
 
 export type IDModel = {
-  id?: number;
+  id: number;
 };

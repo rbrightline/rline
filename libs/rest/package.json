@@ -8,9 +8,9 @@
     "typeorm": "^0.3.20"
   },
   "dependencies": {
-    "@rline/orm": "5.2.0",
-    "@rline/type": "5.2.0",
-    "@rline/utils": "5.2.0",
+    "@rline/orm": "workspace:*",
+    "@rline/type": "workspace:*",
+    "@rline/utils": "workspace:*",
     "@swc/helpers": "~0.5.11"
   },
   "type": "commonjs",

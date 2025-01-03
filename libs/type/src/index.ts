@@ -1,5 +1,16 @@
 // @index(['./**/*.ts', '!./**/*.{spec,test}.ts'], f => `export * from '${f.path}'`)
+export * from './lib/auth/auth-login.service';
+export * from './lib/auth/auth.service';
+export * from './lib/auth/jwt-payload';
+export * from './lib/auth/jwt.service';
+export * from './lib/auth/login.service';
+export * from './lib/auth/login';
+export * from './lib/auth/password.service';
+export * from './lib/auth/resovery.service';
+export * from './lib/auth/signup.service';
+export * from './lib/auth/uuid.service';
 export * from './lib/constant/config-keys';
+export * from './lib/constant/metadata';
 export * from './lib/constant/operation-names';
 export * from './lib/model/accesst-token';
 export * from './lib/model/active';

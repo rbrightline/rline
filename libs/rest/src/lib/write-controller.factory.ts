@@ -28,6 +28,9 @@ import {
 import { restPaths } from '@rline/utils';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity.js';
 import { RestExceptionFilter } from './rest-exception.filter';
+import { ResourceName } from './decorator/resource-name.metadata';
+import { ResourceOperationName } from './decorator/resource-operation-name.metadata';
+import { OperationName } from '@rline/type';
 
 export interface WriteControllerInterface<Entity extends ObjectLiteral> {
   save(body: DeepPartial<Entity>): Promise<Entity>;
@@ -46,6 +49,7 @@ export function WriteControllerFactory<Entity extends ObjectLiteral>(
 ): Type<WriteControllerInterface<Entity>> {
   const R = restPaths(entity.name)!;
 
+  @ResourceName(entity.name)
   @UseFilters(RestExceptionFilter)
   @ApiTags(entity.name)
   @ApiBearerAuth()
@@ -56,6 +60,7 @@ export function WriteControllerFactory<Entity extends ObjectLiteral>(
       protected readonly service: EntityWriteService<Entity>
     ) {}
 
+    @ResourceOperationName(OperationName.WRITE)
     @ApiOperation({ summary: 'Save entity' })
     @ApiCreatedResponse({ type: entity, example: new entity() })
     @ApiBody({ type: createDto })
@@ -64,6 +69,7 @@ export function WriteControllerFactory<Entity extends ObjectLiteral>(
       return this.service.save(body);
     }
 
+    @ResourceOperationName(OperationName.UPDATE)
     @ApiOperation({ summary: 'Update entity' })
     @ApiOkResponse({ type: UpdateResultDto, example: new UpdateResultDto() })
     @ApiBody({ type: updateDto })
@@ -75,6 +81,7 @@ export function WriteControllerFactory<Entity extends ObjectLiteral>(
       return this.service.update(id, body);
     }
 
+    @ResourceOperationName(OperationName.DELETE)
     @ApiOperation({ summary: 'Delete entity' })
     @ApiOkResponse({ type: DeleteResultDto, example: new DeleteResultDto() })
     @Delete(R.id)
@@ -82,6 +89,7 @@ export function WriteControllerFactory<Entity extends ObjectLiteral>(
       return this.service.delete(id);
     }
 
+    @ResourceOperationName(OperationName.DELETE)
     @ApiOperation({ summary: 'Restore a deleted entity' })
     @ApiOkResponse({ type: UpdateResultDto, example: new UpdateResultDto() })
     @Post(R.id)

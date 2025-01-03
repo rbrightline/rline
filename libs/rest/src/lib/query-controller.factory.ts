@@ -28,6 +28,9 @@ import {
 
 import { restPaths } from '@rline/utils';
 import { RestExceptionFilter } from './rest-exception.filter';
+import { ResourceName } from './decorator/resource-name.metadata';
+import { ResourceOperationName } from './decorator/resource-operation-name.metadata';
+import { OperationName } from '@rline/type';
 
 export interface QueryControllerInterface<T extends ObjectLiteral> {
   findAll(query: FindManyOptionsDto<T>): Promise<T[]>;
@@ -43,6 +46,7 @@ export function QueryControllerFactory<T extends ObjectLiteral>(
   @UseFilters(RestExceptionFilter)
   @ApiTags(entity.name + ' Query')
   @ApiBearerAuth()
+  @ResourceName(entity.name)
   @Controller()
   class QueryController<T extends ObjectLiteral>
     implements QueryControllerInterface<T>
@@ -52,6 +56,7 @@ export function QueryControllerFactory<T extends ObjectLiteral>(
       protected readonly service: EntityQueryService<T>
     ) {}
 
+    @ResourceOperationName(OperationName.READ)
     @ApiOperation({ summary: 'Find all' })
     @ApiOkResponse({ type: [entity], example: [new entity(), new entity()] })
     @Get(R.plural)
@@ -59,6 +64,7 @@ export function QueryControllerFactory<T extends ObjectLiteral>(
       return this.service.findAll(query);
     }
 
+    @ResourceOperationName(OperationName.READ)
     @ApiOperation({ summary: 'Find one by id' })
     @ApiOkResponse({ type: entity, example: new entity() })
     @ApiNotFoundResponse({ description: `Entity with the id not found` })
@@ -74,6 +80,7 @@ export function QueryControllerFactory<T extends ObjectLiteral>(
       return found;
     }
 
+    @ResourceOperationName(OperationName.READ)
     @ApiOperation({ summary: 'Count' })
     @ApiOkResponse({ type: CountResultDto, example: { count: 0 } })
     @Get(R.count)

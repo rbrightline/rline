@@ -3,7 +3,7 @@ import { UserModel } from './user';
 
 export type SeesionModelRaw = {
   deviceId: string;
-  token: string;
+  permissions: string;
 };
 
 export type SessionModelRelations<TUser = UserModel> = {

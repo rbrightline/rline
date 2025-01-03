@@ -9,13 +9,13 @@ export type TimestampModel = IDModel & {
    * The date and time when the entity was created.
    * This can be null if the entity has not been created yet.
    */
-  createdAt?: Date;
+  createdAt: Date;
 
   /**
    * The date and time when the entity was last updated.
    * This can be null if the entity has not been updated yet.
    */
-  updatedAt?: Date;
+  updatedAt: Date;
 
   /**
    * The date and time when the entity was deleted.

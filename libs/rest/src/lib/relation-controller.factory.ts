@@ -32,6 +32,9 @@ import {
 
 import { restPaths } from '@rline/utils';
 import { RestExceptionFilter } from './rest-exception.filter';
+import { ResourceName } from './decorator/resource-name.metadata';
+import { ResourceOperationName } from './decorator/resource-operation-name.metadata';
+import { OperationName } from '@rline/type';
 
 export interface RelationControllerInterface<Entity extends ObjectLiteral> {
   findByRelation(
@@ -55,6 +58,7 @@ export function RelationControllerFactory<T extends ObjectLiteral>(
 
   @UseFilters(RestExceptionFilter)
   @ApiTags(entity.name + ' Relations')
+  @ResourceName(entity.name)
   @ApiBearerAuth()
   @Controller()
   class RelationController<T extends ObjectLiteral>
@@ -65,6 +69,7 @@ export function RelationControllerFactory<T extends ObjectLiteral>(
       protected readonly service: EntityRelationService<T>
     ) {}
 
+    @ResourceOperationName(OperationName.READ)
     @ApiOperation({ summary: 'Find by relation id' })
     @ApiOkResponse({ type: [entity], example: [new entity(), new entity()] })
     @Get(R.relation)
@@ -75,6 +80,7 @@ export function RelationControllerFactory<T extends ObjectLiteral>(
       return this.service.findByRelation(params, query);
     }
 
+    @ResourceOperationName(OperationName.UPDATE)
     @ApiOperation({ summary: 'Add relation (x-to-many)' })
     @ApiOkResponse({ type: UpdateResultDto, example: new UpdateResultDto() })
     @Put(R.relationId)
@@ -82,6 +88,7 @@ export function RelationControllerFactory<T extends ObjectLiteral>(
       return this.service.addRelation(params);
     }
 
+    @ResourceOperationName(OperationName.UPDATE)
     @ApiOperation({ summary: 'Remove relation (x-to-many)' })
     @ApiOkResponse({ type: UpdateResultDto, example: new UpdateResultDto() })
     @Delete(R.relationId)
@@ -89,6 +96,7 @@ export function RelationControllerFactory<T extends ObjectLiteral>(
       return this.service.removeRelation(params);
     }
 
+    @ResourceOperationName(OperationName.UPDATE)
     @ApiOperation({ summary: 'Set relation (x-to-one)' })
     @ApiOkResponse({ type: UpdateResultDto, example: new UpdateResultDto() })
     @Post(R.relationId)
@@ -96,6 +104,7 @@ export function RelationControllerFactory<T extends ObjectLiteral>(
       return this.service.setRelation(params);
     }
 
+    @ResourceOperationName(OperationName.UPDATE)
     @ApiOperation({ summary: 'Unset relation (x-to-one)' })
     @ApiOkResponse({ type: UpdateResultDto, example: new UpdateResultDto() })
     @Delete(R.relation)
@@ -103,6 +112,7 @@ export function RelationControllerFactory<T extends ObjectLiteral>(
       return this.service.unsetRelation(params);
     }
 
+    @ResourceOperationName(OperationName.READ)
     @ApiOperation({ summary: 'Count by relation id' })
     @ApiOkResponse({ type: CountResultDto, example: new CountResultDto() })
     @Get(R.relationId)
