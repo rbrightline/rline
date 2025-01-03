@@ -112,9 +112,9 @@ describe('Property', () => {
       ${{ type: 'object' }}                           | ${{ value: [] }}   | ${['isObject']}
       ${{ type: 'array', items: { type: 'string' } }} | ${{ value: [] }}   | ${undefined}
       ${{ type: 'array', items: { type: 'string' } }} | ${{ value: {} }}   | ${['isArray', 'isString']}
-      ${{ type: 'array', items: { type: 'string' } }} | ${{ value: 1 }}    | ${['isArray', 'isString', 'nestedValidation']}
-      ${{ type: 'array', items: { type: 'string' } }} | ${{ value: true }} | ${['isArray', 'isString', 'nestedValidation']}
-      ${{ type: 'array', items: { type: 'string' } }} | ${{ value: '1' }}  | ${['isArray', 'nestedValidation']}
+      ${{ type: 'array', items: { type: 'string' } }} | ${{ value: 1 }}    | ${['isArray', 'isString']}
+      ${{ type: 'array', items: { type: 'string' } }} | ${{ value: true }} | ${['isArray', 'nestedValidation']}
+      ${{ type: 'array', items: { type: 'string' } }} | ${{ value: '1' }}  | ${['isArray']}
     `(
       'should validate $data with $options and throw $errors',
       ({ options, data, errors }) => {

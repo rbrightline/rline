@@ -18,8 +18,6 @@ export function ArrayValidation(
     if (!options.items)
       throw new Error('items property is required for array property');
 
-    IsArray()(t, p);
-
     if (options.items.type === 'object') {
       if (!target)
         throw new Error(
@@ -33,7 +31,9 @@ export function ArrayValidation(
       DefaultValueTransform(options.default)(t, p);
     }
 
+    IsArray()(t, p);
     Validation(options.items, { each: true }, target)(t, p);
+
     options.minSize && ArrayMinSize(options.minSize)(t, p);
     options.maxSize && ArrayMaxSize(options.maxSize)(t, p);
   };

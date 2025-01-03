@@ -19,7 +19,7 @@ describe('restPaths', () => {
   });
 
   it('should generate correct paths with prefix', () => {
-    const name = 'user';
+    const name = 'User';
     const prefix = 'api';
     const expected: RestApiPaths = {
       plural: 'api/users',

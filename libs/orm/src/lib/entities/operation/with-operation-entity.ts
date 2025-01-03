@@ -2,7 +2,7 @@ import { JoinTable, OneToMany } from 'typeorm';
 
 import { Operation } from './operation';
 import { Property } from '@rline/property';
-import { ActiveEntity } from '../../base/active';
+import { ActiveEntity } from '../../base/active.entity';
 
 export class WithOperationEntity<T> extends ActiveEntity {
   @Property({ type: 'array', items: { type: 'object' } }, () => Operation)

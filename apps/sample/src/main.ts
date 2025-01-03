@@ -1,8 +1,3 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
 import {
   Logger,
   UnprocessableEntityException,
@@ -11,37 +6,67 @@ import {
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ConfigService } from '@nestjs/config';
+import { ConfigKeys } from '@rline/type';
+import helmet from 'helmet';
 
 async function bootstrap() {
+  const logger = new Logger('Bootstrap');
   const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
 
-  app.setGlobalPrefix(globalPrefix);
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-      transformOptions: {
-        exposeUnsetFields: false,
-        exposeDefaultValues: false,
-      },
+  // Get Configs
+  const [APP_NAME, APP_DESCRIPTION, PORT, PREFIX] = (() => {
+    const C = app.get(ConfigService);
+    return [
+      C.getOrThrow(ConfigKeys.APP_NAME),
+      C.getOrThrow(ConfigKeys.APP_DESCRIPTION),
+      C.getOrThrow(ConfigKeys.PORT),
+      C.getOrThrow(ConfigKeys.PREFIX),
+    ];
+  })();
 
-      exceptionFactory(errors) {
-        throw new UnprocessableEntityException({ errors });
-      },
-    })
-  );
+  // EnableCorse
+  EnableCors: {
+    app.enableCors({ origin: '*' });
+  }
 
-  const port = process.env.PORT || 3000;
+  // ConfigureMiddlewares
+  ConfigureMiddlewares: {
+    app.setGlobalPrefix(PREFIX);
+    app.use(helmet());
+    app.useGlobalPipes(
+      new ValidationPipe({
+        transform: true,
+        transformOptions: {
+          exposeUnsetFields: false,
+          exposeDefaultValues: false,
+        },
+        exceptionFactory(errors) {
+          console.debug(JSON.stringify(errors, null, 2));
 
-  const config = new DocumentBuilder().setTitle('Api').build();
-  const doc = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, doc);
+          throw new UnprocessableEntityException({ errors });
+        },
+      })
+    );
+  }
 
-  await app.listen(port);
+  // ConfigureSwagger
+  ConfigureSwagger: {
+    const swaggerConfig = new DocumentBuilder()
+      .setTitle(APP_NAME)
+      .setDescription(APP_DESCRIPTION)
+      .addBearerAuth()
+      .build();
+    const swaggerDoc = SwaggerModule.createDocument(app, swaggerConfig);
+    SwaggerModule.setup(PREFIX, app, swaggerDoc);
+  }
 
-  Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
-  );
+  // Start the app
+  await app.listen(PORT, () => {
+    logger.log(
+      `🚀 ${APP_NAME} is running on: http://localhost:${PORT}/${PREFIX}`
+    );
+  });
 }
 
 bootstrap();

@@ -9,10 +9,10 @@ import { keys } from '@rline/utils';
 import {
   DeepPartial,
   ObjectLiteral,
-  Repository,
   DeleteResult as TypeOrmDeleteResult,
 } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity.js';
+import { BaseService } from './base.service';
 
 /**
  * Service for handling write operations on entities.
@@ -23,14 +23,15 @@ import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity
  * @implements {WriteService<Entity, CreateDto, UpdateDto>}
  */
 export class EntityWriteService<
-  Entity extends ObjectLiteral,
-  CreateDto extends DeepPartial<Entity> = DeepPartial<Entity>,
-  UpdateDto extends QueryDeepPartialEntity<Entity> = QueryDeepPartialEntity<Entity>
-> implements WriteService<Entity, CreateDto, UpdateDto>
+    Entity extends ObjectLiteral,
+    CreateDto extends DeepPartial<Entity> = DeepPartial<Entity>,
+    UpdateDto extends QueryDeepPartialEntity<Entity> = QueryDeepPartialEntity<Entity>
+  >
+  extends BaseService<Entity>
+  implements WriteService<Entity, CreateDto, UpdateDto>
 {
-  constructor(private readonly repo: Repository<Entity>) {}
-
   protected async _findById(id: number, select: any[]) {
+    this.logger.debug(`_findById: ${JSON.stringify({ id, select })}`);
     const [found] = await this.repo.find({
       where: { id },
       select,
@@ -50,6 +51,7 @@ export class EntityWriteService<
    * @throws UnprocessableEntityException - If the entity violates unique constraints, an exception is thrown with validation errors.
    */
   protected async isUnique(entity: CreateDto): Promise<boolean | never> {
+    this.logger.debug(`isUnique: ${JSON.stringify(entity)}`);
     const uniques = this.repo.metadata.uniques.map((e) =>
       e.columns.map((c) => c.propertyName)
     );
@@ -86,11 +88,13 @@ export class EntityWriteService<
    * @throws {Error} If the entity is not unique.
    */
   async save(entity: CreateDto): Promise<Entity> {
+    this.logger.debug(`save: ${JSON.stringify(entity)}`);
     await this.isUnique(entity);
     return await this.repo.save(entity);
   }
 
   async update(id: number, entity: UpdateDto): Promise<UpdateResult> {
+    this.logger.debug(`update: ${id} ${JSON.stringify(entity)}`);
     const oldData = await this._findById(id, keys(entity));
     const { raw, affected } = await this.repo.update(id, entity);
     const newData = await this._findById(id, keys(entity));
@@ -111,6 +115,7 @@ export class EntityWriteService<
    * @throws An error if the method is not implemented.
    */
   async delete(id: number, options?: DeleteOptions): Promise<DeleteResult> {
+    this.logger.debug(`delete: ${id}`);
     const oldData = await this._findById(id, ['id', 'deletedAt']);
     let result: TypeOrmDeleteResult = { raw: '' };
     let newData: Entity | null = null;
@@ -141,6 +146,7 @@ export class EntityWriteService<
    * @throws Will throw an error if the entity cannot be found or the restore operation fails.
    */
   async restore(id: number): Promise<UpdateResult> {
+    this.logger.debug(`restore: ${id}`);
     const oldData = await this._findById(id, ['id', 'deletedAt']);
     let result: TypeOrmDeleteResult = { raw: '' };
     result = await this.repo.restore(id);

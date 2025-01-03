@@ -1,23 +1,22 @@
-import {
-  AddRelationOptions,
-  CountByRelationOptions,
-  CountResult,
-  FindByRelationOptions,
-  FindManyOptions,
-  RelationService,
-  RemoveRelationOptions,
-  SetRelationOptions,
-  UnsetRelationOptions,
-  UpdateResult,
-} from '@rline/type';
-import { FindOperator, ObjectLiteral, Repository } from 'typeorm';
+import { RelationService } from '@rline/type';
+import { FindOperator, ObjectLiteral } from 'typeorm';
+import { BaseService } from './base.service';
+import { FindByRelationOptionsDto } from '../dto/find-by-relation-options.dto';
+import { FindManyOptionsDto } from '../dto/find-many-options.dto';
+import { AddRelationOptionsDto } from '../dto/add-relation-options.dto';
+import { RemoveRelationOptionsDto } from '../dto/remove-relation-options.dto';
+import { CountByRelationOptionsDto } from '../dto/count-by-relations-options.dto';
+import { UnsetRelationOptionsDto } from '../dto/unset-relation-options.dto';
+import { SetRelationOptionsDto } from '../dto/set-relation-options.dto';
+import { UpdateResultDto } from '../dto/update-result.dto';
+import { CountResultDto } from '../dto/count-result.dto';
 
 export class EntityRelationService<Entity extends ObjectLiteral>
+  extends BaseService<Entity>
   implements RelationService<Entity, FindOperator<any>>
 {
-  constructor(protected readonly repo: Repository<Entity>) {}
-
   protected async __findOneById(id: number, relationName: string) {
+    this.logger.debug(`async : ${JSON.stringify({ id, relationName })}`);
     return await this.repo
       .createQueryBuilder('m')
       .select(['m.id', 'r.id'])
@@ -26,7 +25,8 @@ export class EntityRelationService<Entity extends ObjectLiteral>
       .getOne();
   }
 
-  async addRelation(params: AddRelationOptions): Promise<UpdateResult> {
+  async addRelation(params: AddRelationOptionsDto): Promise<UpdateResultDto> {
+    this.logger.debug(`addRelation : ${JSON.stringify(params)}`);
     const oldData = await this.__findOneById(params.id, params.relationName);
     await this.repo
       .createQueryBuilder()
@@ -37,7 +37,10 @@ export class EntityRelationService<Entity extends ObjectLiteral>
     return { raw: '', affected: 1, data: [oldData, newData] };
   }
 
-  async removeRelation(params: RemoveRelationOptions): Promise<UpdateResult> {
+  async removeRelation(
+    params: RemoveRelationOptionsDto
+  ): Promise<UpdateResultDto> {
+    this.logger.debug(`removeRelation : ${JSON.stringify(params)}`);
     const oldData = await this.__findOneById(params.id, params.relationName);
     await this.repo
       .createQueryBuilder()
@@ -48,7 +51,8 @@ export class EntityRelationService<Entity extends ObjectLiteral>
     return { raw: '', affected: 1, data: [oldData, newData] };
   }
 
-  async setRelation(params: SetRelationOptions): Promise<UpdateResult> {
+  async setRelation(params: SetRelationOptionsDto): Promise<UpdateResultDto> {
+    this.logger.debug(`setRelation : ${JSON.stringify(params)}`);
     const oldData = await this.__findOneById(params.id, params.relationName);
     await this.repo
       .createQueryBuilder()
@@ -59,7 +63,10 @@ export class EntityRelationService<Entity extends ObjectLiteral>
     return { raw: '', affected: 1, data: [oldData, newData] };
   }
 
-  async unsetRelation(params: UnsetRelationOptions): Promise<UpdateResult> {
+  async unsetRelation(
+    params: UnsetRelationOptionsDto
+  ): Promise<UpdateResultDto> {
+    this.logger.debug(`unsetRelation : ${JSON.stringify(params)}`);
     const oldData = await this.__findOneById(params.id, params.relationName);
     await this.repo
       .createQueryBuilder()
@@ -70,7 +77,10 @@ export class EntityRelationService<Entity extends ObjectLiteral>
     return { raw: '', affected: 1, data: [oldData, newData] };
   }
 
-  async countByRelation(params: CountByRelationOptions): Promise<CountResult> {
+  async countByRelation(
+    params: CountByRelationOptionsDto
+  ): Promise<CountResultDto> {
+    this.logger.debug(`countByRelation : ${JSON.stringify(params)}`);
     const { relationId, relationName } = params;
     const count = await this.repo
       .createQueryBuilder('m')
@@ -81,9 +91,12 @@ export class EntityRelationService<Entity extends ObjectLiteral>
   }
 
   async findByRelation(
-    params: FindByRelationOptions,
-    query: FindManyOptions<Entity, FindOperator<any>>
+    params: FindByRelationOptionsDto,
+    query: FindManyOptionsDto<Entity>
   ): Promise<Entity[]> {
+    this.logger.debug(
+      `findByRelation : ${JSON.stringify(params)} ${JSON.stringify(query)}`
+    );
     const { relationId, relationName } = params;
     const builder = this.repo.createQueryBuilder('m');
 

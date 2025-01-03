@@ -79,7 +79,7 @@ export function restPaths(name: string, prefix = ''): RestApiPaths | null {
     id: `${idPath}`,
     plus: `${idPath}/plus`,
     count: `${pluralPath}/count`,
-    relation: `${idPath}/:relation`,
-    relationId: `${idPath}/:relation/:relationId`,
+    relation: `${idPath}/:relationName`,
+    relationId: `${idPath}/:relationName/:relationId`,
   };
 }

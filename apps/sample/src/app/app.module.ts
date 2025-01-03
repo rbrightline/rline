@@ -1,26 +1,15 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ResourceModule } from '@rline/rest';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   Category,
-  CreateSampleDto,
-  datasourceOptionsFactory,
-  Operation,
-  WhereSampleDto,
-  Sample,
-  UpdateSampleDto,
   CreateCategoryDto,
+  getDataSourceOptions,
+  Sample,
   UpdateCategoryDto,
-  WhereCategoryDto,
-  AggregateCategoryDto,
-  AggregateSampleDto,
-  ByIdAggregateSampleDto,
 } from '@rline/orm';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import 'class-transformer';
-import 'class-validator';
-import { ByIDAggregateCategoryDto } from '@rline/orm/lib/entities/category/QueryCategoryDto';
 
+import { RestModule } from '@rline/rest';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -28,39 +17,22 @@ import { ByIDAggregateCategoryDto } from '@rline/orm/lib/entities/category/Query
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory(config: ConfigService) {
-        return datasourceOptionsFactory(
-          config,
-          [Operation, Sample, Category],
-          []
-        );
+        return getDataSourceOptions(config, [Sample, Category], []);
       },
     }),
-
-    ResourceModule.register({
+    RestModule.register({
+      type: 'all',
+      entity: Sample,
+      createDto: Sample,
+      updateDto: Sample,
+      relations: [Category],
+    }),
+    RestModule.register({
+      type: 'all',
       entity: Category,
       createDto: CreateCategoryDto,
       updateDto: UpdateCategoryDto,
-      whereDto: WhereCategoryDto,
-      aggregateDto: AggregateCategoryDto,
-      byIDAggregateDto: ByIDAggregateCategoryDto,
-      read: true,
-      write: true,
-    }),
-    ResourceModule.register({
-      entity: Sample,
-      createDto: CreateSampleDto,
-      updateDto: UpdateSampleDto,
-      whereDto: WhereSampleDto,
-      aggregateDto: AggregateSampleDto,
-      byIDAggregateDto: ByIdAggregateSampleDto,
-      read: true,
-      write: true,
-      addRelation: true,
-      setRelation: true,
-      increment: true,
-      queryRelation: true,
     }),
   ],
-  providers: [],
 })
 export class AppModule {}

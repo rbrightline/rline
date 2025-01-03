@@ -28,11 +28,5 @@ export default defineConfig({
       reportsDirectory: './test-output/vitest/coverage',
       provider: 'v8',
     },
-
-    sequence: {
-      // Options for sequencing
-      shuffle: false, // Run in the defined order (not shuffled)
-      concurrent: false, // Run one file at a time
-    },
   },
 });

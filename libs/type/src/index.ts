@@ -15,6 +15,7 @@ export * from './lib/query/count';
 export * from './lib/query/delete';
 export * from './lib/query/find-by-relation';
 export * from './lib/query/find-many';
+export * from './lib/query/find-one-by-id';
 export * from './lib/query/find-one';
 export * from './lib/query/order-dir';
 export * from './lib/query/order';

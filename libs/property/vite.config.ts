@@ -1,3 +1,4 @@
+import path from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -8,6 +9,16 @@ export default defineConfig({
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
   // },
+
+  resolve: {
+    alias: {
+      '@rline/orm': path.resolve(__dirname, '../orm/dist'),
+      '@rline/property': path.resolve(__dirname, '../property/dist'),
+      '@rline/utils': path.resolve(__dirname, '../utils/dist'),
+      '@rline/type': path.resolve(__dirname, '../type/dist'),
+      '@rline/validation': path.resolve(__dirname, '../validation/dist'),
+    },
+  },
   test: {
     watch: false,
     globals: true,

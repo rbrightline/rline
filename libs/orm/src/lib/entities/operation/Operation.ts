@@ -1,6 +1,6 @@
-import { Column } from '../../orm/column';
-import { Entity } from '../../orm/entity';
-import { BaseEntity } from '../../base/base';
+import { Column } from '../../orm/column.decorator';
+import { Entity } from '../../orm/entity.decorator';
+import { BaseEntity } from '../../base/base.entity';
 
 @Entity()
 export class Operation extends BaseEntity {
