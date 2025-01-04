@@ -1,5 +1,5 @@
 {
-  "name": "@rline/auth",
+  "name": "@rline/entity",
   "version": "5.2.0",
   "author": {
     "name": "Robert Brightline",
@@ -10,19 +10,10 @@
     "access": "public",
     "tag": "latest"
   },
-  "peerDependencies": {
-    "@nestjs/core": "^10.4.15",
-    "@nestjs/common": "^10.4.15",
-    "@nestjs/swagger": "^8.1.0",
-    "@nestjs/typeorm": "^10.0.2",
-    "@nestjs/jwt": "^10.2.0",
-    "typeorm": "^0.3.20"
-  },
   "dependencies": {
     "@swc/helpers": "~0.5.11",
     "@rline/type": "workspace:*",
     "@rline/property": "workspace:*",
-    "@rline/rest": "workspace:*",
     "@rline/orm": "workspace:*"
   },
   "type": "commonjs",
