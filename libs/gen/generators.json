@@ -29,6 +29,11 @@
       "factory": "./dist/generators/init/init",
       "schema": "./dist/generators/init/schema.json",
       "description": "init generator"
+    },
+    "sync": {
+      "factory": "./dist/generators/sync/sync",
+      "schema": "./dist/generators/sync/schema.json",
+      "description": "sync generator"
     }
   }
 }

@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Object Property",
+    "properties": {
+        "type": {
+            "const": "object"
+        },
+        "target": {
+            "$ref": "../name/model.schema.json"
+        },
+        "default": {
+            "type": "object"
+        }
+    },
+    "required": [
+        "type",
+        "target"
+    ]
+}

@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Common Number Property",
+    "title": "CommonNumberPropertyOptions",
     "properties": {
         "numberFormat": {
             "$ref": "../enum/number-format.schema.json"

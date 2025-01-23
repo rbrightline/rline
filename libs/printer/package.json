@@ -1,10 +1,14 @@
 {
   "name": "@rline/printer",
   "version": "0.0.1",
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest"
+  },
   "dependencies": {
     "@swc/helpers": "~0.5.11"
   },
-  "type": "module",
+  "type": "commonjs",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [

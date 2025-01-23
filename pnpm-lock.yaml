@@ -33,6 +33,9 @@ importers:
       '@nx/web':
         specifier: 20.3.2
         version: 20.3.2(@babel/traverse@7.26.5)(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))(@types/node@18.16.9)(nx@20.3.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))(typescript@5.6.3)(verdaccio@5.33.0(typanion@3.14.0))
+      '@rline/gen':
+        specifier: workspace:*
+        version: link:libs/gen
       '@swc-node/register':
         specifier: ~1.9.1
         version: 1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3)
@@ -123,9 +126,12 @@ importers:
 
   libs/gen:
     dependencies:
-      tslib:
-        specifier: ^2.3.0
-        version: 2.8.1
+      '@rline/model':
+        specifier: workspace:*
+        version: link:../model
+      '@swc/helpers':
+        specifier: ~0.5.11
+        version: 0.5.15
 
   libs/model:
     dependencies:
@@ -134,6 +140,12 @@ importers:
         version: 0.5.15
 
   libs/printer:
+    dependencies:
+      '@swc/helpers':
+        specifier: ~0.5.11
+        version: 0.5.15
+
+  libs/type:
     dependencies:
       '@swc/helpers':
         specifier: ~0.5.11

@@ -1,0 +1,80 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Relation",
+    "allOf": [
+        {
+            "$ref": "./ui-property.schema.json"
+        },
+        {
+            "properties": {
+                "type": {
+                    "$ref": "#/definitions/RelationType"
+                },
+                "target": {
+                    "$ref": "../name/model.schema.json"
+                },
+                "targetProperty": {
+                    "description": "Reference property in the target entity",
+                    "$ref": "../name/property.schema.json"
+                },
+                "eager": {
+                    "type": "boolean"
+                },
+                "join": {
+                    "description": "should join the column/table?",
+                    "type": "boolean",
+                    "default": true
+                },
+                "cascade": {
+                    "description": "should cascade the realtion during entity creation",
+                    "type": "boolean",
+                    "default": true
+                },
+                "onDelete": {
+                    "description": "what should happen when the relation is deleted?",
+                    "$ref": "#/definitions/OnDelete",
+                    "default": "SET NULL"
+                },
+                "onUpdate": {
+                    "description": "what should happen when the relation is udpated",
+                    "$ref": "#/definitions/OnUpdate"
+                }
+            },
+            "required": [
+                "type",
+                "target"
+            ]
+        }
+    ],
+    "definitions": {
+        "RelationType": {
+            "title": "Relation Type",
+            "enum": [
+                "many-to-many",
+                "many-to-one",
+                "one-to-one",
+                "one-to-many"
+            ]
+        },
+        "OnDelete": {
+            "enum": [
+                "RESTRICT",
+                "CASCADE",
+                "SET NULL",
+                "DEFAULT",
+                "NO ACTION"
+            ],
+            "default": "SET NULL"
+        },
+        "OnUpdate": {
+            "enum": [
+                "RESTRICT",
+                "CASCADE",
+                "SET NULL",
+                "DEFAULT",
+                "NO ACTION"
+            ],
+            "default": "SET NULL"
+        }
+    }
+}

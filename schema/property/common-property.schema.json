@@ -1,0 +1,46 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "CommonPropertyOptions",
+    "title": "Common Property",
+    "properties": {
+        "name": {
+            "$ref": "../name/property.schema.json"
+        },
+        "description": {
+            "type": "string"
+        },
+        "required": {
+            "type": "boolean",
+            "default": true
+        },
+        "unique": {
+            "type": "boolean",
+            "default": true
+        },
+        "acceptString": {
+            "type": "boolean",
+            "description": "transform string values into the actual type before any operations",
+            "default": true
+        },
+        "read": {
+            "type": "boolean",
+            "description": "Is the property visible in the data load?",
+            "default": true
+        },
+        "udpate": {
+            "type": "boolean",
+            "description": "Is proprety updatable?",
+            "default": true
+        },
+        "equalToProperty": {
+            "$ref": "../name/property.schema.json"
+        },
+        "notEqualToProperty": {
+            "$ref": "../name/property.schema.json"
+        }
+    },
+    "required": [
+        "type",
+        "name"
+    ]
+}

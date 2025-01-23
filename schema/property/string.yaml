@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=./string.schema.json
+
+contains:
+  - some
+  - other
+
+endWith: some
+startWith: some
+
+minLength: 3
+maxLength: 100
+notContains:
+  - root
+  - super
+
+notEndWith: some
+notStartWith: some
+stringFormat: password

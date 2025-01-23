@@ -1,0 +1,39 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "UI Property",
+    "properties": {
+        "label": {
+            "type": "string"
+        },
+        "mapTo": {
+            "$ref": "../name/property.schema.json"
+        },
+        "inputType": {
+            "$ref": "../enum/input-type.schema.json"
+        },
+        "prefixText": {
+            "type": "string"
+        },
+        "suffixText": {
+            "type": "string"
+        },
+        "prefixIcon": {
+            "$ref": "../enum/icon.schema.json"
+        },
+        "suffixIcon": {
+            "$ref": "../enum/icon.schema.json"
+        },
+        "dependsOn": {
+            "$ref": "../name/property.schema.json"
+        },
+        "group": {
+            "type": "string"
+        },
+        "bold": {
+            "type": "boolean"
+        },
+        "italic": {
+            "type": "boolean"
+        }
+    }
+}

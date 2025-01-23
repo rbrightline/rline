@@ -1,10 +1,9 @@
-import { formatFiles, generateFiles, Tree, workspaceRoot } from '@nx/devkit';
-import * as path from 'path';
-import { InitGeneratorSchema } from './schema';
+import { Tree, workspaceRoot } from '@nx/devkit';
+import { cpSync } from 'fs';
+import { join } from 'path';
 
-export async function initGenerator(tree: Tree, options: InitGeneratorSchema) {
-  generateFiles(tree, path.join(__dirname, 'files'), workspaceRoot, options);
-  await formatFiles(tree);
+export async function initGenerator(tree: Tree) {
+  cpSync(join(__dirname, 'files'), workspaceRoot, { recursive: true });
 }
 
 export default initGenerator;

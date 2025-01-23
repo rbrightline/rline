@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Number Format",
+    "title": "NumberFormat",
     "description": "Number format such as rate (0-5), percentage (0-100)",
     "enum": [
         [

@@ -7,15 +7,15 @@
   },
   "dependencies": {
     "@nx/devkit": "20.3.2",
-    "tslib": "^2.3.0"
+    "@swc/helpers": "~0.5.11",
+    "@rline/model": "workspace:*"
   },
   "type": "commonjs",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "!**/*.tsbuildinfo",
-    "generators.json"
+    "!**/*.tsbuildinfo"
   ],
   "exports": {
     "./package.json": "./package.json",
@@ -27,7 +27,7 @@
   },
   "module": "./dist/index.js",
   "nx": {
-    "sourceRoot": "libs/entity/src",
+    "sourceRoot": "libs/gen/src",
     "projectType": "library",
     "targets": {
       "build": {
@@ -36,11 +36,23 @@
           "{options.outputPath}"
         ],
         "options": {
-          "outputPath": "libs/entity/dist",
-          "main": "libs/entity/src/index.ts",
-          "tsConfig": "libs/entity/tsconfig.lib.json",
+          "outputPath": "libs/gen/dist",
+          "main": "libs/gen/src/index.ts",
+          "tsConfig": "libs/gen/tsconfig.lib.json",
           "skipTypeCheck": true,
-          "stripLeadingPaths": true
+          "stripLeadingPaths": true,
+          "assets": [
+            {
+              "input": "./libs/gen/src",
+              "glob": "**/!(*.ts)",
+              "output": "."
+            },
+            {
+              "input": "./libs/gen/src",
+              "glob": "**/*.d.ts",
+              "output": "."
+            }
+          ]
         }
       }
     },

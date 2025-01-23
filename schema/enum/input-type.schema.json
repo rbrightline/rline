@@ -1,0 +1,26 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Input Type",
+    "description": "UI input type",
+    "enum": [
+        "text",
+        "textarea",
+        "texteditor",
+        "number",
+        "number-range",
+        "integer",
+        "integer-range",
+        "currency",
+        "percent",
+        "rate",
+        "switch",
+        "select",
+        "autocomplete",
+        "date",
+        "date-time",
+        "checkbox",
+        "checkbox-group",
+        "radio",
+        "radio-group"
+    ]
+}

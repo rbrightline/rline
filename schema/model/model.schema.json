@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Model",
+    "properties": {
+        "type": {
+            "enum": [
+                "ENTITY",
+                "DTO",
+                "ABSTRACT_ENTITY",
+                "ABSTRACT_DTOS",
+                "TYPE",
+                "ENUM"
+            ]
+        },
+        "extends": {
+            "$ref": "../name/model.schema.json",
+            "description": "Which abstract model is extended by the entity?"
+        },
+        "uniques": {
+            "type": "array",
+            "items": {
+                "$ref": "../name/property.schema.json"
+            }
+        },
+        "properties": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+                "$ref": "../property/property.schema.json"
+            }
+        },
+        "relations": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+                "$ref": "../property/relation.schema.json"
+            }
+        }
+    },
+    "additionalProperties": false
+}

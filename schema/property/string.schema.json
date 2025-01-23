@@ -1,0 +1,59 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "String Property",
+    "properties": {
+        "type": {
+            "const": "string"
+        },
+        "default": {
+            "type": "string"
+        },
+        "stringFormat": {
+            "$ref": "../enum/string-format.schema.json"
+        },
+        "minLength": {
+            "type": "integer"
+        },
+        "maxLength": {
+            "type": "integer"
+        },
+        "contains": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+                "type": "string"
+            }
+        },
+        "notContains": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+                "type": "string"
+            }
+        },
+        "startWith": {
+            "type": "string"
+        },
+        "notStartWith": {
+            "type": "string"
+        },
+        "endWith": {
+            "type": "string"
+        },
+        "notEndWith": {
+            "type": "string"
+        },
+        "containProperty": {
+            "$ref": "../name/property.schema.json"
+        },
+        "notContainProperty": {
+            "$ref": "../name/property.schema.json"
+        },
+        "longerThanProperty": {
+            "$ref": "../name/property.schema.json"
+        },
+        "shorterThanProperty": {
+            "$ref": "../name/property.schema.json"
+        }
+    }
+}

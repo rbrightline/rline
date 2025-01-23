@@ -1,0 +1,3 @@
+# yaml-language-server: $schema=./property.schema.json
+type: string
+name: score

@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "$id": "Sync",
+  "title": "Syncronize the schema with type definations",
+  "type": "object"
+}

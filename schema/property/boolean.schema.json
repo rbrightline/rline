@@ -1,0 +1,16 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "BooleanPropertyOptions",
+    "title": "Boolean Property",
+    "properties": {
+        "type": {
+            "const": "boolean"
+        },
+        "default": {
+            "type": "boolean"
+        }
+    },
+    "required": [
+        "type"
+    ]
+}
