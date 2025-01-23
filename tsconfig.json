@@ -2,5 +2,24 @@
   "extends": "./tsconfig.base.json",
   "compileOnSave": false,
   "files": [],
-  "references": []
+  "references": [
+    {
+      "path": "./libs/common"
+    },
+    {
+      "path": "./libs/core"
+    },
+    {
+      "path": "./libs/entity"
+    },
+    {
+      "path": "./libs/model"
+    },
+    {
+      "path": "./libs/printer"
+    },
+    {
+      "path": "./libs/gen"
+    }
+  ]
 }

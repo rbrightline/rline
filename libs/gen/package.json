@@ -1,0 +1,50 @@
+{
+  "name": "@rline/gen",
+  "version": "0.0.1",
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest"
+  },
+  "dependencies": {
+    "@nx/devkit": "20.3.2",
+    "tslib": "^2.3.0"
+  },
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "!**/*.tsbuildinfo",
+    "generators.json"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "module": "./dist/index.js",
+  "nx": {
+    "sourceRoot": "libs/entity/src",
+    "projectType": "library",
+    "targets": {
+      "build": {
+        "executor": "@nx/js:swc",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "options": {
+          "outputPath": "libs/entity/dist",
+          "main": "libs/entity/src/index.ts",
+          "tsConfig": "libs/entity/tsconfig.lib.json",
+          "skipTypeCheck": true,
+          "stripLeadingPaths": true
+        }
+      }
+    },
+    "name": "gen"
+  },
+  "generators": "./generators.json"
+}

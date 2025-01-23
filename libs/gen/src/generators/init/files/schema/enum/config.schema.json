@@ -1,0 +1,53 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "App Config",
+    "properties": {
+        "APP_NAME": {
+            "type": "string"
+        },
+        "APP_DESCRIPTION": {
+            "type": "string"
+        },
+        "PORT": {
+            "type": "number",
+            "minimum": 3000,
+            "maximum": 5000
+        },
+        "JWT_SECRET": {
+            "type": "string"
+        },
+        "DATABASE_TYPE": {
+            "enum": [
+                "postgres",
+                "better-sqlite3",
+                "mysql"
+            ]
+        },
+        "DATABASE_USERNAME": {
+            "type": "string",
+            "default": "testuser"
+        },
+        "DATABASE_PASSWORD": {
+            "type": "string",
+            "default": "password"
+        },
+        "DATABASE_NAME": {
+            "type": "string",
+            "default": "testdb"
+        },
+        "ROOT_USERANME": {
+            "type": "string",
+            "default": "root"
+        },
+        "ROOT_PASSWORD": {
+            "type": "string",
+            "default": "password"
+        },
+        "ENCRYPTION_KEY": {
+            "type": "string"
+        },
+        "ENCRYPTION_IV": {
+            "type": "string"
+        }
+    }
+}

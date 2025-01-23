@@ -1,0 +1,42 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Number Property",
+    "allOf": [
+        {
+            "$ref": "./common-number.schema.json"
+        },
+        {
+            "properties": {
+                "type": {
+                    "const": "number"
+                },
+                "default": {
+                    "type": "number"
+                },
+                "isIn": {
+                    "type": "array",
+                    "items": {
+                        "oneOf": [
+                            {
+                                "type": "number"
+                            }
+                        ]
+                    }
+                },
+                "isNotIn": {
+                    "type": "array",
+                    "items": {
+                        "oneOf": [
+                            {
+                                "type": "number"
+                            }
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "type"
+            ]
+        }
+    ]
+}

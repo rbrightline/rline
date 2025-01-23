@@ -1,0 +1,34 @@
+{
+  "generators": {
+    "entity": {
+      "factory": "./dist/generators/entity/entity",
+      "schema": "./dist/generators/entity/schema.json",
+      "description": "entity generator"
+    },
+    "dto": {
+      "factory": "./dist/generators/dto/dto",
+      "schema": "./dist/generators/dto/schema.json",
+      "description": "dto generator"
+    },
+    "model": {
+      "factory": "./dist/generators/model/model",
+      "schema": "./dist/generators/model/schema.json",
+      "description": "model generator"
+    },
+    "controller": {
+      "factory": "./dist/generators/controller/controller",
+      "schema": "./dist/generators/controller/schema.json",
+      "description": "controller generator"
+    },
+    "api": {
+      "factory": "./dist/generators/api/api",
+      "schema": "./dist/generators/api/schema.json",
+      "description": "api generator"
+    },
+    "init": {
+      "factory": "./dist/generators/init/init",
+      "schema": "./dist/generators/init/schema.json",
+      "description": "init generator"
+    }
+  }
+}

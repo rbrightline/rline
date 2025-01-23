@@ -1,0 +1,36 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "allOf": [
+        {
+            "$ref": "./common-property.schema.json"
+        },
+        {
+            "$ref": "./ui-property.schema.json"
+        },
+        {
+            "oneOf": [
+                {
+                    "$ref": "./string.schema.json"
+                },
+                {
+                    "$ref": "./number.schema.json"
+                },
+                {
+                    "$ref": "./integer.schema.json"
+                },
+                {
+                    "$ref": "./boolean.schema.json"
+                },
+                {
+                    "$ref": "./date.schema.json"
+                },
+                {
+                    "$ref": "./object.schema.json"
+                },
+                {
+                    "$ref": "./array.schema.json"
+                }
+            ]
+        }
+    ]
+}
