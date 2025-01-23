@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../../schema/model/model.schema.json
+properties:
+  - name: unit
+    type: string
+    stringFormat: short
+
+  - name: street
+    type: string
+    stringFormat: short
+
+  - name: city
+    type: string
+    stringFormat: short
+
+  - name: state
+    type: string
+    stringFormat: short
+
+  - name: country
+    type: string
+    stringFormat: short
+
+  - name: zip
+    type: string
+    stringFormat: short

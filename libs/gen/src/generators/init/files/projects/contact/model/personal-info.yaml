@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../../schema/model/model.schema.json
+
+properties:
+  - name: firstName
+    type: string
+    stringFormat: short
+
+  - name: lastName
+    type: string
+    stringFormat: short
+
+  - name: middleName
+    type: string
+    stringFormat: short
+
+  - name: dob
+    type: date
+
+  - name: gender
+    type: string
+    isIn:
+      - Male
+      - Female

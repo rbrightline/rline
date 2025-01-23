@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Project",
+    "title": "ProjectOptions",
     "properties": {
         "title": {
             "type": "string"
@@ -13,14 +13,6 @@
             "description": "between 3000 to 3997 is online services. between 4000 to 5000 is internal services. Production port is even, the dev/test server is the following odd number.",
             "minimum": 3000,
             "maximum": 5000
-        },
-        "models": {
-            "type": "array",
-            "description": "List of models used in the project",
-            "uniqueItems": true,
-            "items": {
-                "$ref": "../name/model.schema.json"
-            }
         }
     }
 }

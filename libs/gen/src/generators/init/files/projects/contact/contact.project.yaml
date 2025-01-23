@@ -1,1 +1,4 @@
 # yaml-language-server: $schema=../../schema/project/project.schema.json
+title: Contact
+description: Store contact information
+port: 3030

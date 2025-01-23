@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../schema/model/model.schema.json
+properties:
+  - name: phone
+    type: string
+    stringFormat: phone-number

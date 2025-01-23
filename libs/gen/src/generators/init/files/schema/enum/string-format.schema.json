@@ -3,6 +3,8 @@
     "title": "StringFormat",
     "description": "String format such as email, password, uuid, ip6, ip4 and so more",
     "enum": [
+        "short",
+        "long",
         "email",
         "hostname",
         "ipv4",

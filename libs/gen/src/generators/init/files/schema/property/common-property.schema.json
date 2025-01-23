@@ -36,6 +36,14 @@
         },
         "notEqualToProperty": {
             "$ref": "../name/property.schema.json"
+        },
+        "hash": {
+            "type": "boolean",
+            "default": true
+        },
+        "encrypt": {
+            "type": "boolean",
+            "default": true
         }
     },
     "required": [

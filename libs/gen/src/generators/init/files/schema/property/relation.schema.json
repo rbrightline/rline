@@ -7,6 +7,9 @@
         },
         {
             "properties": {
+                "name": {
+                    "$ref": "../name/property.schema.json"
+                },
                 "type": {
                     "$ref": "#/definitions/RelationType"
                 },
@@ -18,7 +21,8 @@
                     "$ref": "../name/property.schema.json"
                 },
                 "eager": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "default": true
                 },
                 "join": {
                     "description": "should join the column/table?",
@@ -40,6 +44,7 @@
                     "$ref": "#/definitions/OnUpdate"
                 }
             },
+            "additionalProperties": false,
             "required": [
                 "type",
                 "target"

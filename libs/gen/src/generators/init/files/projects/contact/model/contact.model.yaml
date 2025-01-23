@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=../../../schema/model/model.schema.json
+
+relations:
+  - name: addresses
+    type: many-to-many
+    target: Addresss
+    cascade: true
+    join: true
+    eager: true
+
+  - name: emails
+    type: many-to-many
+    target: Email
+    cascade: true
+    join: true
+    eager: true
+
+  - name: phones
+    type: many-to-many
+    target: Phone
+    cascade: true
+    join: true
+    eager: true
+
+  - name: socialMedia
+    type: many-to-many
+    target: SocialMedia
+    cascade: true
+    join: true
+    eager: true

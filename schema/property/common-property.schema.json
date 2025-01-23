@@ -1,7 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "CommonPropertyOptions",
-    "title": "Common Property",
+    "title": "CommonPropertyOptions",
     "properties": {
         "name": {
             "$ref": "../name/property.schema.json"

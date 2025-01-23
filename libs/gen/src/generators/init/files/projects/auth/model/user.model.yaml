@@ -1,1 +1,13 @@
 # yaml-language-server: $schema=../../../schema/model/model.schema.json
+properties:
+  - name: username
+    type: string
+    stringFormat: email
+    required: true
+    unique: true
+
+  - name: password
+    type: string
+    stringFormat: password
+    required: true
+    hash: true

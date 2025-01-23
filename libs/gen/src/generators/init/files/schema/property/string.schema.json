@@ -17,6 +17,20 @@
         "maxLength": {
             "type": "integer"
         },
+        "isIn": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+                "type": "string"
+            }
+        },
+        "isNotIn": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+                "type": "string"
+            }
+        },
         "contains": {
             "type": "array",
             "uniqueItems": true,

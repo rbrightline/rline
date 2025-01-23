@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Input Type",
+    "title": "InputType",
     "description": "UI input type",
     "enum": [
         "text",

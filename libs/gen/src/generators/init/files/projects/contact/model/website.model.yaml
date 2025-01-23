@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../../schema/model/model.schema.json
+properties:
+  - name: website
+    type: string
+    stringFormat: url
+
+  - name: facebook
+    type: string
+    stringFormat: url
+
+  - name: twitter
+    type: string
+    stringFormat: url
+
+  - name: instagram
+    type: string
+    stringFormat: url
+
+  - name: tiktok
+    type: string
+    stringFormat: url
+
+  - name: linkedin
+    type: string
+    stringFormat: url
