@@ -8,6 +8,12 @@
     },
     {
       "path": "./libs/property"
+    },
+    {
+      "path": "./libs/orm"
+    },
+    {
+      "path": "./libs/rest"
     }
   ]
 }

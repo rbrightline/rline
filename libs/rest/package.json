@@ -1,5 +1,5 @@
 {
-  "name": "@rline/type",
+  "name": "@rline/rest",
   "version": "0.0.1",
   "type": "module",
   "main": "./dist/index.js",
@@ -18,7 +18,7 @@
     "!**/*.tsbuildinfo"
   ],
   "nx": {
-    "sourceRoot": "libs/type/src",
+    "sourceRoot": "libs/rest/src",
     "targets": {
       "build": {
         "executor": "@nx/js:swc",
@@ -26,14 +26,18 @@
           "{options.outputPath}"
         ],
         "options": {
-          "outputPath": "libs/type/dist",
-          "main": "libs/type/src/index.ts",
-          "tsConfig": "libs/type/tsconfig.lib.json",
+          "outputPath": "libs/rest/dist",
+          "main": "libs/rest/src/index.ts",
+          "tsConfig": "libs/rest/tsconfig.lib.json",
           "skipTypeCheck": false,
           "stripLeadingPaths": true
         }
       }
     }
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^11.0.9",
+    "@nestjs/swagger": "^11.0.3"
   },
   "dependencies": {
     "@swc/helpers": "~0.5.11"

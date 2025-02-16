@@ -1,1 +1,1 @@
-export * from './lib/property.js';
+export * from './lib';

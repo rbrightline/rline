@@ -8,9 +8,10 @@
     "lib": [
       "es2022"
     ],
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "Preserve",
+    "moduleResolution": "bundler",
     "noEmitOnError": true,
+    "experimentalDecorators": true,
     "noFallthroughCasesInSwitch": true,
     "strictPropertyInitialization": false,
     "noImplicitOverride": true,

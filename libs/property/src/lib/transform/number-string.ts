@@ -1,0 +1,19 @@
+import { Transform } from 'class-transformer';
+
+export function NumberStringTransformer(): PropertyDecorator {
+  return (t, p) => {
+    Transform(({ value }) => {
+      if (typeof value === 'string') {
+        if (value.length > 20) return undefined;
+        const newValue = parseFloat(value);
+        if (isNaN(newValue)) {
+          return undefined;
+        }
+        return newValue;
+      } else if (typeof value === 'number') {
+        return value;
+      }
+      return undefined;
+    })(t, p);
+  };
+}

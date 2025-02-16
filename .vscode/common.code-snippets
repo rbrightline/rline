@@ -1,4 +1,9 @@
 {
+    "export all": {
+        "prefix": "export all",
+        "body": "// @index(['./**/*.ts', '!./**/*{spec,test,index}.ts',], f => `export * from '${f.path}'`)",
+        "scope": "typescript"
+    },
     "hello": {
         "prefix": "hello",
         "body": "console.log('Hello');",
@@ -14,4 +19,28 @@
         ],
         "scope": "typescript,javascript"
     },
+    "property decorator": {
+        "prefix": "property decorator",
+        "body": [
+            "        export function $1(): PropertyDecorator {",
+            "            return (t, p) => {",
+            "              // [ ] create the $1 property decorator",
+            "$0",
+            "            };",
+            "          }",
+        ],
+        "scope": "typescript"
+    },
+    "clas decorator": {
+        "prefix": "clas decorator",
+        "body": [
+            "        export function $1(): ClassDecorator {",
+            "            return (t) => {",
+            "              // [ ] create the $1 Class decorator",
+            "$0",
+            "            };",
+            "          }",
+        ],
+        "scope": "typescript"
+    }
 }
