@@ -1,0 +1,17 @@
+{
+    "hello": {
+        "prefix": "hello",
+        "body": "console.log('Hello');",
+        "scope": "typescript,javascript"
+    },
+    "function": {
+        "prefix": "function",
+        "description": "Function statement",
+        "body": [
+            "export function $1($2):$3 {",
+            "    return $4;",
+            "}",
+        ],
+        "scope": "typescript,javascript"
+    },
+}
