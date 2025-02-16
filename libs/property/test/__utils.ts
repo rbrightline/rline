@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Exclude, plainToInstance } from 'class-transformer';
 import { validateSync } from 'class-validator';
-import { Property, PropertyOptions } from '../lib';
+import { Property, PropertyOptions } from '../src';
 
 @Exclude()
 export class TestClass {

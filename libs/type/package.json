@@ -1,6 +1,21 @@
 {
   "name": "@rline/type",
-  "version": "0.0.1",
+  "version": "11.0.0",
+  "author": {
+    "email": "robert.brightline@gmail.com",
+    "name": "Robert Brightline",
+    "url": "https://rbrightline.github.io"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest"
+  },
+  "keywords": [
+    "nestjs",
+    "common",
+    "model",
+    "type"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",

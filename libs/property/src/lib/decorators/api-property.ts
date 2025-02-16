@@ -20,6 +20,8 @@ export function ApiProperty(options: PropertyOptions): PropertyDecorator {
         ...optionsRest
       } = options as any;
       __ApiProperty({ ...optionsRest, items: itemsRest })(t, p);
+    } else if (options.type === 'date') {
+      __ApiProperty({ ...options, type: 'string', format: 'date' })(t, p);
     } else {
       __ApiProperty({ ...(options as any) })(t, p);
     }

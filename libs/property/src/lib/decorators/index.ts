@@ -3,6 +3,7 @@ export * from './api-property';
 export * from './array';
 export * from './boolean';
 export * from './common';
+export * from './date';
 export * from './integer';
 export * from './number';
 export * from './object';

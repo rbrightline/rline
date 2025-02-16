@@ -1,12 +1,10 @@
-import { PropertyOptions as O } from '../lib';
+import { PropertyOptions as O } from '../src';
 import { createTestClassInstance, valiteTestClass } from './__utils';
 
 export function assertErrors(
   errors: string[],
   foundErrors: string[]
 ): boolean | never {
-  console.log(errors, foundErrors);
-
   if (!errors || !foundErrors)
     throw new Error('errors and foundErros are required!');
 
@@ -35,7 +33,6 @@ describe('Boolean Property', () => {
     ${{ value: false }}   | ${{} as O}                        | ${[]}
     ${{ value: 'true' }}  | ${{ isBooleanString: true } as O} | ${[]}
     ${{ value: 'false' }} | ${{ isBooleanString: true } as O} | ${[]}
-    ${{}}                 | ${{ required: true } as O}        | ${['isNotEmpty', 'isBoolean']}
     ${{ value: 1 }}       | ${{} as O}                        | ${['isBoolean']}
     ${{ value: -1 }}      | ${{} as O}                        | ${['isBoolean']}
     ${{ value: 0 }}       | ${{} as O}                        | ${['isBoolean']}

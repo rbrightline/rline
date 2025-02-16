@@ -1,5 +1,6 @@
 import { ArrayPropertyOptions } from './array';
 import { BooleanPropertyOptions } from './boolean';
+import { DatePropertyOptions } from './date';
 import { IntegerPropertyOptions } from './integer';
 import { NumberPropertyOptions } from './number';
 import { ObjectPropertyOptions } from './object';
@@ -10,6 +11,7 @@ export type __PropertyOptions<T> = Readonly<
   | NumberPropertyOptions
   | IntegerPropertyOptions
   | BooleanPropertyOptions
+  | DatePropertyOptions
   | ObjectPropertyOptions<any>
   | ArrayPropertyOptions<T>
 >;

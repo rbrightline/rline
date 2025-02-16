@@ -4,6 +4,7 @@ import { ApiProperty } from './api-property';
 import { ArrayProperty } from './array';
 import { BooleanProperty } from './boolean';
 import { CommonProperty } from './common';
+import { DateProperty } from './date';
 import { IntegerProperty } from './integer';
 import { NumberProperty } from './number';
 import { ObjectProperty } from './object';
@@ -35,6 +36,10 @@ export function __Property(
         BooleanProperty(options, validationOptions)(t, p);
         break;
       }
+
+      case 'date':
+        DateProperty(options, validationOptions)(t, p);
+        break;
 
       case 'object': {
         ObjectProperty(options, validationOptions)(t, p);

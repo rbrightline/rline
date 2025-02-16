@@ -1,3 +1,3 @@
 # orm
 
-Wrapper around typeorm
+Typeorm

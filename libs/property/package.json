@@ -1,6 +1,22 @@
 {
   "name": "@rline/property",
-  "version": "0.0.1",
+  "version": "11.0.2",
+  "author": {
+    "email": "robert.brightline@gmail.com",
+    "name": "Robert Brightline",
+    "url": "https://rbrightline.github.io"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest"
+  },
+  "keywords": [
+    "nestjs",
+    "dto",
+    "swagger",
+    "validator",
+    "decorator"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -36,12 +52,12 @@
     }
   },
   "peerDependencies": {
+    "@nestjs/common": "^11.0.9",
     "@nestjs/swagger": "^11.0.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1"
   },
   "dependencies": {
-    "@nestjs/common": "^11.0.9",
     "@swc/helpers": "~0.5.11"
   }
 }

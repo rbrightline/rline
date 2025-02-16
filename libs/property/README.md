@@ -1,3 +1,3 @@
 # property
 
-Property decorator for data-transfer-objects (DTO)
+DTO property decorator.

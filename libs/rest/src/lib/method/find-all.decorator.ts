@@ -2,7 +2,7 @@ import { Get, Type } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 
 /**
- * Find all entitites, such as `/products`
+ * Find all decorator
  * @param path
  * @param type response type
  * @returns

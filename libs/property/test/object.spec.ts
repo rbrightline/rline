@@ -1,4 +1,4 @@
-import { PropertyOptions as O } from '../lib';
+import { PropertyOptions as O } from '../src';
 import { createTestClassInstance, TestClass, valiteTestClass } from './__utils';
 import { assertErrors } from './boolean.spec';
 
