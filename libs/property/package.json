@@ -1,6 +1,6 @@
 {
   "name": "@rline/property",
-  "version": "11.0.3",
+  "version": "11.0.10",
   "author": {
     "email": "robert.brightline@gmail.com",
     "name": "Robert Brightline",
@@ -17,7 +17,7 @@
     "validator",
     "decorator"
   ],
-  "type": "module",
+  "type": "commonjs",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

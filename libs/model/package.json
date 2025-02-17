@@ -1,6 +1,6 @@
 {
   "name": "@rline/model",
-  "version": "11.0.4",
+  "version": "11.0.10",
   "author": {
     "email": "robert.brightline@gmail.com",
     "name": "Robert Brightline",
@@ -15,7 +15,7 @@
     "type",
     "database"
   ],
-  "type": "module",
+  "type": "commonjs",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -43,7 +43,7 @@
           "outputPath": "libs/model/dist",
           "main": "libs/model/src/index.ts",
           "tsConfig": "libs/model/tsconfig.lib.json",
-          "skipTypeCheck": true,
+          "skipTypeCheck": false,
           "stripLeadingPaths": true
         }
       }

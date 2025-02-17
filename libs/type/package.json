@@ -1,6 +1,6 @@
 {
   "name": "@rline/type",
-  "version": "11.0.5",
+  "version": "11.0.10",
   "author": {
     "email": "robert.brightline@gmail.com",
     "name": "Robert Brightline",
@@ -16,7 +16,7 @@
     "model",
     "type"
   ],
-  "type": "module",
+  "type": "commonjs",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

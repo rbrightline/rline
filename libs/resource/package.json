@@ -1,6 +1,6 @@
 {
   "name": "@rline/resource",
-  "version": "11.0.0",
+  "version": "11.0.10",
   "author": {
     "email": "robert.brightline@gmail.com",
     "name": "Robert Brightline",
@@ -15,7 +15,7 @@
     "controller",
     "module"
   ],
-  "type": "module",
+  "type": "commonjs",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -50,11 +50,11 @@
     }
   },
   "peerDependencies": {
+    "@nestjs/common": "^11.0.10",
     "@nestjs/typeorm": "^11.0.0",
-    "@rline/entity": "^11.0.5",
-    "@rline/orm": "^11.0.3",
-    "@rline/rest": "^11.0.1",
-    "@nestjs/common": "^11.0.10"
+    "@rline/orm": "^11.0.10",
+    "@rline/rest": "^11.0.10",
+    "@rline/entity": "^11.0.10"
   },
   "dependencies": {
     "@swc/helpers": "~0.5.11"
