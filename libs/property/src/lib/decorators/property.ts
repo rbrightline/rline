@@ -15,10 +15,6 @@ export function __Property(
   validationOptions?: Readonly<ValidationOptions>
 ): PropertyDecorator {
   return (t, p) => {
-    ApiProperty(options)(t, p);
-
-    CommonProperty(options, validationOptions)(t, p);
-
     switch (options.type) {
       case 'string': {
         StringProperty(options, validationOptions)(t, p);
@@ -62,5 +58,7 @@ export function __Property(
 export function Property(options: PropertyOptions): PropertyDecorator {
   return (t, p) => {
     __Property(options)(t, p);
+    ApiProperty(options)(t, p);
+    CommonProperty(options)(t, p);
   };
 }

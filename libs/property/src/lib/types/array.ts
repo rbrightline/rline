@@ -6,6 +6,7 @@ export type __ArrayPropertyOptions<T> = Readonly<{
   maxItems?: number;
   minItems?: number;
   uniqueItems?: boolean;
+  isArrayString?: boolean;
 }>;
 
 export type ArrayPropertyOptions<T> = Readonly<

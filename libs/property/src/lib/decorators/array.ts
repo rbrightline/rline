@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import {
   ArrayMaxSize,
   ArrayMinSize,
@@ -16,5 +17,12 @@ export function ArrayProperty<T>(
 
     if (minItems != undefined) ArrayMinSize(minItems, vo)(t, p);
     if (maxItems != undefined) ArrayMaxSize(maxItems, vo)(t, p);
+
+    if (options.isArrayString === true)
+      Transform(({ value }) => {
+        if (typeof value == 'string') return [value];
+
+        return value;
+      })(t, p);
   };
 }
