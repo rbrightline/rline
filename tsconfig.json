@@ -15,5 +15,14 @@
     {
       "path": "./libs/rest"
     },
+    {
+      "path": "./libs/model"
+    },
+    {
+      "path": "./libs/entity"
+    },
+    {
+      "path": "./libs/resource"
+    }
   ]
 }

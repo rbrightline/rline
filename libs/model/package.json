@@ -1,6 +1,6 @@
 {
-  "name": "@rline/orm",
-  "version": "11.0.3",
+  "name": "@rline/model",
+  "version": "11.0.4",
   "author": {
     "email": "robert.brightline@gmail.com",
     "name": "Robert Brightline",
@@ -11,14 +11,11 @@
     "tag": "latest"
   },
   "keywords": [
-    "nestjs",
-    "orm",
-    "typeorm",
-    "swagger",
-    "decorator",
+    "model",
+    "type",
     "database"
   ],
-  "type": "commonjs",
+  "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -35,7 +32,7 @@
     "!**/*.tsbuildinfo"
   ],
   "nx": {
-    "sourceRoot": "libs/orm/src",
+    "sourceRoot": "libs/model/src",
     "targets": {
       "build": {
         "executor": "@nx/js:swc",
@@ -43,25 +40,14 @@
           "{options.outputPath}"
         ],
         "options": {
-          "outputPath": "libs/orm/dist",
-          "main": "libs/orm/src/index.ts",
-          "tsConfig": "libs/orm/tsconfig.lib.json",
-          "skipTypeCheck": false,
+          "outputPath": "libs/model/dist",
+          "main": "libs/model/src/index.ts",
+          "tsConfig": "libs/model/tsconfig.lib.json",
+          "skipTypeCheck": true,
           "stripLeadingPaths": true
         }
       }
     }
-  },
-  "peerDependencies": {
-    "@nestjs/common": "^11.0.9",
-    "@nestjs/swagger": "^11.0.3",
-    "@nestjs/testing": "^11.0.9",
-    "@nestjs/typeorm": "^11.0.0",
-    "class-transformer": "^0.5.1",
-    "class-validator": "^0.14.1",
-    "@rline/property": "^11.0.3",
-    "@rline/type": "^11.0.5",
-    "typeorm": "^0.3.20"
   },
   "dependencies": {
     "@swc/helpers": "~0.5.11"

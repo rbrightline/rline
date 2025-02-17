@@ -64,7 +64,17 @@
       "inputs": ["production", "^production"]
     },
     "test": {
-      "dependsOn": ["^build", "^build", "^build", "^build", "^build", "^build"]
+      "dependsOn": [
+        "^build",
+        "^build",
+        "^build",
+        "^build",
+        "^build",
+        "^build",
+        "^build",
+        "^build",
+        "^build"
+      ]
     }
   },
   "release": {
