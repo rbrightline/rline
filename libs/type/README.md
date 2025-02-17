@@ -1,3 +1,3 @@
 # @rline/type
 
-Common types
+Common types and type utilities

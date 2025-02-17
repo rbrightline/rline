@@ -1,4 +1,5 @@
 import { Type } from '@nestjs/common';
+import { Property } from '@rline/property';
 import {
   RelationOptions as __RelationOptions,
   JoinColumn,
@@ -9,6 +10,7 @@ import {
   OneToOne,
 } from 'typeorm';
 import { RelationType } from 'typeorm/metadata/types/RelationTypes.js';
+import { IDDto } from '../dto';
 
 export type ExtraRelationOptions = Readonly<{
   type: RelationType;
@@ -28,16 +30,21 @@ export function Relation<T extends { id: number }>(
     switch (type) {
       case 'many-to-many':
       case 'one-to-many': {
-        if (join === true) {
-          JoinTable()(t, p);
-        }
+        Property({
+          type: 'array',
+          items: { type: 'object', target: () => IDDto },
+        })(t, p);
+
+        if (join === true) JoinTable()(t, p);
+
         break;
       }
       case 'many-to-one':
       case 'one-to-one': {
-        if (join === true) {
-          JoinColumn()(t, p);
-        }
+        Property({ type: 'object', target: () => IDDto })(t, p);
+
+        if (join === true) JoinColumn()(t, p);
+
         break;
       }
     }

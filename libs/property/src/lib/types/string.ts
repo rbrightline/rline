@@ -4,7 +4,7 @@ import { StringFormat } from './string-format';
 export type __StringPropertyOptions = Readonly<{
   type: 'string';
   example?: string;
-  default?: number;
+  default?: string;
   stringFormat?: StringFormat;
   pattern?: RegExp;
   enum?: string[];

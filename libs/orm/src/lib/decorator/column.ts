@@ -6,7 +6,7 @@ import { NumberColumn } from './number';
 import { ObjectColumn } from './object';
 import { StringColumn } from './string';
 
-export function Col(options: PropertyOptions): PropertyDecorator {
+export function Column(options: PropertyOptions): PropertyDecorator {
   return (t, p) => {
     const type = options.type;
 

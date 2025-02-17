@@ -1,5 +1,6 @@
 import { Property } from '@rline/property';
 import { BaseModel } from '@rline/type';
+import { Exclude } from 'class-transformer';
 import {
   CreateDateColumn,
   DeleteDateColumn,
@@ -7,6 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+@Exclude()
 export class BaseEntity implements BaseModel {
   @Property({ type: 'integer' })
   @PrimaryGeneratedColumn()
