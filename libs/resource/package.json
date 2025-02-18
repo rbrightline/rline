@@ -1,6 +1,6 @@
 {
   "name": "@rline/resource",
-  "version": "11.0.11",
+  "version": "11.0.12",
   "author": {
     "email": "robert.brightline@gmail.com",
     "name": "Robert Brightline",
@@ -52,11 +52,11 @@
   "peerDependencies": {
     "@nestjs/common": "^11.0.10",
     "@nestjs/typeorm": "^11.0.0",
-    "@rline/orm": "^11.0.10",
-    "@rline/rest": "^11.0.10",
-    "@rline/entity": "^11.0.10"
+    "@rline/rest": "^11.0.10"
   },
   "dependencies": {
+    "@rline/entity": "^11.0.11",
+    "@rline/orm": "^11.0.18",
     "@swc/helpers": "~0.5.11"
   }
 }

@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { BooleanQueryProperty } from './boolean';
 import { DateQueryProperty } from './date';
 import { IntegerQueryProperty } from './integer';
@@ -7,10 +8,13 @@ import { StringQueryProperty } from './string';
 export type QueryPropertyOptions = {
   type: 'string' | 'number' | 'integer' | 'boolean' | 'date';
 };
+
 export function QueryProperty(
   options: QueryPropertyOptions
 ): PropertyDecorator {
   return (t, p) => {
+    ApiProperty({ type: 'string', required: false, nullable: true })(t, p);
+
     switch (options.type) {
       case 'string':
         StringQueryProperty()(t, p);

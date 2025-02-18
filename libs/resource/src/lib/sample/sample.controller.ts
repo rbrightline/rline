@@ -1,7 +1,11 @@
 import { Body, Logger, Param, ParseIntPipe, Query } from '@nestjs/common';
-import { CreateSampleDto, Sample, UpdateSampleDto } from '@rline/entity';
 import {
-  BaseQueryDto,
+  CreateSampleDto,
+  QuerySampleDto,
+  Sample,
+  UpdateSampleDto,
+} from '@rline/entity';
+import {
   EntityService,
   InjectEntityService,
   OrderDto,
@@ -21,7 +25,7 @@ export class SampleController {
   @Read('samples', () => Sample)
   read(
     @Query() paginator: PaginatorDto<Sample>,
-    @Query() where: BaseQueryDto,
+    @Query() where: QuerySampleDto,
     @Query() order: OrderDto<Sample>
   ) {
     this.logger.debug(paginator);
