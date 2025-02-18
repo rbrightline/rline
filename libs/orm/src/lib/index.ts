@@ -2,6 +2,7 @@
 export * from './decorator';
 export * from './dto';
 export * from './entity';
+export * from './naming';
 export * from './provider';
 export * from './query';
 export * from './service';

@@ -3,10 +3,15 @@ import { BaseQueryDto, QueryProperty } from '@rline/orm';
 import { Exclude } from 'class-transformer';
 
 @Exclude()
-export class QuerySampleDto extends BaseQueryDto implements SampleModel {
-  @QueryProperty({ type: 'string' }) name: string;
-  @QueryProperty({ type: 'number' }) number: number;
-  @QueryProperty({ type: 'integer' }) integer: number;
-  @QueryProperty({ type: 'boolean' }) boolean: boolean;
-  @QueryProperty({ type: 'date' }) date: Date;
+export class QuerySampleDto
+  extends BaseQueryDto
+  implements Record<keyof SampleModel, any>
+{
+  @QueryProperty({ type: 'string' }) category: any;
+  @QueryProperty({ type: 'string' }) categories: any;
+  @QueryProperty({ type: 'string' }) name: any;
+  @QueryProperty({ type: 'number' }) number: any;
+  @QueryProperty({ type: 'integer' }) integer: any;
+  @QueryProperty({ type: 'boolean' }) boolean: any;
+  @QueryProperty({ type: 'date' }) date: any;
 }

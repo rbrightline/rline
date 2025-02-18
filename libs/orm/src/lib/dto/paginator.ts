@@ -13,7 +13,7 @@ export class PaginatorDto<T extends BaseEntity> {
     description: 'Take the number of items',
     isIntegerString: true,
   })
-  take: number;
+  take?: number;
 
   @Property({
     type: 'integer',
@@ -22,7 +22,7 @@ export class PaginatorDto<T extends BaseEntity> {
     description: 'Skip the number of items',
     isIntegerString: true,
   })
-  skip: number;
+  skip?: number;
 
   @Property({
     type: 'array',
@@ -30,8 +30,8 @@ export class PaginatorDto<T extends BaseEntity> {
     description: 'Select the properties',
     isArrayString: true,
   })
-  select: Keys<T>;
+  select?: Keys<T>;
 
   @Property({ type: 'boolean', default: false, isBooleanString: true })
-  withDeleted: boolean;
+  withDeleted?: boolean;
 }

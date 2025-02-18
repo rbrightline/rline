@@ -52,11 +52,17 @@
   "peerDependencies": {
     "@nestjs/common": "^11.0.10",
     "@nestjs/typeorm": "^11.0.0",
-    "@rline/orm": "^11.0.18",
     "@rline/rest": "^11.0.15",
-    "@rline/entity": "^11.0.21"
+    "typeorm": "^0.3.20"
   },
   "dependencies": {
+    "@rline/entity": "workspace:^",
+    "@rline/orm": "workspace:^",
     "@swc/helpers": "~0.5.11"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "^11.0.10",
+    "better-sqlite3": "^11.8.1",
+    "pg": "^8.13.3"
   }
 }

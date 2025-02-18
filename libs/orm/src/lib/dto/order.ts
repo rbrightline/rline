@@ -6,19 +6,19 @@ import { BaseEntity } from '../entity';
 @Exclude()
 export class OrderDto<T extends BaseEntity> {
   @Property({ type: 'string', maxLength: 30, default: 'id' })
-  orderBy: KeyOf<T>;
+  orderBy?: KeyOf<T>;
 
   @Property({
     type: 'string',
     enum: ['ASC', 'DESC'],
     default: 'ASC',
   })
-  direction: 'ASC' | 'DESC';
+  direction?: 'ASC' | 'DESC';
 
   @Property({
     type: 'string',
     enum: ['FIRST', 'LAST'],
     default: 'LAST',
   })
-  nulls: 'FIRST' | 'LAST';
+  nulls?: 'FIRST' | 'LAST';
 }

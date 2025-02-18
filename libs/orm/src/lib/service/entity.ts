@@ -30,16 +30,23 @@ export class EntityService<
 
   async read(
     paginator: PaginatorDto<T>,
-    where: FindOptionsWhere<T>,
+    where: Partial<Record<keyof T, any>>,
     orderDto: OrderDto<T>
   ) {
     const { orderBy, direction, nulls } = orderDto;
+    let order: FindOptionsOrder<any> = {};
+    if (orderBy) {
+      order = {};
+      order[orderBy] = {
+        direction: direction ?? 'ASC',
+        nulls: nulls ?? 'LAST',
+      };
+    }
+
     return await this.repository.find({
       ...paginator,
       where,
-      order: {
-        [orderBy]: { direction, nulls },
-      } as unknown as FindOptionsOrder<T>,
+      order,
     });
   }
 
