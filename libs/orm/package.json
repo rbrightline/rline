@@ -1,6 +1,6 @@
 {
   "name": "@rline/orm",
-  "version": "11.0.14",
+  "version": "11.0.17",
   "author": {
     "email": "robert.brightline@gmail.com",
     "name": "Robert Brightline",
@@ -57,11 +57,11 @@
     "@nestjs/swagger": "^11.0.3",
     "@nestjs/testing": "^11.0.9",
     "@nestjs/typeorm": "^11.0.0",
+    "@rline/property": "^11.0.16",
+    "@rline/type": "^11.0.10",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
-    "typeorm": "^0.3.20",
-    "@rline/property": "^11.0.14",
-    "@rline/type": "^11.0.10"
+    "typeorm": "^0.3.20"
   },
   "dependencies": {
     "@swc/helpers": "~0.5.11"

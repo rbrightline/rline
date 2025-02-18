@@ -8,4 +8,5 @@ export type CommonPropertyOptions = Readonly<{
   writeOnly?: boolean;
   description?: string;
   expose?: boolean;
+  default?: any;
 }>;

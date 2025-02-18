@@ -9,8 +9,10 @@ export class UnsetRelationParamDto implements UnsetRelationParam {
     required: true,
     minimum: 1,
     description: 'Entity id',
+    isIntegerString: true,
   })
   id: number;
+
   @Property({
     type: 'string',
     minLength: 1,
@@ -30,6 +32,7 @@ export class RelationParamDto
     required: true,
     minimum: 1,
     description: 'Relation id',
+    isIntegerString: true,
   })
   rid: number;
 }

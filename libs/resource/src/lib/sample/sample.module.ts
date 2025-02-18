@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Sample } from '@rline/entity';
@@ -7,7 +7,13 @@ import { SampleController } from './sample.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Sample])],
-  providers: [provideEntityService(Sample)],
+  providers: [
+    provideEntityService(Sample),
+    {
+      provide: Logger,
+      useValue: new Logger(Sample.name),
+    },
+  ],
   controllers: [SampleController],
 })
 export class SampleModule {}

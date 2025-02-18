@@ -1,4 +1,4 @@
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude, Expose, Transform } from 'class-transformer';
 import { IsNotEmpty, IsOptional, ValidationOptions } from 'class-validator';
 import { CommonPropertyOptions } from '../types';
 
@@ -23,6 +23,15 @@ export function CommonProperty(
       Exclude()(t, p);
     } else {
       Expose()(t, p);
+    }
+
+    if (options.default != undefined) {
+      Transform(({ value }) => {
+        if (value == undefined) {
+          return options.default;
+        }
+        return value;
+      })(t, p);
     }
   };
 }

@@ -31,12 +31,15 @@ export class EntityService<
   async read(
     paginator: PaginatorDto<T>,
     where: FindOptionsWhere<T>,
-    orderDto?: OrderDto<T>
+    orderDto: OrderDto<T>
   ) {
+    const { orderBy, direction, nulls } = orderDto;
     return await this.repository.find({
       ...paginator,
       where,
-      order: orderDto as unknown as FindOptionsOrder<T>,
+      order: {
+        [orderBy]: { direction, nulls },
+      } as unknown as FindOptionsOrder<T>,
     });
   }
 

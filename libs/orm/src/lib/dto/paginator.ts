@@ -1,7 +1,9 @@
 import { Property } from '@rline/property';
 import { Keys } from '@rline/type';
+import { Exclude } from 'class-transformer';
 import { BaseEntity } from '../entity';
 
+@Exclude()
 export class PaginatorDto<T extends BaseEntity> {
   @Property({
     type: 'integer',
@@ -9,6 +11,7 @@ export class PaginatorDto<T extends BaseEntity> {
     maximum: 100,
     minimum: 1,
     description: 'Take the number of items',
+    isIntegerString: true,
   })
   take: number;
 
@@ -17,6 +20,7 @@ export class PaginatorDto<T extends BaseEntity> {
     default: 0,
     minimum: 0,
     description: 'Skip the number of items',
+    isIntegerString: true,
   })
   skip: number;
 
@@ -24,8 +28,10 @@ export class PaginatorDto<T extends BaseEntity> {
     type: 'array',
     items: { type: 'string', required: true, maxLength: 30 },
     description: 'Select the properties',
+    isArrayString: true,
   })
   select: Keys<T>;
 
-  @Property({ type: 'boolean', default: false }) withDeleted: boolean;
+  @Property({ type: 'boolean', default: false, isBooleanString: true })
+  withDeleted: boolean;
 }
