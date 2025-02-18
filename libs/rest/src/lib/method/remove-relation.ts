@@ -15,7 +15,7 @@ export function RemoveRelation(
     ApiOperation({
       summary: 'Remove relation (many-to-many or one-to-many)',
     })(t, p, d);
-    ApiOkResponse({ type, description: 'Success' })(t, p, d);
+    ApiOkResponse({ type: type(), description: 'Success' })(t, p, d);
     Delete(path)(t, p, d);
   };
 }

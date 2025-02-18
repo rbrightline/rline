@@ -12,7 +12,7 @@ export function AddRelation(path: string, type: () => Type): MethodDecorator {
     ApiOperation({
       summary: 'Add relation (many-to-many or one-to-many)',
     })(t, p, d);
-    ApiOkResponse({ type, description: 'Success' })(t, p, d);
+    ApiOkResponse({ type: type(), description: 'Success' })(t, p, d);
     Put(path)(t, p, d);
   };
 }

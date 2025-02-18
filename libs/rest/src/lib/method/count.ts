@@ -12,7 +12,7 @@ export function Count(path: string, type: () => Type): MethodDecorator {
     ApiOperation({
       summary: 'Count',
     })(t, p, d);
-    ApiOkResponse({ type, description: 'Success' })(t, p, d);
+    ApiOkResponse({ type: type(), description: 'Success' })(t, p, d);
     Get(path)(t, p, d);
   };
 }

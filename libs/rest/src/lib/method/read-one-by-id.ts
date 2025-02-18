@@ -10,7 +10,7 @@ import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 export function ReadOneById(path: string, type: () => Type): MethodDecorator {
   return (t, p, d) => {
     ApiOperation({ summary: 'Read one by id' })(t, p, d);
-    ApiOkResponse({ type, description: 'Success' })(t, p, d);
+    ApiOkResponse({ type: type(), description: 'Success' })(t, p, d);
     Get(path)(t, p, d);
   };
 }

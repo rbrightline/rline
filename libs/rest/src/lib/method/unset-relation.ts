@@ -12,7 +12,7 @@ export function UnsetRelation(path: string, type: () => Type): MethodDecorator {
     ApiOperation({
       summary: 'Set relation (many-to-one or one-to-one)',
     })(t, p, d);
-    ApiOkResponse({ type, description: 'Success' })(t, p, d);
+    ApiOkResponse({ type: type(), description: 'Success' })(t, p, d);
     Delete(path)(t, p, d);
   };
 }
