@@ -4,9 +4,9 @@ import { Exclude } from 'class-transformer';
 
 @Exclude()
 export class CreateSampleDto implements SampleModel {
-  @Property({ type: 'string' }) name: string;
-  @Property({ type: 'number' }) number: number;
-  @Property({ type: 'integer' }) integer: number;
-  @Property({ type: 'boolean' }) boolean: boolean;
-  @Property({ type: 'date' }) date: Date;
+  @Property({ type: 'string', minLength: 3, maxLength: 30 }) name: string;
+  @Property({ type: 'number', minimum: 0, maximum: 100 }) number: number;
+  @Property({ type: 'integer', minimum: 0, maximum: 10 }) integer: number;
+  @Property({ type: 'boolean', default: true }) boolean: boolean;
+  @Property({ type: 'date', isDateString: true }) date: Date;
 }
