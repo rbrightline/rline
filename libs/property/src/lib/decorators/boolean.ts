@@ -14,8 +14,10 @@ export function BooleanProperty(
           return true;
         } else if (value === 'false') {
           return false;
+        } else if (typeof value === 'boolean') {
+          return value;
         }
-        return 'not boolean';
+        return undefined;
       })(t, p);
     }
   };
