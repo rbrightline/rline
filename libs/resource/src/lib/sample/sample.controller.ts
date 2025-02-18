@@ -6,13 +6,21 @@ import {
   UpdateSampleDto,
 } from '@rline/entity';
 import {
+  DeleteResultDto,
   EntityService,
   InjectEntityService,
   OrderDto,
   PaginatorDto,
   UpdateResultDto,
 } from '@rline/orm';
-import { Controller, Read, ReadOneById, Save, Update } from '@rline/rest';
+import {
+  Controller,
+  Delete,
+  Read,
+  ReadOneById,
+  Save,
+  Update,
+} from '@rline/rest';
 
 @Controller()
 export class SampleController {
@@ -56,7 +64,7 @@ export class SampleController {
     return this.service.update(id, entity);
   }
 
-  @Update('sample/:id', () => UpdateResultDto)
+  @Delete('sample/:id', () => DeleteResultDto)
   delete(@Param('id', ParseIntPipe) id: number) {
     this.logger.debug(id);
     return this.service.delete(id);

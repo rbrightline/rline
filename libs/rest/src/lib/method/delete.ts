@@ -8,8 +8,8 @@ import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
  */
 export function Delete(path: string, type: () => Type): MethodDecorator {
   return (t, p, d) => {
-    __Delete(path)(t, p, d);
     ApiOperation({ summary: 'Delete entity by id' })(t, p, d);
     ApiOkResponse({ type: type() })(t, p, d);
+    __Delete(path)(t, p, d);
   };
 }

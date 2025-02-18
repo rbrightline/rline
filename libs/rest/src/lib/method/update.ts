@@ -9,8 +9,8 @@ import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
  */
 export function Update(path: string, type: () => Type): MethodDecorator {
   return (t, p, d) => {
-    Put(path)(t, p, d);
     ApiOperation({ summary: 'Update entity by id' })(t, p, d);
     ApiOkResponse({ type: type(), description: 'Success' })(t, p, d);
+    Put(path)(t, p, d);
   };
 }
