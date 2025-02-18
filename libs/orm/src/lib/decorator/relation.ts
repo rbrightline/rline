@@ -21,6 +21,7 @@ export type ExtraRelationOptions = Readonly<{
 export type RelationOptions = Readonly<
   __RelationOptions & ExtraRelationOptions
 >;
+
 export function Relation<T extends { id: number }>(
   options: RelationOptions
 ): PropertyDecorator {
@@ -51,32 +52,16 @@ export function Relation<T extends { id: number }>(
 
     switch (type) {
       case 'many-to-many':
-        ManyToMany<T>(
-          () => target,
-          (e) => e.id,
-          rest
-        )(t, p);
+        ManyToMany<T>(target, (e) => e.id, rest)(t, p);
         break;
       case 'many-to-one':
-        ManyToOne<T>(
-          () => target,
-          (e) => e.id,
-          rest
-        )(t, p);
+        ManyToOne<T>(target, (e) => e.id, rest)(t, p);
         break;
       case 'one-to-many':
-        OneToMany<T>(
-          () => target,
-          (e) => e.id,
-          rest
-        )(t, p);
+        OneToMany<T>(target, (e) => e.id, rest)(t, p);
         break;
       case 'one-to-one':
-        OneToOne<T>(
-          () => target,
-          (e) => e.id,
-          rest
-        )(t, p);
+        OneToOne<T>(target, (e) => e.id, rest)(t, p);
         break;
     }
   };

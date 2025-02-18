@@ -1,6 +1,6 @@
 {
   "name": "@rline/entity",
-  "version": "11.0.19",
+  "version": "11.0.22",
   "author": {
     "email": "robert.brightline@gmail.com",
     "name": "Robert Brightline",
@@ -55,10 +55,10 @@
     "@nestjs/swagger": "^11.0.3",
     "@rline/orm": "^11.0.10",
     "@rline/property": "^11.0.10",
-    "class-transformer": "^0.5.1"
+    "class-transformer": "^0.5.1",
+    "@rline/model": "^11.0.16"
   },
   "dependencies": {
-    "@rline/model": "^11.0.15",
     "@swc/helpers": "~0.5.11"
   }
 }

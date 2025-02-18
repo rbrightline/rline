@@ -1,12 +1,11 @@
 import { Logger, Module } from '@nestjs/common';
-
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Sample } from '@rline/entity';
+import { Category, Sample } from '@rline/entity';
 import { provideEntityService } from '@rline/orm';
 import { SampleController } from './sample.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Sample])],
+  imports: [TypeOrmModule.forFeature([Sample, Category])],
   providers: [
     provideEntityService(Sample),
     {

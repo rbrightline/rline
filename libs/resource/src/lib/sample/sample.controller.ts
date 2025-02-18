@@ -11,14 +11,19 @@ import {
   InjectEntityService,
   OrderDto,
   PaginatorDto,
+  RelationParamDto,
   UpdateResultDto,
 } from '@rline/orm';
 import {
+  AddRelation,
   Controller,
   Delete,
   Read,
   ReadOneById,
+  RemoveRelation,
   Save,
+  SetRelation,
+  UnsetRelation,
   Update,
 } from '@rline/rest';
 
@@ -68,5 +73,25 @@ export class SampleController {
   delete(@Param('id', ParseIntPipe) id: number) {
     this.logger.debug(id);
     return this.service.delete(id);
+  }
+
+  @AddRelation('sample/:id/:rn/:rid', () => UpdateResultDto)
+  async addRelation(@Param() param: RelationParamDto) {
+    return await this.service.addRelation(param);
+  }
+
+  @RemoveRelation('sample/:id/:rn/:rid', () => UpdateResultDto)
+  async removeRelation(@Param() param: RelationParamDto) {
+    return await this.service.removeRelation(param);
+  }
+
+  @SetRelation('sample/:id/:rn/:rid', () => UpdateResultDto)
+  async setRelation(@Param() param: RelationParamDto) {
+    return await this.service.setRelation(param);
+  }
+
+  @UnsetRelation('sample/:id/:rn', () => UpdateResultDto)
+  async unsetRelation(@Param() param: RelationParamDto) {
+    return await this.service.unsetRelation(param);
   }
 }
